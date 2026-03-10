@@ -90,14 +90,22 @@ write.csv(x=directory_taxonomic, file="outputdata/directory_taxonomic.csv")
 
 
 ## COMMENTED OUT UNTIL WE HAVE THE XLSX FILE FILLED ----
-# # Creating "submersed" object to filter "db" to just submersed taxa
-# 
-# directory_taxonomic_updated <- read_xlsx("outputdata/directory_taxonomic_updated.xlsx")
-# 
-# submersed <- directory_taxonomic_updated$fieldNames[grepl("S", directory_taxonomic_updated$VEGETATION_ID)]
-# 
-# # Creating "db_sub"
-# 
-# db_sub <- cbind(db[, colnames(db)%in%directory$fieldNames[directory$Taxonomic=="N"]],
-#                 db[, colnames(db)%in%submersed])
-# 
+# Creating "submersed" object to filter "db" to just submersed taxa
+
+directory_taxonomic_updated <- read_xlsx("outputdata/directory_taxonomic_updated.xlsx")
+
+submersed <- directory_taxonomic_updated$fieldNames[grepl("S", directory_taxonomic_updated$VEGETATION_ID)]
+
+# SHOULD DOUBLE CHECK THESE BEFORE MOVING FORWARD, SOME 
+# RELEVANT FOR "S"
+# Is Juncus pelocarpus really SV?
+# Unsure about ludwigia_palustris
+# nitellopsis_sp?
+# Is schoenoplectus_subterminalis really SV?
+# typha_angustifolia is nonnative, right?
+
+# Creating "db_sub"
+
+db_sub <- cbind(db[, colnames(db)%in%directory$fieldNames[directory$Taxonomic=="N"]],
+                db[, colnames(db)%in%submersed])
+

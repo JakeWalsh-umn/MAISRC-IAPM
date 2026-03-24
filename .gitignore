@@ -3,6 +3,10 @@
 .RData
 .Ruserdata
 
+# Folders
+JakeOutput
+
+# Workspaces
 jakeworkspace.R
 melinaworkspace.R
 maddieworkspace.R

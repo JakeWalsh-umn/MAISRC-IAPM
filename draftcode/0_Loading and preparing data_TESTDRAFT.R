@@ -91,7 +91,9 @@ write.csv(x=directory_taxonomic, file="outputdata/directory_taxonomic.csv")
 
 ## COMMENTED OUT UNTIL WE HAVE THE XLSX FILE FILLED ----
 # Creating "submersed" object to filter "db" to just submersed taxa
-
+# Need to update this based on Melina's changes
+# Will also need to be careful about the numbered column selections below,
+# which will also change if the number of submersed taxa changes.
 directory_taxonomic_updated <- read_xlsx("outputdata/directory_taxonomic_updated.xlsx")
 
 submersed <- directory_taxonomic_updated$fieldNames[grepl("S", directory_taxonomic_updated$VEGETATION_ID)]

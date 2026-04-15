@@ -88,6 +88,19 @@ directory_taxonomic <- left_join(directory %>% filter(Taxonomic=="Y"),
 
 write.csv(x=directory_taxonomic, file="outputdata/directory_taxonomic.csv")
 
+#Changing DNR list classifications:
+
+taxa_xwalk$ORIGIN[taxa_xwalk$TAXON=="typha_angustifolia"] <- "nonnative"
+taxa_xwalk$ORIGIN[taxa_xwalk$TAXON=="typha_xglauca"] <- "nonnative"
+taxa_xwalk$ORIGIN[taxa_xwalk$TAXON=="typha_xglauca_-or-_t_angustifolia"] <- "nonnative"
+taxa_xwalk$ORIGIN[taxa_xwalk$TAXON=="myriophyllum_sibiricum_x_spicatum"] <- "nonnative"
+#changing hybrids to from native to nonnative
+taxa_xwalk$VEGETATION_ID[taxa_xwalk$TAXON=="juncus_pelocarpus"] <- "WE"
+#brown-fruited rush was listed as submerged veg but is emergent
+taxa_xwalk$VEGETATION_ID[taxa_xwalk$TAXON=="veronica_americana"] <- "WE"
+#changing American brooklime from SV to WE
+taxa_xwalk$VEGETATION_ID[taxa_xwalk$TAXON=="hydrocotyle_ranunculoides"] <- "F"
+#changing floating marsh-pennywort from WE to F
 
 ## COMMENTED OUT UNTIL WE HAVE THE XLSX FILE FILLED ----
 # Creating "submersed" object to filter "db" to just submersed taxa
@@ -96,13 +109,6 @@ directory_taxonomic_updated <- read_xlsx("outputdata/directory_taxonomic_updated
 
 submersed <- directory_taxonomic_updated$fieldNames[grepl("S", directory_taxonomic_updated$VEGETATION_ID)]
 
-# SHOULD DOUBLE CHECK THESE BEFORE MOVING FORWARD, SOME 
-# RELEVANT FOR "S"
-# Is Juncus pelocarpus really SV?
-# Unsure about ludwigia_palustris
-# nitellopsis_sp?
-# Is schoenoplectus_subterminalis really SV?
-# typha_angustifolia is nonnative, right?
 
 # Creating "db_sub"
 

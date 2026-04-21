@@ -102,6 +102,7 @@ taxa_xwalk$VEGETATION_ID[taxa_xwalk$TAXON=="veronica_americana"] <- "WE"
 taxa_xwalk$VEGETATION_ID[taxa_xwalk$TAXON=="hydrocotyle_ranunculoides"] <- "F"
 #changing floating marsh-pennywort from WE to F
 
+
 ## COMMENTED OUT UNTIL WE HAVE THE XLSX FILE FILLED ----
 # Creating "submersed" object to filter "db" to just submersed taxa
 

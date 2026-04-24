@@ -116,3 +116,25 @@ submersed <- directory_taxonomic_updated$fieldNames[grepl("S", directory_taxonom
 db_sub <- cbind(db[, colnames(db)%in%directory$fieldNames[directory$Taxonomic=="N"]],
                 db[, colnames(db)%in%submersed])
 
+# It may be easiest just to get an occurrence dataset for now
+summary(factor(db_sub$RAKE_MAX)) 
+# lots of "Unknown" and other units like
+# wet weight of fraction of captured matter
+
+unique(db_sub$ceratophyllum_demersum)
+
+db_sub_pa <- db_sub
+
+# This converts all values to numeric, non-numeric cells are converted to NA
+db_sub_pa[, 23:129] <- lapply(db_sub_pa[, 23:129], as.numeric)
+
+# Now we have a list of numbers (including 0) and NAs
+unique(db_sub_pa$ceratophyllum_demersum)
+
+# Set NAs to 0
+db_sub_pa[, 23:129][is.na(db_sub_pa[, 23:129])] <- 0
+
+# Set anything >0 to 1 (presence)
+db_sub_pa[, 23:129][db_sub_pa[, 23:129]>0] <- 1
+
+summary(db_sub_pa) # We can work with this!

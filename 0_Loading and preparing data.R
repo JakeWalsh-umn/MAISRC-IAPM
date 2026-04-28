@@ -88,6 +88,8 @@ directory_taxonomic <- left_join(directory %>% filter(Taxonomic=="Y"),
 
 write.csv(x=directory_taxonomic, file="outputdata/directory_taxonomic.csv")
 
+taxa_xwalk <- read_xlsx("outputdata/directory_taxonomic_updated.xlsx")
+
 #Changing DNR list classifications:
 
 taxa_xwalk$ORIGIN[taxa_xwalk$TAXON=="typha_angustifolia"] <- "nonnative"
@@ -106,9 +108,8 @@ taxa_xwalk$VEGETATION_ID[taxa_xwalk$TAXON=="hydrocotyle_ranunculoides"] <- "F"
 ## COMMENTED OUT UNTIL WE HAVE THE XLSX FILE FILLED ----
 # Creating "submersed" object to filter "db" to just submersed taxa
 
-directory_taxonomic_updated <- read_xlsx("outputdata/directory_taxonomic_updated.xlsx")
 
-submersed <- directory_taxonomic_updated$fieldNames[grepl("S", directory_taxonomic_updated$VEGETATION_ID)]
+submersed <- taxa_xwalk$fieldNames[grepl("S", taxa_xwalk$VEGETATION_ID)]
 
 
 # Creating "db_sub"

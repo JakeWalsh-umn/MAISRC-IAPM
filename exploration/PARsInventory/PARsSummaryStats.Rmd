@@ -1,0 +1,70 @@
+---
+title: "PARsSummaryStats"
+output: html_document
+---
+
+# MAISRC IAPM Phase I
+#This code creates summaries for DNR control grant PARs Final Query, cleaned using PARsClean code in Melina's workspace
+
+# Packages and load in data
+
+```{r, results='hide', message = FALSE}
+library(tidyverse)
+library(arrow)
+library(readxl)
+library(ggformula)
+library(ggplot2)
+library(mosaic)
+library(mosaicCore)
+library(readxl)
+library(readr)
+
+PARs <- read_csv("C:/Users/PAKEY001/Documents/IAPM Project/MAISRC-IAPM/MelinaWorkspace/PARs_clean1.csv")
+MN_Lakes_Areas <- read_csv("~/IAPM Project/MN_Lakes_Areas.csv")
+```
+
+Join with reference lake area data
+```{r}
+MN_Lakes_Areas$DOW <- as.double(MN_Lakes_Areas$DOW)
+PARs_joined <- PARs %>%
+  left_join(
+    MN_Lakes_Areas,
+    by = c("k_Lake_ID" = "DOW")
+  )
+#Calculating treatment area as % of lake area and littoral area
+PARs_joined$TreatmentSize_PercentofLake <- (PARs_joined$treatment_size / PARs_joined$LakeAreaAcres) * 100
+PARs_joined$TreatmentSize_PercentofLittoral <- (PARs_joined$treatment_size / PARs_joined$ObservedLittoralZone_Acres) * 100
+```
+
+
+PARs count by target species:
+```{r}
+tally(~species_code, data = PARs_joined)
+```
+
+```{r}
+gf_bar(~App_year, fill = ~species_code, data = PARs_joined)
+```
+
+Histograms
+```{r}
+PARs_joined%>%filter(species_code=="EWM")%>%filter(TreatmentSize_PercentofLake <= 120)%>%gf_histogram(~TreatmentSize_PercentofLake, data = PARs_joined, main = "EWM",  xlab = "EWM TreatmentSize_PercentofLake")
+
+PARs_joined%>%filter(species_code=="EWM")%>%filter(TreatmentSize_PercentofLake <= 120)%>%gf_histogram(~TreatmentSize_PercentofLittoral, data = PARs_joined, main = "EWM",  xlab = "EWM TreatmentSize_PercentofLittoral")
+
+PARs_joined%>%filter(species_code=="CLP")%>%filter(TreatmentSize_PercentofLake <= 120)%>%gf_histogram(~TreatmentSize_PercentofLake, data = PARs_joined, main = "CLP",  xlab = "CLP TreatmentSize_PercentofLake")
+
+PARs_joined%>%filter(species_code=="CLP")%>%filter(TreatmentSize_PercentofLake <= 120)%>%gf_histogram(~TreatmentSize_PercentofLittoral, data = PARs_joined, main = "CLP",  xlab = "CLP TreatmentSize_PercentofLittoral")
+```
+
+
+```{r}
+#Number of treatments larger than 15% of lake area for EWM and CLP. Filtered out treatments above 120% but those must be errors.
+sum(~ (TreatmentSize_PercentofLake > 15 & TreatmentSize_PercentofLake <= 120 & species_code == "EWM"),
+    data = PARs_joined, na.rm = TRUE)
+
+sum(~ (TreatmentSize_PercentofLake > 15 & TreatmentSize_PercentofLake <= 120 & species_code == "CLP"),
+    data = PARs_joined, na.rm = TRUE)
+
+```
+

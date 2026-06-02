@@ -67,4 +67,7 @@ sum(~ (TreatmentSize_PercentofLittoral > 15 & species_code == "CLP"),
     data = PARs_joined, na.rm = TRUE)
 
 ```
+```{r}
+write.csv(PARs_joined, "PARs_joined.csv", row.names = FALSE)
+```
 

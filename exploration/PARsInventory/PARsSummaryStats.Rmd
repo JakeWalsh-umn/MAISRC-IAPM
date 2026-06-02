@@ -19,8 +19,8 @@ library(mosaicCore)
 library(readxl)
 library(readr)
 
-PARs <- read_csv("C:/Users/PAKEY001/Documents/IAPM Project/MAISRC-IAPM/MelinaWorkspace/PARs_clean1.csv")
-MN_Lakes_Areas <- read_csv("~/IAPM Project/MN_Lakes_Areas.csv")
+PARs <- read_csv("~/IAPM Project/MAISRC-IAPM/exploration/PARsInventory/PARs_clean1.csv")
+MN_Lakes_Areas <- read_csv("~/IAPM Project/MAISRC-IAPM/exploration/PARsInventory/MN_Lakes_Areas.csv")
 ```
 
 Join with reference lake area data
@@ -46,7 +46,7 @@ tally(~species_code, data = PARs_joined)
 gf_bar(~App_year, fill = ~species_code, data = PARs_joined)
 ```
 
-Histograms
+Histograms. Filtering out treatments above 120% area for now until we figure out what is up.
 ```{r}
 PARs_joined%>%filter(species_code=="EWM")%>%filter(TreatmentSize_PercentofLake <= 120)%>%gf_histogram(~TreatmentSize_PercentofLake, data = PARs_joined, main = "EWM",  xlab = "EWM TreatmentSize_PercentofLake")
 

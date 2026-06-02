@@ -59,11 +59,11 @@ PARs_joined%>%filter(species_code=="CLP")%>%filter(TreatmentSize_PercentofLake <
 
 
 ```{r}
-#Number of treatments larger than 15% of lake area for EWM and CLP. Filtered out treatments above 120% but those must be errors.
-sum(~ (TreatmentSize_PercentofLake > 15 & TreatmentSize_PercentofLake <= 120 & species_code == "EWM"),
+#Number of treatments larger than 15% of littoral area for EWM and CLP.
+sum(~ (TreatmentSize_PercentofLittoral > 15 & species_code == "EWM"),
     data = PARs_joined, na.rm = TRUE)
 
-sum(~ (TreatmentSize_PercentofLake > 15 & TreatmentSize_PercentofLake <= 120 & species_code == "CLP"),
+sum(~ (TreatmentSize_PercentofLittoral > 15 & species_code == "CLP"),
     data = PARs_joined, na.rm = TRUE)
 
 ```

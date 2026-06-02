@@ -35,17 +35,16 @@ grouping by
 ```{r}
 PARs_treatment_group <- PARs_simple %>% 
   
-  arrange(Permit_number, Lake_parent_name, k_Lake_ID, App_year, species_code, Pesticide_trade_name, PAR_start_date) %>%
-  
   # create treatment groups based on permit-year-pesticides that have close application dates and can be assumed to be the same treatment.
   ### should I add to this code so treatment group is numbered for easy grouping again
   
-  group_by(Permit_number, County_name, Lake_parent_name, k_Lake_ID, App_year, species_code, Pesticide_trade_name) %>%
+  group_by(k_Lake_ID, App_year, species_code, Pesticide_trade_name, PAR_start_date) %>%
   mutate(
     day_gap = as.numeric(PAR_start_date - lag(PAR_start_date)),
     new_treatment = if_else(is.na(day_gap) | day_gap > 5, 1, 0), # assumes 5 day treatment window is the max.
     treatment_group = cumsum(new_treatment)
   ) %>%
+  group_by(Permit_number, App_year, species_code,  k_Lake_ID, treatment_group, County_name, Lake_parent_name, Pesticide_trade_name) %>%
    summarise(
     start_date = if(all(is.na(PAR_start_date))) {
       as.Date(NA)
@@ -58,12 +57,15 @@ PARs_treatment_group <- PARs_simple %>%
       max(PAR_start_date, na.rm = TRUE)
     },
     treatment_size = sum(treatment_size, na.rm = TRUE))
+
+PARs_treatment_group <- subset(PARs_treatment_group, select = -treatment_group)
+
 ```
 
 #Deleting duplicates but for some reason this doesn't delete all duplicates. Need to check
 ```{r}
 PARs_treatment_group <- PARs_treatment_group %>%
-  distinct(Lake_parent_name, start_date, treatment_size, .keep_all = TRUE)
+  distinct(k_Lake_ID, start_date, treatment_size, .keep_all = TRUE)
 ```
 
 

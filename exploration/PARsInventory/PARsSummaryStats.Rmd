@@ -16,7 +16,6 @@ library(ggformula)
 library(ggplot2)
 library(mosaic)
 library(mosaicCore)
-library(readxl)
 library(readr)
 
 PARs <- read_csv("~/IAPM Project/MAISRC-IAPM/exploration/PARsInventory/PARs_clean1.csv")

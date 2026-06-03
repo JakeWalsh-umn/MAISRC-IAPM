@@ -1,0 +1,22 @@
+---
+title: "PARsTreatments_IceOff"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(arrow)
+library(readxl)
+library(ggformula)
+library(ggplot2)
+library(mosaic)
+library(mosaicCore)
+library(readr)
+pred_iceoutlong <- read_csv("exploration/pred_iceoutlong.csv")
+```
+
+```{r}
+pred_iceoutlong <- pred_iceoutlong %>% 
+  mutate(DOW = str_remove(ID, "dow_"))
+```
+

@@ -15,30 +15,27 @@ library(readr)
 library(dplyr)
 library(lubridate)
 
-pred_iceoutlong <- read_csv("exploration/pred_iceoutlong.csv")
-PARs_joined <- read_csv("exploration/PARsInventory/PARs_joined.csv")
+pred_iceout <- read_csv("exploration/PARsInventory/2. Ice out/pred_iceout26.csv")
+PARs_joined <- read_csv("exploration/PARsInventory/1. PARs + Littoral Area/PARs_joined.csv")
 ```
 
 ```{r}
-pred_iceoutlong <- pred_iceoutlong %>% 
+pred_iceout <- pred_iceout %>% 
   mutate(DOW = str_remove(ID, "dow_"))%>% 
   mutate(DOW = as.numeric(DOW))
 ```
 
 Join with PARs dataset
+
 ```{r}
 PARs_IceOff <- PARs_joined %>%
-```
-
-
-```{r}
 # 1. Create a temporary year column from start_date to match winter.year
   mutate(match_year = year(start_date)) %>%
-  # 2. Join with pred_iceoutlong based on both conditions
+# 2. Join with pred_iceoutlong based on both conditions
   left_join(
-    pred_iceoutlong %>% select(DOW, est),
+    pred_iceout %>% select(DOW, winter.year, est),
     by = c("k_Lake_ID" = "DOW", "match_year" = "winter.year")) %>%
-  # 3. Clean up the temporary year column
+# 3. Clean up the temporary year column
   select(-match_year) %>%
   rename(iceoff_est = est)
 ```
@@ -54,4 +51,4 @@ Large_CLP_PARs <- PARs_IceOff %>%
 write.csv(Large_CLP_PARs, "Large_CLP_PARs_IceOff.csv", row.names = FALSE)
 ```
 
-Notes: roughly 50 (out of 107) large CLP PARs treatments don't have joined ice out estimates. 35 of those are 2023-present. Of the rest, many are bays.
+Notes: roughly 30 (out of 107) large CLP PARs treatments don't have joined ice out estimates.

@@ -1,4 +1,4 @@
-# last edited 5/18/2026
+# last edited 6/17/2026
 # this script cleans up the PARs data as downloaded from sharepoint.
 # the end result is lumped treatments to the permit-year-treatment-chemical level
 # there can be two rows of the same permit-year-day if there are mulitple chemicals
@@ -97,7 +97,7 @@ PARs_treatment_group <- PARs_working %>%
   ) %>%
   
   #summarize based on the treatment groups
-  group_by(Permit.number, App.year, species.code, Pesticide.trade.name, treatment_group) %>%
+  group_by(Permit.number, App.year, species.code, Pesticide.trade.name, PAR_amount.units, treatment_group) %>%
   
   summarise(
     start_date = if(all(is.na(PAR_start.date))) {
@@ -169,5 +169,6 @@ deg_to_dir <- function(deg) {
 
 # Apply function
 PARs_treatment_group <- PARs_treatment_group %>%
-  mutate(wind_dir = deg_to_dir(avg_dir))
+  mutate(wind_dir = deg_to_dir(avg_dir)) %>% 
+  select(-c(u, v))
 

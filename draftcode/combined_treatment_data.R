@@ -1,12 +1,11 @@
-# last updated: May 19, 2026
-# this script provides the most comprehensive IAPM overview of treatments
-# the output is one main dataset for PI charter and analysis with supplemental datasets
-
+# This is the second version of combined_treatment_data.R
+# last updated 6/17/2026
 
 library(tidyverse)
 library(lubridate)
 library(DescTools)
 library(stringr)
+library(purrr)
 
 ifelse(!dir.exists("data"), 
        dir.create("data"), 
@@ -18,71 +17,75 @@ ifelse(!dir.exists("draftcode"),
        dir.create("draftcode"), 
        "Folder exists already")
 
-#load data
+# STEP 1: load data 
 iapm_annual_survey <- read.csv('data/iapm_annual_survey_all.csv')
 apm_iapm_permits <- read.csv('data/apm_iapm_permit_detail.csv')
+chem_ref_table <- read.csv('data/chem_ref_table.csv')
 
-
-# figure out if there are surveys without permit details 
+# STEP 2
+# remove the columns we don't care about
 iapm_annual_survey <- iapm_annual_survey %>%
-  left_join(apm_iapm_permits %>% select(permit_number, treatment_method), by = "permit_number")
+  select(-c(data_date_time, when_permit_expires, starts_with("aapcd"),
+            satisified_with_swim_itch_control)) %>% 
+  rename(treatment_year = calander_year) %>%
+  mutate(
+    # clean up insignificant things in survey acreage like extra spaces and periods
+    total_treated_area_acres = str_remove_all(total_treated_area_acres, "\\s+"),
+    
+    # cleans up multiple decimals in a row
+    total_treated_area_acres = str_replace_all(total_treated_area_acres, "\\.+", "."),
+    
+    # cleans up extra decimals between numbers 
+    total_treated_area_acres = str_replace(total_treated_area_acres, "^([^.]*\\.[^.]*)\\.", "\\1"),
+    
+    total_treated_area_acres = as.numeric(total_treated_area_acres)
+  )
 
+
+# STEP 3
+# left join by permit number and keep the permit DOW and treatment_method
+# NOTE: the treatment method from permit may not be accurate until we get the new data
+iapm_annual_survey <- iapm_annual_survey %>%
+  left_join(apm_iapm_permits %>% select(DOW = water_resource_numbers, lk_name = water_resource_names, permit_number, 
+                                        tx_method_permit = treatment_method), by = "permit_number")
+
+# STEP 4
+# figure out if there are surveys without permit details 
 surveys_wo_permit_data <- iapm_annual_survey %>% anti_join(apm_iapm_permits, by = "permit_number")
 
+# count how many surveys without permit details
 length(unique(surveys_wo_permit_data$permit_number)) # there are 219 permits with survey responses but no permit data. 
 
 #remove the survey responses that don't have corresponding permit details
 iapm_annual_survey <- iapm_annual_survey %>% anti_join(surveys_wo_permit_data, by = "apm_annual_survey_id")
 
-## at this point the survey dataframe should have mechanical/chemical for all
 
-# standardize "hp" column formats
-iapm_annual_survey <- iapm_annual_survey %>% 
-  mutate(across(starts_with("hp"), ~ suppressWarnings(as.numeric(.x))))
+# STEP 5
+# remove rows where the key treatment details are exact duplicates
+# this treats commercial and landowner rows as the same, and is only looking at treatment data.
+iapm_annual_survey <- iapm_annual_survey %>%
+  arrange(apm_annual_survey_type_id != 2) %>% 
+  distinct(
+    permit_number, 
+    total_treated_area_acres, 
+    treatment_year, 
+    treatment_dates,
+    pick(starts_with("work_done_"), starts_with("hp")), 
+    .keep_all = TRUE
+  )
 
+# for simplicity throughout process, define what represents "no data"
 no_data <- c(
-  0, 0.0,            # Numeric zeros
-  NA, NaN,           # System missing
-  "NA", "NULL",      # Common string placeholders
-  "", " ",           # Empty strings
-  "None", "n/a", "." # Manual entry placeholders
+  0, 0.0,            
+  NA, NaN,           
+  "NA", "NULL",      
+  "", " ",           
+  "None", "n/a", "."
 )
 
-# try to tease apart what kind of treatments the surveys represent
-# first, "chemical" if there is chemical data
-iapm_annual_survey <- iapm_annual_survey %>%
-  mutate(treatment_method = if_else(
-    if_any(starts_with("hp"), ~ !(.x %in% no_data | is.na(.x))),
-    "Chemical", 
-    "other"
-  ))
 
-# second, note when there is chemical and mechanical data in a survey
-iapm_annual_survey <- iapm_annual_survey %>%
-  mutate(
-    treatment_method2 = case_when(
-      !(total_cut_area_acres %in% no_data) & 
-        (!(total_treated_area_acres %in% no_data) | treatment_method == "Chemical") ~ "mechanical, chemical",
-    
-      # "chemical" is also designated when total_treated_area_acres has data
-      !(total_treated_area_acres %in% no_data) | treatment_method == "Chemical" ~ "chemical",
-      
-      # mechanical if there is total_cut_area_acres data
-      !(total_cut_area_acres %in% no_data) ~ "mechanical",
-      
-      TRUE ~ "none"
-    )
-  )
-
-# third, join the method from the permit df
-iapm_annual_survey <- iapm_annual_survey %>%
-  left_join(
-    # Subset the permit df to ONLY include the key and your target column
-    apm_iapm_permits %>% select(permit_number, tx_method_permit = treatment_method), 
-    by = "permit_number"
-  )
-
-
+# STEP 6
+# add a count of how many months work was done in 
 iapm_annual_survey <- iapm_annual_survey %>%
   mutate(
     work_month_count = rowSums(across(
@@ -91,7 +94,8 @@ iapm_annual_survey <- iapm_annual_survey %>%
     ))
   )
 
-#### Add the following columns to the survey data table 
+# STEP 7
+# Add the following columns to the survey data table 
 
 ## tx_confirmed (Y/N) 
 #### -> general indicator of treatment history
@@ -110,7 +114,7 @@ iapm_annual_survey <- iapm_annual_survey %>%
     
     # define if we think the permit was used
     tx_confirmed = case_when(
-     
+      
       str_detect(permit_used, "No") ~ "N",
       
       if_any(
@@ -139,40 +143,8 @@ iapm_annual_survey <- iapm_annual_survey %>%
   )
 
 
-# remove the columns we don't care about
-iapm_annual_survey <- iapm_annual_survey %>%
-  select(-c(data_date_time, when_permit_expires, starts_with("aapcd"),
-            satisified_with_swim_itch_control))
-
-
-# rename the misspelled column
-iapm_annual_survey <- iapm_annual_survey %>%
-  rename(
-    treatment_year = calander_year
-  )
-
-
-# change the month columns into date ranges instead of months
-iapm_annual_survey <- iapm_annual_survey %>%
-  mutate(across(starts_with("work_done_in_"), ~ {
-    
-    clean_month = str_trim(tolower(.x))
-    
-    m_num = match(clean_month, tolower(month.name))
-    m_num = coalesce(m_num, match(clean_month, tolower(month.abb)))
-    
-    start_date <- make_date(year = treatment_year, month = m_num, day = 1)
-    end_date <- rollback(start_date + months(1))
-    
-    ifelse(!is.na(m_num),
-           paste0(month(start_date), "/", day(start_date), "/", year(start_date),
-                  "-",
-                  month(end_date), "/", day(end_date), "/", year(end_date)),
-           NA_character_
-    )
-  }))
-
-# add together all chemical data for easy reference of whether there is any chemical data
+# STEP 8
+# add together all chemical amount data for easy reference of whether there is any chemical data
 iapm_annual_survey <- iapm_annual_survey %>%
   mutate(
     sum_chem = rowSums(across(
@@ -181,256 +153,380 @@ iapm_annual_survey <- iapm_annual_survey %>%
     ), na.rm = TRUE)
   )
 
-
- #### code for inspecting duplicate surveys ####
-duplicate_survey_idyear <- iapm_annual_survey %>%
-  group_by(permit_id, treatment_year) %>%
-  filter(n() > 1) %>%
-  ungroup()
-
-duplicate_survey_idyear %>%
-  count(permit_number, treatment_year) %>%
-  pull(n) %>%
-  mean()
-
-duplicate_survey_idyear_landowner <- duplicate_survey_idyear %>% 
-  filter(apm_annual_survey_type_id == 1)
-
-duplicate_survey_idyear_commercial <- duplicate_survey_idyear %>% 
-  filter(apm_annual_survey_type_id == 2)
-
-duplicate_survey_commercial <- duplicate_survey_idyear_commercial %>%
-  group_by(permit_id, treatment_year) %>%
-  filter(n() > 1) %>%
-  ungroup()
-
-duplicate_survey_landowner <- duplicate_survey_idyear_landowner %>%
-  group_by(permit_id, treatment_year) %>%
-  filter(n() > 1) %>%
-  ungroup()
-
-# the above code doesn't actually have an applied use as the script is written now (5/19/2026)
-
-#### next steps ####
-# add a unique id to the survey data as it is right now and then pivot the chemical data long by month. 
-
-
+# STEP 9
 iapm_annual_survey <- iapm_annual_survey %>% mutate(treatment_id = paste0("S_", row_number()))
 
+# STEP 10a
+# add chemical delimited columns with the original name (unit) and active ingredients
+chem_lookup <- setNames(chem_ref_table$active_ing, chem_ref_table$orig_name)
 
-# change this code pivoting the surveys longer
-surveys_long <- iapm_annual_survey %>%
-  pivot_longer(
-    cols = starts_with("work_done_in_"), # Selects all your month columns
-    values_to = "treatment_range",           # New column will be named 'work_done_in'
-    values_drop_na = FALSE                 # Removes the NULL/NA rows automatically
-  ) %>%
-  select(-name)
-
-# work_month_count = 0, tx_confirmed = "Y" keep the row
-# work_month_count >= 1 remove rows where treatment_range has no data
-
-# handle data where there is data to retain but didn't show up as months of treatment
-rule1_data <- surveys_long %>%
-  filter(work_month_count == 0 & tx_confirmed == "Y") %>%
-  distinct(treatment_id, .keep_all = TRUE)
-
-# handle data where the months of treatment are defined
-rule2_data <- surveys_long %>%
-  filter(work_month_count >= 1 & !is.na(treatment_range))
-
-surveys_long_cleaned <- bind_rows(rule1_data, rule2_data)
-
-# expand comma delimited dates
-surveys_long_exdates <- surveys_long_cleaned %>%
-  # Create a copy of the original column to be the one we expand
-  mutate(individual_treatment_date = treatment_dates) %>%
-  # Expand the copy into multiple rows, keeping the original 'treatment_dates' for reference
-  separate_rows(individual_treatment_date, sep = ",") %>%
-  mutate(individual_treatment_date = trimws(individual_treatment_date))
-
-
-surveys_long_exdates <- surveys_long_exdates %>%
+# STEP 10b
+# create a delimited list of chemicals(unit)
+# use chem_lookup to also make a delimited list of active ingredients. 
+iapm_annual_survey <- iapm_annual_survey %>%
+  rowwise() %>%
   mutate(
-    # Regular expression matches any sequence of numbers separated by / or -
-    date_count = str_count(treatment_dates, "\\d+[/-]\\d+[/-]\\d+"),
-    
-    # Optional: Turn NA results into 0 instead of leaving them as NA
-    date_count = coalesce(date_count, 0)
-  )
-
-# group together treatment rows that have different individual dates but are part of the same treatment
-# multiple dates become comma delimited
-surveys_multi_date <- surveys_long_exdates %>%
-  
-  filter(date_count > 1) %>%
-  
-  mutate(individual_treatment_date = lubridate::mdy(individual_treatment_date)) %>%
-  
-  group_by(pick(everything(), -individual_treatment_date)) %>%
-  arrange(treatment_id, individual_treatment_date, .by_group = TRUE) %>%
-  
-  # define treatment groups by those that happened within 5 days of each other
-  mutate(
-    day_gap = as.numeric(individual_treatment_date - lag(individual_treatment_date)),
-    new_treatment = if_else(is.na(day_gap) | day_gap > 5, 1, 0),
-    treatment_group = cumsum(new_treatment)
+    res = {
+      hp_cols <- names(pick(starts_with("hp")))
+      hp_vals <- c_across(starts_with("hp"))
+      active_cols <- hp_cols[!(hp_vals %in% no_data) & !is.na(hp_vals)]
+      
+      if (length(active_cols) > 0) {
+        # pull out chemical names and units from the hp column names
+        chem_names <- str_match(active_cols, "^[^_]+_(.*)_[^_]+$")[, 2]
+        unit_names <- str_extract(active_cols, "[^_]+$")
+        
+        # Look up the active ingredients using chem_lookup
+        act_ing_vector <- unique(chem_lookup[chem_names])
+        act_ing_vector <- act_ing_vector[!is.na(act_ing_vector)]
+        
+        # Create the full chem (unit) pairs
+        bracket_pairs <- paste0(chem_names, " (", unit_names, ")")
+        
+        
+        tibble(
+          chemicals_units = paste(unique(bracket_pairs), collapse = ", "),
+          active_ing      = paste(act_ing_vector, collapse = ", ")
+        )
+      } else {
+        tibble(
+          chemicals_units = "", 
+          active_ing      = ""
+        )
+      }
+    }
   ) %>%
-  
-  group_by(pick(everything(), -individual_treatment_date), treatment_group) %>%
-  
-  mutate(
-    collapsed_string = paste(as.character(individual_treatment_date), collapse = ", ")
-  ) %>%
-  
-  filter(row_number() == 1) %>% 
-  
-  mutate(individual_treatment_date = collapsed_string) %>%
-  
   ungroup() %>%
-  select(-c(day_gap, new_treatment, treatment_group, collapsed_string))
-  
-
-surveys_single_no_date <- surveys_long_exdates %>%
-  filter(date_count < 2) %>%
-  mutate(
-    individual_treatment_date = format(
-      parse_date_time(individual_treatment_date, orders = c("ymd", "mdy"), quiet = TRUE), 
-      "%Y-%m-%d"
-    )
-  )
-    
-    
-# combine the two separately processed datasets into one
-surveys_long_clean <- bind_rows(surveys_single_no_date, surveys_multi_date)
+  unpack(res)
 
 
+# STEP 11
 # set aside subset of the data to build out treatment details dataset
-surveys_tx_details <- surveys_long_clean %>% 
-  
-  filter(multiple_tx == "N") %>% 
+survey_tx_details <- iapm_annual_survey %>% 
   
   select(
     permit_id, 
     treatment_id, 
     treatment_dates, 
     total_treated_area_acres, 
-    starts_with("hp")
+    starts_with("hp"),
+    chemicals_units,
+    active_ing
   )
 
+# STEP 12
+# clean up survey dataset
+surveys_narrow <- iapm_annual_survey %>%
+  select(-c(starts_with("hp")))
 
-# summarize chemical data to be simpler for treatment records dataset
-surveys_long_clean <- surveys_long_clean %>%
+# STEP 13
+# pivot the month columns to long form so each row represents a survey-month
+surveys_long <- surveys_narrow %>%
+  pivot_longer(
+    cols = starts_with("work_done_in_"), 
+    values_to = "tx_month",           
+    values_drop_na = FALSE
+  ) %>%
+  select(-name)
+
+# STEP 14
+# remove duplicate rows within different types of survey responses
+# AND
+# remove extra rows that were created in the pivot_longer
+# work_month_count = 0, tx_confirmed = "Y" keep the row
+# work_month_count >= 1 remove rows where treatment_range has no data
+# handle rows where there are specific dates of treatment rather than months
+# NOTE: parsed_date and collapsed string are redundant - fix 
+
+# # STEP 14a: subset rule1, rule2, and rule3 data
+rule1_data <- surveys_long %>%
+  filter(work_month_count == 0 & tx_dates == "Y") %>%
   
-  rowwise() %>%
+  group_by(permit_number, treatment_dates) %>%
   
-  mutate(
-    chemicals = {
-      # Grab the names of all 'hp' columns in this specific row
-      hp_cols <- names(pick(starts_with("hp")))
-      
-      # Grab the values for those columns in this row
-      hp_vals <- c_across(starts_with("hp"))
-      
-      # only keep columns where there is useful data 
-      active_cols <- hp_cols[!(hp_vals %in% no_data) & !is.na(hp_vals)]
-      
-      # If any active columns exist, extract chemical names from between underscores
-      if (length(active_cols) > 0) {
-        chem_names <- str_match(active_cols, "^[^_]+_(.*)_[^_]+$")[, 2]
-        paste(unique(chem_names), collapse = ", ")
-      } else {
-        "" 
-      }
+  filter(
+    # check for groups with at least one row with valid chemical data
+    if (any(!chemicals_units %in% no_data)) {
+      # remove any rows without valid chemical data
+      !chemicals_units %in% no_data
+    } else {
+      # If the group contains ONLY no_data in chemical columns, keep them all
+      TRUE
     }
   ) %>%
   
+  ungroup() %>% 
+  
+  mutate(
+    original_string = treatment_dates,
+    string_length = nchar(treatment_dates)) %>%
+  
+  # split the dates into individual rows so we can evaluate them individually
+  separate_longer_delim(treatment_dates, delim = ",") %>%
+  mutate(treatment_dates = str_squish(treatment_dates)) %>%
+  
+  mutate(
+    parsed_date = as.Date(parse_date_time(treatment_dates, orders = c("mdy", "ymd", "dmy")))) %>%
+  
+ # for each treatment_id, only keep rows with distinct dates
+  distinct(treatment_id, parsed_date, .keep_all = TRUE) %>%
+  
+  mutate(
+    date_count = str_count(original_string, "\\d+[/-]\\d+[/-]\\d+"),
+    date_count = coalesce(date_count, 0)) %>% 
+  
+  # collapse dates that are part of the same survey AND are within 5 day treatment window
+  group_by(treatment_id) %>% 
+  arrange(parsed_date, .by_group = TRUE) %>% 
+  mutate(
+    group_anchor = if(n() > 1) {
+      accumulate(parsed_date, ~ if (.y - .x <= 5) .x else .y)} else {
+      parsed_date},
+    
+    day_gap = as.numeric(parsed_date - group_anchor),
+    new_treatment = if_else(parsed_date == group_anchor, 1, 0),
+    treatment_group = cumsum(new_treatment)) %>% 
+  
+  select(-group_anchor) %>% 
+  
+  # group by treatment_groups which represent the 5 day windows 
+  # collapse dates into list
+  group_by(treatment_id, treatment_group) %>%
+  
+  mutate(
+    collapsed_string = paste(as.character(parsed_date), collapse = ", ")
+  ) %>%
+  
+  # only keep one row, because above steps created as many rows as dates in a treatment group
+  filter(row_number() == 1) %>% 
+  
+  mutate(parsed_date = collapsed_string) %>%
+  ungroup() %>%
+  
+  # arrange by the length of the date strings
+  arrange(string_length) %>% 
+  
+  # keep only one permit-chemical-date combo
+  # NOTE: this step could prioritize other variables in the arrange step above
+  distinct(permit_number, chemicals_units, parsed_date, .keep_all = TRUE) %>% 
+  
+  mutate(dup_clean_id = paste0("rule1"))
+
+# handle data where the months of treatment are defined
+rule2_data <- surveys_long %>%
+  filter(
+    work_month_count >= 1,
+    !is.na(tx_month),               
+    !tx_month %in% no_data) %>%
+  
+  group_by(permit_number, treatment_year, tx_month) %>%
+  filter(
+    # Check if any row in the group has a valid chemical recorded
+    if (any(!chemicals_units %in% no_data)) {
+      # If real chemicals exist, drop any row where the chemical is in the no_data list
+      !chemicals_units %in% no_data
+    } else {
+      # If the group only contains chemical values in your no_data list, keep them all
+      TRUE
+    }
+  ) %>%
+  
+  ungroup() %>%
+  
+  arrange(
+    # Low work_month_count more likely to have better quality tx details
+    work_month_count,
+    
+    # apm_annual_survey_type_id = 2 (commercial) comes BEFORE = 1
+    apm_annual_survey_type_id != 2,
+    
+    # Highest total_treated_area_acres (descending order)
+    desc(total_treated_area_acres)
+  ) %>%
+  
+  # Group by permit-year-month-chemical and slice the first row.
+  distinct(permit_number, treatment_year, tx_month, chemicals_units, .keep_all = TRUE) %>%
+
+  
+  mutate(dup_clean_id = paste0("rule2"))
+
+# handle data where the survey implies a treatment happened but there is no date or month data
+rule3_data <- surveys_long %>%
+  filter(work_month_count == 0 & tx_dates == "N") %>%  
+  group_by(permit_number, treatment_year) %>%
+  
+  # sort by indicators of better data and slice to only keep one row per group 
+  arrange(
+    sum_chem %in% no_data, # FALSE (valid data) comes before TRUE (no-data), 
+    apm_annual_survey_type_id != 2, # commercial surveys before landowner
+    desc(total_treated_area_acres), # highest acres prioritized
+    .by_group = TRUE                # Ensures sorting happens within our groups
+  ) %>%
+  slice(1) %>%
+  ungroup() %>%
+  mutate(dup_clean_id = paste0("rule3"))
+
+# STEP 14b:add treatment start and end dates using the date strings (rule 1) and months (rule 2)
+
+rule1_data <- rule1_data %>%
+  select(-any_of(c("original_string", "string_length", "date_count", "day_gap", "new_treatment"))) %>%
+  
+  mutate(
+    # Use a flexible regex to pull ALL dates out of the string as a clean list
+    extracted_dates = str_extract_all(collapsed_string, "\\d{4}[/-]\\d{2}[/-]\\d{2}"),
+    
+    # Convert the lists of text strings into lists of date objects
+    date_objects = map(extracted_dates, ymd),
+    
+    # extract the true minimum and maximum chronologically from each list
+    start_date = map_vec(date_objects, ~ if(length(.x) > 0) min(.x, na.rm = TRUE) else as.Date(NA)),
+    end_date   = map_vec(date_objects, ~ if(length(.x) > 0) max(.x, na.rm = TRUE) else as.Date(NA))
+    ) %>%
+  
+  # Clean up the temporary list columns
+  select(-extracted_dates, -date_objects)
+
+rule2_data <- rule2_data %>%
+  mutate(
+    # pull the year from treatment_year, combine with tx_month, 
+    # and day "01", then parse it into a date
+    clean_date = ymd(str_glue("{treatment_year}-{tx_month}-01")),
+    
+    # Get the first day of that month
+    start_date = floor_date(clean_date, unit = "month"),
+    
+    # Get the last day of that month (correctly factors in leap years based on the data's year!)
+    end_date = ceiling_date(clean_date, unit = "month") - days(1)
+  ) %>%
+  # Clean up the temporary column
+  select(-clean_date)
+
+
+surveys_long_working <- bind_rows(rule1_data, rule2_data, rule3_data)
+
+# remove subset dataframes to keep environment clean
+#rm(rule1_data, rule2_data, rule3_data)
+
+# STEP 14c: build out hierarchical rules that eliminate rule 2 and rule 3 data 
+# where rule 1 data exists already 
+
+surveys_dedup <- surveys_long_working %>%
+  # Clean up old active_ing column - rebuild at the end
+  select(-any_of("active_ing")) %>% 
+  mutate(row_id = row_number()) %>%
+  
+  # Build temporary date intervals for robust timeline mapping
+  mutate(
+    treatment_interval = interval(
+      ymd(start_date), 
+      ymd(end_date) + days(1) 
+    )
+  ) %>% 
+  
+  # expand the chemical column
+  separate_rows(chemicals_units, sep = ",\\s*") %>%
+  
+  # group by permit-year-chemicals
+  group_by(permit_number, treatment_year, chemicals_units) %>%
+  filter(
+    # prioritize keeping rows from rule1
+    dup_clean_id == "rule1" | 
+      
+      # only keep rule2 rows that don't overlap in dates with rule1 rows
+      (dup_clean_id == "rule2" & !any(
+        dup_clean_id == "rule1" & 
+          int_overlaps(treatment_interval, .data$treatment_interval[dup_clean_id == "rule1"])
+      )) |
+      
+      # only keep rule3 rows when there are no rule1 or rule2 rows
+      (dup_clean_id == "rule3" & !any(dup_clean_id %in% c("rule1", "rule2")))
+  ) %>%  
+  ungroup() %>%  
+  
+  # re-assemble chemicals row-by-row
+  group_by(row_id) %>%
+  mutate(
+    chemicals_units = paste(unique(chemicals_units), collapse = ", ")
+  ) %>%
+  ungroup() %>%
+  
+  distinct(row_id, .keep_all = TRUE) %>%
+  select(-row_id, -treatment_interval) %>% 
+  
+  # rejoin active ingredients from chem_ref_table based on chemicals_units strings
+  rowwise() %>% 
+    mutate(
+      active_ing = {
+      # 1. Strip away the brackets and units (e.g., "Weedar 64 (gal)" -> "Weedar 64")
+        raw_chems <- str_remove_all(chemicals_units, "\\s\\([^)]+\\)")
+        chem_vector <- str_split(raw_chems, ",\\s*")[[1]]
+      
+        if (length(chem_vector) > 0 && chem_vector[1] != "") {
+        # 2. Extract active ingredients, strip out duplicates, drop NAs, collapse
+          act_vector <- unique(chem_lookup[chem_vector])
+          paste(act_vector[!is.na(act_vector)], collapse = ", ")
+      } else {
+        ""
+      }
+    }
+  ) %>% 
   ungroup()
 
-#remove the chemical details now that we don't need it. 
-surveys_long_clean <- surveys_long_clean %>% 
-  select(-starts_with("hp"))
+# the script at this point mostly sorts duplicates, but there could be some
+# inefficient pipelines, some messy naming conventions, columns to clean up
+# the next step is to bring in PAR data and sort out duplicates in a similar way 
+# with PAR data. 
 
+###############
+# Pull in PAR data
+###############
+
+# STEP 15
 #### run the PAR script "IAPM_PARs_clean.R" ####
 source(here::here("draftcode", "IAPM_PARs_clean.R"))
 
+# STEP 16
 # add columns to refer to additional details
-PARs_treatment_group <- PARs_treatment_group %>% mutate(treatment_id = paste0("P_", row_number())) %>%
-                                                 mutate(additional_data = "Y")
-                                  
-PARs_clean <- PARs_treatment_group %>% 
-  select(treatment_id, permit_number = Permit.number, treatment_year = App.year, chemicals = Pesticide.trade.name, start_date,
-         end_date, treatment_size, additional_data)
+PARs_treatment_group <- PARs_treatment_group %>% 
+  left_join(
+    chem_ref_table %>% select(orig_name, active_ing),
+    by = c("Pesticide.trade.name" = "orig_name")) %>%
+  mutate(treatment_id = paste0("P_", row_number())) %>%
+  mutate(additional_data = "Y")
 
+
+# STEP 17
+PARs_clean <- PARs_treatment_group %>% 
+  mutate(
+    chemicals_units = paste0(Pesticide.trade.name, " (", PAR_amount.units, ")")) %>% 
+  select(
+    treatment_id, 
+    permit_number = Permit.number, 
+    treatment_year = App.year, 
+    chemicals_units, 
+    start_date,
+    end_date, 
+    treatment_size, 
+    additional_data,
+    active_ing
+  )
+
+# STEP 18:
 # collapse PAR rows by treatment and chemical to match the format of the surveys
 PARs_clean <- PARs_clean %>%
   
-  group_by(pick(everything(), -c(treatment_id, chemicals))) %>%
+  group_by(pick(everything(), -c(treatment_id, chemicals_units, active_ing))) %>%
   
   summarize(
     treatment_id = paste(unique(treatment_id), collapse = ", "),
-    chemicals = paste(unique(chemicals), collapse = ", "),
+    chemicals_units = paste(unique(chemicals_units), collapse = ", "),
+    active_ing = paste(unique(active_ing), collapse = ", "),
     .groups = "drop" 
   )
 
 
-
-# define a function to help convert multiple date formats into start and end dates
-parse_flexible_dates <- function(text_string) {
-  if (is.na(text_string) || text_string == "") {
-    return(as.Date(NA))
-  }
-  
-  # Split on commas, spaces around dashes, OR the middle dash between two yyyy-mm-dd blocks
-  # e.g., converts "2026-05-19-2026-05-22" into "2026-05-19" "2026-05-22"
-  raw_fragments <- str_split_1(text_string, ",|\\s+[-–—]\\s+|(?<=\\d)-(?=\\d{4})") %>% str_trim()
-  
-  # Drop empty strings
-  raw_fragments <- raw_fragments[raw_fragments != "" & !is.na(raw_fragments)]
-  
-  if (length(raw_fragments) == 0) return(as.Date(NA))
-  
-  parsed_dates <- parse_date_time(raw_fragments, orders = "ymd", quiet = TRUE)
-  
-  return(as.Date(parsed_dates))
-}
-
-# use above function to add start and end dates to the survey data
-surveys_long_clean <- surveys_long_clean %>%
-  rowwise() %>%
-  mutate(
-    start_date = {
-      if (!is.na(individual_treatment_date) & individual_treatment_date != "") {
-        dates <- parse_flexible_dates(individual_treatment_date)
-        if (all(is.na(dates))) as.Date(NA) else min(dates, na.rm = TRUE)
-        
-      } else if (!is.na(treatment_range) & treatment_range != "") {
-        dates <- parse_flexible_dates(treatment_range)
-        if (all(is.na(dates))) as.Date(NA) else min(dates, na.rm = TRUE)
-        
-      } else {
-        as.Date(NA)
-      }
-    },
-    
-    end_date = {
-      if (!is.na(individual_treatment_date) & individual_treatment_date != "") {
-        dates <- parse_flexible_dates(individual_treatment_date)
-        if (all(is.na(dates))) as.Date(NA) else max(dates, na.rm = TRUE)
-        
-      } else if (!is.na(treatment_range) & treatment_range != "") {
-        dates <- parse_flexible_dates(treatment_range)
-        if (all(is.na(dates))) as.Date(NA) else max(dates, na.rm = TRUE)
-        
-      } else {
-        as.Date(NA)
-      }
-    }
-  ) %>%
-  ungroup()
-  
-
-surveys_clean <- surveys_long_clean %>% 
+# STEP 19
+surveys_clean <- surveys_dedup %>% 
   mutate(
     treatment_size = if_else(
       multiple_tx == "N", 
@@ -451,55 +547,151 @@ surveys_clean <- surveys_long_clean %>%
     start_date,
     end_date,
     treatment_size,
-    chemicals, 
+    chemicals_units, 
+    active_ing,
     treatment_id,
     additional_data
   )
 
+# STEP 20
 all_tx <- bind_rows(
   surveys_clean,
   # fix column(s) with different data types
   PARs_clean %>% mutate(treatment_year = as.integer(treatment_year)))
 
-#### need to figure out how to handle duplicates 
-## can we use the treatment ids to help us? Did we already sort duplicates for each source respectively? 
-duplicate_tx_row <- all_tx %>%
-  # 1. Create your temporary month column
-  mutate(month = lubridate::month(start_date, label = TRUE, abbr = TRUE)) %>%
+
+# STEP 21: sort out overlap between survey treatment data and PAR treatment data
+all_tx_clean <- all_tx %>%
   
-  # 2. Group by your target columns (this keeps all other columns hidden in the background)
-  group_by(permit_number, treatment_year, month) %>%
+  # define treament_intervals
+  mutate(
+    treatment_interval = case_when(
+      !is.na(start_date) & !is.na(end_date) ~ interval(ymd(start_date), ymd(end_date) + days(1)),
+      TRUE                                  ~ NA
+    )
+  ) %>% 
   
-  # 3. Filter to keep rows where the group size is greater than 1
-  filter(n() > 1) %>%
+  # group by permit-year
+  group_by(permit_number, treatment_year) %>%
   
-  # 4. Always ungroup at the end so downstream functions work normally
-  ungroup()
+
+  filter(
+    # ensure there are valid start and end dates in those being sorted
+    (!is.na(start_date) & !is.na(end_date) & (
+      
+      # if treatment_id starts with "P", always keep it
+      str_sub(treatment_id, 1, 1) == "P" |
+        
+        # determine if there is overlap in each S row with the treatment interval of a P row
+        (str_sub(treatment_id, 1, 1) == "S" & !map_lgl(
+          treatment_interval, 
+          ~ any(int_overlaps(.x, treatment_interval[str_sub(treatment_id, 1, 1) == "P"]), na.rm = TRUE)
+        ))
+    )) |
+      
+      # when there is no date data
+      # only keep it if it's the only record in its groups
+      ((is.na(start_date) | is.na(end_date)) & n() == 1)
+  ) %>%  
+  
+  ungroup() %>% 
+  select(-treatment_interval)
+
+# STEP 22: attempt to clean up supplemental data
+# ideally we only want survey_tx_details and pars_tx_details to include
+# data that we have deemed valuable
 
 
-#### next steps ####
-# join the all_iapm_treatments data back to the permit data
+# STEP 22a: create a list of treatment_ids that made it through all filters
+valid_tx_ids <- all_tx_clean %>%
+  
+  select(treatment_id) %>% 
 
-#### CAUTION ####
-# I think there are duplicate rows between surveys and PARs that still need to be sorted. 
+  separate_longer_delim(treatment_id, delim = ",") %>% 
+  
+  mutate(treatment_id = str_squish(treatment_id)) %>% 
+  
+  # create vector of treatment_ids
+  pull(treatment_id) %>% 
+  unique()
+
+# create a list of treatment_ids that did make it in the dataset but with limited info
+surveys_no_additional_data <- all_tx_clean %>%
+  # Isolate only the rows with "N"
+  filter(additional_data == "N") %>%
+  
+  # Keep only the treatment_id column to save memory
+  select(treatment_id) %>%
+  
+  # Unpack any comma-separated strings so we can evaluate every individual ID
+  separate_longer_delim(treatment_id, delim = ",") %>%
+  mutate(treatment_id = str_squish(treatment_id)) %>%
+  
+  # Pull the column into a simple vector of unique bad IDs
+  pull(treatment_id) %>%
+  unique()
+
+# STEP 22b: filter tx_details data based on the IDs in step 22a
+survey_tx_details <- survey_tx_details %>%
+  # remove treatment_ids that don't appear in treatment dataset
+  filter(treatment_id %in% valid_tx_ids) %>%
+  # remove tx_details for rows with "no additional data" because limited survey
+  filter(!treatment_id %in% surveys_no_additional_data)
 
 
-### at this point there are the following datasets
-# all_tx which represents the treatments that we know happened. 
-# PARs_treatment_group which is the permit-treatment-chemical grouped PAR data
-# surveys_tx_details which has the additional details on treatments
+pars_tx_details <- PARs_treatment_group %>%
+  # remove treatment_ids that don't appear in treatment dataset
+  filter(treatment_id %in% valid_tx_ids)
+
+# STEP: 22c clean up par_tx_details columns
+# NOTE: this step will be simplified when I fix the crazy column names. 
+pars_tx_details <- pars_tx_details %>% 
+  select(c(
+    permit_number = Permit.number,
+    treatment_year = App.year,
+    treatment_id,
+    target_species = species.code,
+    chemical = Pesticide.trade.name,
+    chem_unit = PAR_amount.units,
+    start_date,
+    end_date,
+    treatment_size,
+    avg_depth,
+    avg_vol_rate,
+    avg_areal_rate,
+    amount_total,
+    water_temp_low,
+    water_temp_high,
+    wind_speed_low,
+    wind_speed_high,
+    wind_direction,
+    air_temp_low,
+    air_temp_high,
+    avg_speed,
+    wind_dir,
+    active_ing
+  ))
+
+# add lakes and DOW id
+# NOTE: this step shouldn't be necessary but I accidentally dropped these data earlier
+all_tx_clean <- all_tx_clean %>%
+  left_join(
+    apm_iapm_permits %>%
+      distinct(permit_number, .keep_all = TRUE) %>%
+      select(
+        permit_number, 
+        lake_name = water_resource_names, 
+        DOW = water_resource_numbers
+      ),
+    by = "permit_number"
+  )
 
 #export data: 
-all_tx %>%
+all_tx_clean %>%
   write_csv("outputdata/all_IAPM_treatments.csv")
 
-PARs_treatment_group %>%
+pars_tx_details %>%
   write_csv("outputdata/IAPM_PAR_details.csv")
 
-surveys_tx_details %>%
+survey_tx_details %>%
   write_csv("outputdata/survey_tx_details.csv")
-  
-
-
-
-

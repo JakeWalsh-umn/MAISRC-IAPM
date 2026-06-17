@@ -15,8 +15,8 @@ library(readr)
 library(dplyr)
 library(lubridate)
 
-pred_iceout <- read_csv("exploration/PARsInventory/2. Ice out/pred_iceout26.csv")
-PARs_joined <- read_csv("exploration/PARsInventory/1. PARs + Littoral Area/PARs_joined.csv")
+pred_iceout <- read_csv("~/IAPM Project/MAISRC-IAPM/exploration/PARsInventory/2. Ice out/pred_iceout26.csv")
+PARs_joined <- read_csv("~/IAPM Project/MAISRC-IAPM/exploration/PARsInventory/1. PARs + Littoral Area/PARs_joined.csv")
 ```
 
 ```{r}
@@ -26,7 +26,6 @@ pred_iceout <- pred_iceout %>%
 ```
 
 Join with PARs dataset
-
 ```{r}
 PARs_IceOff <- PARs_joined %>%
 # 1. Create a temporary year column from start_date to match winter.year
@@ -34,7 +33,7 @@ PARs_IceOff <- PARs_joined %>%
 # 2. Join with pred_iceoutlong based on both conditions
   left_join(
     pred_iceout %>% select(DOW, winter.year, est),
-    by = c("k_Lake_ID" = "DOW", "match_year" = "winter.year")) %>%
+    by = c("DOW" = "DOW", "match_year" = "winter.year")) %>%
 # 3. Clean up the temporary year column
   select(-match_year) %>%
   rename(iceoff_est = est)

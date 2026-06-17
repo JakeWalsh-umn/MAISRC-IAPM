@@ -18,17 +18,31 @@ library(mosaic)
 library(mosaicCore)
 library(readr)
 
-PARs <- read_csv("~/IAPM Project/MAISRC-IAPM/exploration/PARsInventory/PARs_clean1.csv")
-MN_Lakes_Areas <- read_csv("~/IAPM Project/MAISRC-IAPM/exploration/PARsInventory/MN_Lakes_Areas.csv")
+MN_Lakes_Areas <- read_csv("~/IAPM Project/MAISRC-IAPM/exploration/PARsInventory/1. PARs + Littoral Area/MN_Lakes_Areas.csv")
+all_IAPM_treatments <- read_csv("~/IAPM Project/MAISRC-IAPM/outputdata/all_IAPM_treatments.csv")
+PARs <- read_excel("~/IAPM Project/PARs-query-FINAL_exported5-27-2026.xlsx")
 ```
+
+Add target species to all_IAPM_treatments.csv
+```{r}
+PARs_grouped <- all_IAPM_treatments %>%
+  left_join(
+    PARs %>% select(Permit_number, App_year, species_code),
+    by = c("permit_number" = "Permit_number", "treatment_year" = "App_year") 
+  )
+PARs_grouped <- PARs_grouped %>%
+  filter(!is.na(species_code))
+```
+
 
 Join with reference lake area data
 ```{r}
 MN_Lakes_Areas$DOW <- as.double(MN_Lakes_Areas$DOW)
-PARs_joined <- PARs %>%
+PARs_grouped$DOW <- as.double(PARs_grouped$DOW)
+PARs_joined <- PARs_grouped %>%
   left_join(
     MN_Lakes_Areas,
-    by = c("k_Lake_ID" = "DOW")
+    by = c("DOW" = "DOW")
   )
 #Calculating treatment area as % of lake area and littoral area
 PARs_joined$TreatmentSize_PercentofLake <- (PARs_joined$treatment_size / PARs_joined$LakeAreaAcres) * 100
@@ -42,7 +56,7 @@ tally(~species_code, data = PARs_joined)
 ```
 
 ```{r}
-gf_bar(~App_year, fill = ~species_code, data = PARs_joined)
+gf_bar(~treatment_year, fill = ~species_code, data = PARs_joined)
 ```
 
 Histograms. Filtering out treatments above 120% area for now until we figure out what is up.

@@ -490,7 +490,7 @@ source(here::here("draftcode", "IAPM_PARs_clean.R"))
 PARs_treatment_group <- PARs_treatment_group %>% 
   left_join(
     chem_ref_table %>% select(orig_name, active_ing),
-    by = c("Pesticide.trade.name" = "orig_name")) %>%
+    by = c("pesticide_trade_name" = "orig_name")) %>%
   mutate(treatment_id = paste0("P_", row_number())) %>%
   mutate(additional_data = "Y")
 
@@ -498,15 +498,15 @@ PARs_treatment_group <- PARs_treatment_group %>%
 # STEP 17
 PARs_clean <- PARs_treatment_group %>% 
   mutate(
-    chemicals_units = paste0(Pesticide.trade.name, " (", PAR_amount.units, ")")) %>% 
+    chemicals_units = paste0(pesticide_trade_name, " (", amount_units, ")")) %>% 
   select(
     treatment_id, 
-    permit_number = Permit.number, 
-    treatment_year = App.year, 
+    permit_number, 
+    treatment_year = app_year, 
     chemicals_units, 
     start_date,
     end_date, 
-    treatment_size, 
+    treatment_size = PAR_treatment_size, 
     additional_data,
     active_ing
   )
@@ -517,12 +517,12 @@ PARs_clean <- PARs_clean %>%
   
   group_by(pick(everything(), -c(treatment_id, chemicals_units, active_ing))) %>%
   
-  summarize(
+  mutate(
     treatment_id = paste(unique(treatment_id), collapse = ", "),
     chemicals_units = paste(unique(chemicals_units), collapse = ", "),
     active_ing = paste(unique(active_ing), collapse = ", "),
-    .groups = "drop" 
-  )
+  ) %>%
+  ungroup()
 
 
 # STEP 19
@@ -647,15 +647,15 @@ pars_tx_details <- PARs_treatment_group %>%
 # NOTE: this step will be simplified when I fix the crazy column names. 
 pars_tx_details <- pars_tx_details %>% 
   select(c(
-    permit_number = Permit.number,
-    treatment_year = App.year,
+    permit_number,
+    treatment_year = app_year,
     treatment_id,
-    target_species = species.code,
-    chemical = Pesticide.trade.name,
-    chem_unit = PAR_amount.units,
+    target_species = species_code,
+    chemical = pesticide_trade_name,
+    chem_unit = amount_units,
     start_date,
     end_date,
-    treatment_size,
+    treatment_size = PAR_treatment_size,
     avg_depth,
     avg_vol_rate,
     avg_areal_rate,
@@ -664,7 +664,6 @@ pars_tx_details <- pars_tx_details %>%
     water_temp_high,
     wind_speed_low,
     wind_speed_high,
-    wind_direction,
     air_temp_low,
     air_temp_high,
     avg_speed,
@@ -681,10 +680,54 @@ all_tx_clean <- all_tx_clean %>%
       select(
         permit_number, 
         lake_name = water_resource_names, 
-        DOW = water_resource_numbers
+        DOW = water_resource_numbers,
+        target_species = species
       ),
     by = "permit_number"
   )
+
+# Add code here that adds littoral zone data to the all_tx_clean
+#lake_attribute_df <- read.csv('data/MN_lake_basin_littoral_zone_15_ft_std.csv')
+
+
+# invasive species reference table where each possible IAPM species has a code
+species_reference <- tibble::tribble(
+  ~species_name,                ~code,
+  "Brittle Naiad",               "BN",
+  "Curly-leaf Pondweed",         "CLP",
+  "Eurasian Watermilfoil",       "EWM",
+  "Flowering Rush",              "FR",
+  "Java waterdropwort",          "JW",
+  "Purple Loosestrife",          "PL",
+  "Starry Stonewort",            "SS",
+  "Water Hyacinth",              "WH",
+  "Yellow Iris",                 "YI",
+  "Zebra Mussels",               "ZM",
+  "non-native Phragmites spp.",  "PHR",
+  "non-native water lily",       "NWL",
+  "NULL",                        "UNKNOWN"
+)
+
+# Right now this uses the permit species for all rows, but I could prioritize the PAR species when it exists. 
+all_tx_clean <- all_tx_clean %>%
+  mutate(
+    # 1. Split the text strings into a structured list of individual species
+    species_list = str_split(target_species, ";\\s*"),
+    
+    # 2. Map each list element against the master reference table
+    species_code = map_chr(species_list, function(x) {
+      # Use match() to find the single-species codes from our reference
+      matched_codes <- species_reference$code[match(x, species_reference$species_name)]
+      
+      # Handle missing translations cleanly
+      matched_codes <- coalesce(matched_codes, "NA")
+      
+      # 3. Stitch them back together into a comma-separated code string
+      paste(matched_codes, collapse = "_")
+    })
+  ) %>%
+  # Clean up the helper column
+  select(-species_list)
 
 #export data: 
 all_tx_clean %>%
@@ -695,3 +738,13 @@ pars_tx_details %>%
 
 survey_tx_details %>%
   write_csv("outputdata/survey_tx_details.csv")
+
+
+
+# exploring chemicals when there are repeated treatments
+multiple_iapm_tx <- all_tx_clean %>%
+  # Group and count simultaneously
+ group_by(permit_number, treatment_year) %>%
+  # Filter for combinations that appear more than once
+  filter(n() > 1) %>%
+  arrange(permit_number, treatment_year)

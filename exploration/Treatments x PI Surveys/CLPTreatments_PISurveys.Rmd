@@ -51,6 +51,22 @@ Permits_long <- Permits_long %>%
 ```
 
 
+
+Create PARs database
+```{r}
+all_IAPM_treatments <- read_csv("~/IAPM Project/MAISRC-IAPM/outputdata/all_IAPM_treatments.csv")
+PARs <- read_excel("~/IAPM Project/PARs-query-FINAL_exported5-27-2026.xlsx")
+
+PARs_grouped <- all_IAPM_treatments %>%
+  left_join(
+    PARs %>% select(Permit_number, App_year, species_code),
+    by = c("permit_number" = "Permit_number", "treatment_year" = "App_year") 
+  )
+PARs_grouped <- PARs_grouped %>%
+  filter(!is.na(species_code))
+```
+
+
 ```{r}
 #starting with db_sub_pa from 1_Loading and preparing PI data.R
 
@@ -176,21 +192,21 @@ target_string <- rep(NA, dim(dat_dlnm)[1])
 # populate the matrix
 for(i in 1:dim(dat_dlnm)[1]){
   
-  if(dat_dlnm$DOW[i]%in%Permits_long$water_resource_numbers){
+  if(dat_dlnm$DOW[i]%in%PARs_grouped$DOW){
     
-    permits_i <- Permits_long %>%
-      filter(water_resource_numbers==dat_dlnm$DOW[i])
+    PARs_i <- PARs_grouped %>%
+      filter(DOW==dat_dlnm$DOW[i])
     
-    target_string[i] <- paste(unique(permits_i$species), collapse=",")
+    target_string[i] <- paste(unique(PARs_i$species), collapse=",")
     
     year_i <- dat_dlnm$year[i]
     
-    treatment_history_matrix[i, 1] <- ifelse(year_i%in%permits_i$year,
-                                             permits_i$approved_acres[permits_i$year==year_i]/dat_dlnm$LK_LZACR_1[i],
+    treatment_history_matrix[i, 1] <- ifelse(year_i%in%PARs_i$year,
+                                             PARs_i$approved_acres[PARs_i$year==year_i]/dat_dlnm$LK_LZACR_1[i],
                                              0)
     for(j in 2:9){
-      treatment_history_matrix[i, j] <- ifelse((year_i+1-j)%in%permits_i$year,
-                                               permits_i$approved_acres[permits_i$year==year_i+1-j]/dat_dlnm$LK_LZACR_1[i],
+      treatment_history_matrix[i, j] <- ifelse((year_i+1-j)%in%PARs_i$year,
+                                               PARs_i$approved_acres[PARs_i$year==year_i+1-j]/dat_dlnm$LK_LZACR_1[i],
                                                0)
     }
     
@@ -205,11 +221,12 @@ for(i in 1:dim(dat_dlnm)[1]){
   
 }
 #Code below (commented out) is changing anything that is treatment above 100% of littoral zone to 1 (100)
+
 #but we should prob change that because maybe we want so see what is going on in those rows
 
 #treatment_history_matrix[treatment_history_matrix>1] <- 1
 
 #
-
+write.csv(treatment_history_matrix, file = "exploration/Treatment x PI Surveys/treatment_history_matrix.csv")
 ```
 

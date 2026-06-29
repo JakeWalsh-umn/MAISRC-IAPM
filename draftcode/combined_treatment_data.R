@@ -686,9 +686,31 @@ all_tx_clean <- all_tx_clean %>%
     by = "permit_number"
   )
 
-# Add code here that adds littoral zone data to the all_tx_clean
-#lake_attribute_df <- read.csv('data/MN_lake_basin_littoral_zone_15_ft_std.csv')
+# Add littoral zone data
+lake_attribute_df <- read.csv('data/MN_lake_basin_littoral_zone_15_ft_std.csv', colClasses = c(DOWLKNUM = "character"))
 
+all_tx_clean <- all_tx_clean %>%
+  left_join(
+    lake_attribute_df %>%
+      select(
+        DOWLKNUM,
+        LK_LZACRES
+      ),
+    by = c("DOW" = "DOWLKNUM")
+  )
+
+all_tx_clean <- all_tx_clean %>%
+  mutate(
+    lake_LZ_acres = LK_LZACRES,
+    prcnt_LZ = case_when(
+      # If either column is in your no_data list, leave it blank (NA)
+      treatment_size %in% no_data | LK_LZACRES %in% no_data ~ NA_real_,
+      
+      # Otherwise, perform the calculation and round to 3 decimal places
+      TRUE ~ round(treatment_size / LK_LZACRES, digits = 4)
+    )
+  )%>% 
+  select(-c(LK_LZACRES))
 
 # invasive species reference table where each possible IAPM species has a code
 species_reference <- tibble::tribble(
@@ -723,11 +745,11 @@ all_tx_clean <- all_tx_clean %>%
       matched_codes <- coalesce(matched_codes, "NA")
       
       # 3. Stitch them back together into a comma-separated code string
-      paste(matched_codes, collapse = "_")
+      paste(matched_codes, collapse = ", ")
     })
   ) %>%
   # Clean up the helper column
-  select(-species_list)
+  select(-c(species_list, target_species))
 
 #export data: 
 all_tx_clean %>%

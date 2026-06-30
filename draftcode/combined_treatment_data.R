@@ -1,5 +1,7 @@
 # This is the second version of combined_treatment_data.R
-# last updated 6/17/2026
+# last updated 6/30/2026
+# refer to IAPM TxData Cleaning Manual for next steps for improving this script.
+
 
 library(tidyverse)
 library(lubridate)
@@ -517,12 +519,12 @@ PARs_clean <- PARs_clean %>%
   
   group_by(pick(everything(), -c(treatment_id, chemicals_units, active_ing))) %>%
   
-  mutate(
+  summarise(
     treatment_id = paste(unique(treatment_id), collapse = ", "),
     chemicals_units = paste(unique(chemicals_units), collapse = ", "),
     active_ing = paste(unique(active_ing), collapse = ", "),
-  ) %>%
-  ungroup()
+    .groups = "drop"
+  )
 
 
 # STEP 19
@@ -703,10 +705,10 @@ all_tx_clean <- all_tx_clean %>%
   mutate(
     lake_LZ_acres = LK_LZACRES,
     prcnt_LZ = case_when(
-      # If either column is in your no_data list, leave it blank (NA)
+      # If either columns value is in your no_data list
       treatment_size %in% no_data | LK_LZACRES %in% no_data ~ NA_real_,
       
-      # Otherwise, perform the calculation and round to 3 decimal places
+      # Otherwise, calculate percent and round to 4 decimal places
       TRUE ~ round(treatment_size / LK_LZACRES, digits = 4)
     )
   )%>% 
@@ -733,22 +735,21 @@ species_reference <- tibble::tribble(
 # Right now this uses the permit species for all rows, but I could prioritize the PAR species when it exists. 
 all_tx_clean <- all_tx_clean %>%
   mutate(
-    # 1. Split the text strings into a structured list of individual species
+    #Split the text strings into a list of individual species
     species_list = str_split(target_species, ";\\s*"),
     
-    # 2. Map each list element against the master reference table
+    # compare list to the reference table
     species_code = map_chr(species_list, function(x) {
       # Use match() to find the single-species codes from our reference
       matched_codes <- species_reference$code[match(x, species_reference$species_name)]
       
-      # Handle missing translations cleanly
       matched_codes <- coalesce(matched_codes, "NA")
       
-      # 3. Stitch them back together into a comma-separated code string
+      # combine species that are listed in the same row into comma separated list. 
       paste(matched_codes, collapse = ", ")
     })
   ) %>%
-  # Clean up the helper column
+  
   select(-c(species_list, target_species))
 
 #export data: 
@@ -763,10 +764,10 @@ survey_tx_details %>%
 
 
 
-# exploring chemicals when there are repeated treatments
+#exploring chemicals when there are repeated treatments
 multiple_iapm_tx <- all_tx_clean %>%
   # Group and count simultaneously
- group_by(permit_number, treatment_year) %>%
+  group_by(permit_number, treatment_year) %>%
   # Filter for combinations that appear more than once
   filter(n() > 1) %>%
   arrange(permit_number, treatment_year)

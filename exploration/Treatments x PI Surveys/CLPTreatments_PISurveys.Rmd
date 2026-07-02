@@ -3,12 +3,13 @@ title: "CLPTreatments_PISurveys"
 output: html_document
 ---
 
-```{r}
+```{r, results = "hide", fig.keep = "none"}
 library(tidyverse)
 library(arrow)
 library(readxl)
 library(lubridate)
 library(sf)
+library(here)
 
 library(mgcv)
 #library(gratia)
@@ -29,7 +30,7 @@ library(clusterCrit)
 
 Create CLP treatment database.
 ```{r}
-all_IAPM_treatments <- read_csv("~/IAPM Project/MAISRC-IAPM/outputdata/all_IAPM_treatments.csv")
+all_IAPM_treatments <- read_csv(here("outputdata", "all_IAPM_treatments.csv"))
 
 
 CLP_treatments <- all_IAPM_treatments %>%
@@ -38,13 +39,13 @@ CLP_treatments <- all_IAPM_treatments %>%
 
 #filtering out treatments where we only know the month
 CLP_treatments <- CLP_treatments %>%
-  # calculate the difference
+  # calculate the difference in start date to end date
   mutate(
     days_apart = as.numeric(difftime(end_date, start_date, units = "days"))
   ) %>%
   # 2. Keep only rows where they are 0 or 1 day apart (and drop NAs)
   filter(!is.na(days_apart), days_apart <= 1) %>%
-  # 3. Optional: Remove the temporary calculation column
+  # 3. Remove the temporary calculation column
   select(-days_apart)
 ```
 
@@ -53,10 +54,15 @@ Starting with db_sub_pa from 1_Loading and preparing PI data.R. From Jake's Atte
 
 ```{r}
 #load in PI data
-db_sub_pa <- read_csv("~/IAPM Project/MAISRC-IAPM/outputdata/db_sub_pa.csv")
+db_sub_pa <- read_csv("~/IAPM Project/data/db_sub_pa.csv")
 
-#load in lake LZ data
-MN_lake_basin_littoral_zone <- read_csv("~/IAPM Project/MAISRC-IAPM/data/MN_lake_basin_littoral_zone_15_ft_std.csv")
+#load in lake LZ data, joing LZ acres
+MN_lake_basin_littoral_zone <- read_csv(here("data", "MN_lake_basin_littoral_zone_15_ft_std.csv"))
+CLP_treatments <- CLP_treatments %>%
+  left_join(
+    MN_lake_basin_littoral_zone %>% select(DOWLKNUM, LK_LZACRES), 
+    by = c("DOW" = "DOWLKNUM")
+  )
 
 ## Exploring DLNM possibilities ----
 
@@ -88,14 +94,14 @@ dat_dlnm <- db_sub_pa %>%
                                              nitella_furcata:vallisneria_sp))>0)) %>%
   drop_na()
 
-#dat_dlnm <- left_join(dat_dlnm,
- #                     lake_basin_morphology_df %>%
-  #                      filter(ISLAND=="N" & !is.na(LK_LZACR_1)) %>%
-   #                     dplyr::select(DOWLKNUM,
-    #                                  LK_LZACR_1),
-     #                 by=join_by(DOW==DOWLKNUM)) %>%
-#  drop_na()
 
+#join LZ acres to dat_dlnm
+dat_dlnm <- dat_dlnm %>%
+  left_join(
+    MN_lake_basin_littoral_zone %>% select(DOWLKNUM, LK_LZACRES), 
+    by = c("DOW" = "DOWLKNUM")
+  )
+  
 
 ##I think we don't need this but maybe we do
 #dat_dlnm <- left_join(dat_dlnm,
@@ -149,16 +155,16 @@ for(i in 1:dim(dat_dlnm)[1]){
     CLP_treatments_i <- CLP_treatments %>%
       filter(DOW==dat_dlnm$DOW[i])
     
-    target_string[i] <- paste(unique(CLP_treatments_i$species), collapse=",")
+    target_string[i] <- paste(unique(CLP_treatments_i$species_code), collapse=",")
     
     year_i <- dat_dlnm$year[i]
     
     treatment_history_matrix[i, 1] <- ifelse(year_i%in%CLP_treatments_i$treatment_year,
-                                               CLP_treatments_i$treatment_size[CLP_treatments_i$treatment_year==year_i]/dat_dlnm$LK_LZACR_1[i],
+                                               CLP_treatments_i$treatment_size[CLP_treatments_i$treatment_year==year_i]/dat_dlnm$LK_LZACRES[i],
                                              0)
     for(j in 2:9){
       treatment_history_matrix[i, j] <- ifelse((year_i+1-j)%in%CLP_treatments_i$treatment_year,
-                                               CLP_treatments_i$treatment_size[CLP_treatments_i$treatment_year==year_i+1-j]/dat_dlnm$LK_LZACR_1[i],
+                                               CLP_treatments_i$treatment_size[CLP_treatments_i$treatment_year==year_i+1-j]/dat_dlnm$LK_LZACRES[i],
                                                0)
     }
     
@@ -172,13 +178,15 @@ for(i in 1:dim(dat_dlnm)[1]){
   #print(i)
   
 }
+
+head(treatment_history_matrix)
 #Code below (commented out) is changing anything that is treatment above 100% of littoral zone to 1 (100)
 
 #but we should prob change that because maybe we want so see what is going on in those rows
 
 #treatment_history_matrix[treatment_history_matrix>1] <- 1
 
-#
-write.csv(treatment_history_matrix, file = "exploration/Treatment x PI Surveys/treatment_history_matrix.csv")
+write.csv(treatment_history_matrix, file = "~/IAPM Project/MAISRC-IAPM/exploration/Treatments x PI Surveys/treatment_history_matrix.csv")
+
 ```
 

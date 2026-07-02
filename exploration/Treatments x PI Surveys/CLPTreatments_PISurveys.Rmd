@@ -26,88 +26,40 @@ library(dtwclust)
 library(clusterCrit)
 ```
 
-Convert permit data from wide to long
-```{r}
-apm_iapm_permit <- read_csv("~/IAPM Project/Data/apm_iapm_permit_detail.csv")
 
-Permits_long <- apm_iapm_permit %>% 
-  pivot_longer(
-    # 1. Target only the columns that end in a year
-    cols = starts_with("permit_approved_acres_"),
-    
-    # 2. Split the  column name into a static column name and a year
-    # ".value" tells R to make "permit_approved_acres" the data column
-    names_to = c(".value", "year"),
-    
-    # 3. Use a regular expression to separate the text from the 4-digit year
-    names_pattern = "(permit_approved_acres)_(20\\d{2})"
-  ) %>%
-   mutate(year=as.numeric(year))
-
-# Drop rows where the column is NA or NULL
-Permits_long <- Permits_long %>% 
-  filter(!is.na(`permit_approved_acres`), `permit_approved_acres` != "NULL")
-
-```
-
-
-
-Create PARs database
+Create CLP treatment database.
 ```{r}
 all_IAPM_treatments <- read_csv("~/IAPM Project/MAISRC-IAPM/outputdata/all_IAPM_treatments.csv")
-PARs <- read_excel("~/IAPM Project/PARs-query-FINAL_exported5-27-2026.xlsx")
 
-PARs_grouped <- all_IAPM_treatments %>%
-  left_join(
-    PARs %>% select(Permit_number, App_year, species_code),
-    by = c("permit_number" = "Permit_number", "treatment_year" = "App_year") 
-  )
-PARs_grouped <- PARs_grouped %>%
-  filter(!is.na(species_code))
+
+CLP_treatments <- all_IAPM_treatments %>%
+ filter(species_code == "CLP") %>%
+  filter(!is.na(start_date))
+
+#filtering out treatments where we only know the month
+CLP_treatments <- CLP_treatments %>%
+  # calculate the difference
+  mutate(
+    days_apart = as.numeric(difftime(end_date, start_date, units = "days"))
+  ) %>%
+  # 2. Keep only rows where they are 0 or 1 day apart (and drop NAs)
+  filter(!is.na(days_apart), days_apart <= 1) %>%
+  # 3. Optional: Remove the temporary calculation column
+  select(-days_apart)
 ```
 
 
-```{r}
-#starting with db_sub_pa from 1_Loading and preparing PI data.R
-
-```
-
-
-
-From Jake's Attempt 1 at characterizing treatment histories by PI Survey
+Starting with db_sub_pa from 1_Loading and preparing PI data.R. From Jake's Attempt 1 at characterizing treatment histories by PI Survey
 
 ```{r}
+#load in PI data
+db_sub_pa <- read_csv("~/IAPM Project/MAISRC-IAPM/outputdata/db_sub_pa.csv")
 
-# Lake Morphology data ----
-lake_basin_morphology <- read_sf("JakeOutput/lake_basin_morphology.shp")
-lake_basin_morphology_df <- st_drop_geometry(lake_basin_morphology)
-
-
-lake_basin_morphology <- st_transform(lake_basin_morphology, "epsg:4326")
-
-# PI Data ----
-# db_sub_pa is from 1_Loading and preparing PI data.R
-
-# Permitting data ----
-#permits <- permits <- read.csv("JakeOutput/apm_iapm_permit_detail.csv",
-                        #       na.strings=c("NA", "NULL"))
-
-#iapm_permits_long2 <- permits
-
-
-#colnames(iapm_permits_long2)[7:35] <- 1997:2025
-
-#iapm_permits_long2 <- iapm_permits_long2 %>%
- # filter(permit_type=="Invasive Aquatic Plant Management") %>%
- # pivot_longer(cols=`1997`:`2025`, 
-     #          names_to="year",
-    #           values_to="approved_acres") %>%
- # mutate(year=as.numeric(year))
+#load in lake LZ data
+MN_lake_basin_littoral_zone <- read_csv("~/IAPM Project/MAISRC-IAPM/data/MN_lake_basin_littoral_zone_15_ft_std.csv")
 
 ## Exploring DLNM possibilities ----
 
-
-#
 dat_dlnm <- db_sub_pa %>%
   filter(!is.na(depth_ft) & depth_ft <= 15) %>%
   mutate(SURVEY_START=as.Date(SURVEY_START),
@@ -192,21 +144,21 @@ target_string <- rep(NA, dim(dat_dlnm)[1])
 # populate the matrix
 for(i in 1:dim(dat_dlnm)[1]){
   
-  if(dat_dlnm$DOW[i]%in%PARs_grouped$DOW){
+  if(dat_dlnm$DOW[i]%in%CLP_treatments$DOW){
     
-    PARs_i <- PARs_grouped %>%
+    CLP_treatments_i <- CLP_treatments %>%
       filter(DOW==dat_dlnm$DOW[i])
     
-    target_string[i] <- paste(unique(PARs_i$species), collapse=",")
+    target_string[i] <- paste(unique(CLP_treatments_i$species), collapse=",")
     
     year_i <- dat_dlnm$year[i]
     
-    treatment_history_matrix[i, 1] <- ifelse(year_i%in%PARs_i$year,
-                                             PARs_i$approved_acres[PARs_i$year==year_i]/dat_dlnm$LK_LZACR_1[i],
+    treatment_history_matrix[i, 1] <- ifelse(year_i%in%CLP_treatments_i$treatment_year,
+                                               CLP_treatments_i$treatment_size[CLP_treatments_i$treatment_year==year_i]/dat_dlnm$LK_LZACR_1[i],
                                              0)
     for(j in 2:9){
-      treatment_history_matrix[i, j] <- ifelse((year_i+1-j)%in%PARs_i$year,
-                                               PARs_i$approved_acres[PARs_i$year==year_i+1-j]/dat_dlnm$LK_LZACR_1[i],
+      treatment_history_matrix[i, j] <- ifelse((year_i+1-j)%in%CLP_treatments_i$treatment_year,
+                                               CLP_treatments_i$treatment_size[CLP_treatments_i$treatment_year==year_i+1-j]/dat_dlnm$LK_LZACR_1[i],
                                                0)
     }
     
@@ -217,7 +169,7 @@ for(i in 1:dim(dat_dlnm)[1]){
     
   }
   
-  print(i)
+  #print(i)
   
 }
 #Code below (commented out) is changing anything that is treatment above 100% of littoral zone to 1 (100)

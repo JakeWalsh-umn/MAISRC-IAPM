@@ -25,7 +25,7 @@ apm_iapm_permits <- read.csv('data/apm_iapm_permit_detail.csv')
 chem_ref_table <- read.csv('data/chem_ref_table.csv')
 
 # STEP 2
-# remove the columns we don't care about
+# remove the survey columns we don't care about
 iapm_annual_survey <- iapm_annual_survey %>%
   select(-c(data_date_time, when_permit_expires, starts_with("aapcd"),
             satisified_with_swim_itch_control)) %>% 
@@ -43,12 +43,35 @@ iapm_annual_survey <- iapm_annual_survey %>%
     total_treated_area_acres = as.numeric(total_treated_area_acres)
   )
 
+# run this script for inspecting duplicate permits
+#inspect_duplicates <- apm_iapm_permits %>%
 
-# STEP 3
+#    filter(permit_type == "Invasive Aquatic Plant Management") %>%
+    
+#    group_by(permit_number) %>%
+    
+#    filter(n() >= 2) %>%
+    
+#    ungroup() %>%
+    
+#    arrange(permit_number)
+
+# STEP 3a
+# filter for IAPM, remove duplicate permit rows while prioritizing pesticide control
+iapm_permits <- apm_iapm_permits %>%
+  filter (permit_type == "Invasive Aquatic Plant Management") %>%
+  arrange(
+    permit_number, 
+    desc(treatment_method == "Pesticide Control")
+  ) %>%
+  # Keep only the first row for each permit number (respects the sort order above)
+  distinct(permit_number, .keep_all = TRUE)
+
+# STEP 3b
 # left join by permit number and keep the permit DOW and treatment_method
 # NOTE: the treatment method from permit may not be accurate until we get the new data
 iapm_annual_survey <- iapm_annual_survey %>%
-  left_join(apm_iapm_permits %>% select(DOW = water_resource_numbers, lk_name = water_resource_names, permit_number, 
+  left_join(iapm_permits %>% select(DOW = water_resource_numbers, lk_name = water_resource_names, permit_number, 
                                         tx_method_permit = treatment_method), by = "permit_number")
 
 # STEP 4
@@ -57,6 +80,8 @@ surveys_wo_permit_data <- iapm_annual_survey %>% anti_join(apm_iapm_permits, by 
 
 # count how many surveys without permit details
 length(unique(surveys_wo_permit_data$permit_number)) # there are 219 permits with survey responses but no permit data. 
+
+missing_permits <- unique(surveys_wo_permit_data$permit_number)
 
 #remove the survey responses that don't have corresponding permit details
 iapm_annual_survey <- iapm_annual_survey %>% anti_join(surveys_wo_permit_data, by = "apm_annual_survey_id")
@@ -383,7 +408,7 @@ rule1_data <- rule1_data %>%
     # extract the true minimum and maximum chronologically from each list
     start_date = map_vec(date_objects, ~ if(length(.x) > 0) min(.x, na.rm = TRUE) else as.Date(NA)),
     end_date   = map_vec(date_objects, ~ if(length(.x) > 0) max(.x, na.rm = TRUE) else as.Date(NA))
-    ) %>%
+  ) %>%
   
   # Clean up the temporary list columns
   select(-extracted_dates, -date_objects)
@@ -599,6 +624,7 @@ all_tx_clean <- all_tx %>%
   ungroup() %>% 
   select(-treatment_interval)
 
+
 # STEP 22: attempt to clean up supplemental data
 # ideally we only want survey_tx_details and pars_tx_details to include
 # data that we have deemed valuable
@@ -765,6 +791,7 @@ survey_tx_details %>%
 
 
 #exploring chemicals when there are repeated treatments
+# eventually DELETE this
 multiple_iapm_tx <- all_tx_clean %>%
   # Group and count simultaneously
   group_by(permit_number, treatment_year) %>%

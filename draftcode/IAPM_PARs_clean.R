@@ -108,7 +108,7 @@ PARs_treatment_group <- PARs_working %>%
     end_date   = if(all(is.na(PAR_end_date))) {
       as.Date(NA)
     } else {
-      max(PAR_start_date, na.rm = TRUE)
+      max(PAR_end_date, na.rm = TRUE)
     },
     
     PAR_treatment_size = sum(treatment_size, na.rm = TRUE),
@@ -145,7 +145,6 @@ PARs_treatment_group <- PARs_working %>%
     u = mean(wind_speed * sin(wind_dir * pi / 180), na.rm = TRUE),
     v = mean(wind_speed * cos(wind_dir * pi / 180), na.rm = TRUE)) %>%
     
-     slice(1) %>%
   ungroup() %>%
   
   mutate(

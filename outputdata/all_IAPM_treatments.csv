@@ -40,7 +40,6 @@ permit_number,treatment_year,start_date,end_date,treatment_size,chemicals_units,
 2017-0600,2023,2023-08-09,2023-08-09,3.3,,,S_2036,Y,Fish,86018300,54.16,0.0609,EWM
 2017-0615,2023,2023-05-23,2023-05-23,1.72,diquat (gals),Diquat Dibromide,S_2037,Y,Gleason,27009500,NA,NA,CLP
 2017-0653,2023,2023-06-21,2023-06-21,9.88,diquat (gals),Diquat Dibromide,S_2038,Y,Long,62006700,117.29,0.0842,EWM
-2017-0663,2023,2023-05-15,2023-05-15,5.12,aquathol_k (gals),Endothall,S_2039,Y,Brooks,86026400,58.31,0.0878,CLP
 2017-0666,2023,2023-07-11,2023-07-11,18.98,,,S_2040,Y,Clear,82016300,270.31,0.0702,EWM
 2017-0729,2023,2023-07-27,2023-07-27,21.1,,,S_2041,Y,Scandinavian,61004100,229.73,0.0918,EWM
 2017-0743,2023,2023-05-16,2023-05-16,3,diquat (gals),Diquat Dibromide,S_2043,Y,Gun,01009900,370.28,0.0081,CLP
@@ -321,9 +320,6 @@ permit_number,treatment_year,start_date,end_date,treatment_size,chemicals_units,
 2017-0615,2024,2024-05-13,2024-05-13,9.35,diquat (gals),Diquat Dibromide,S_2436,Y,Gleason,27009500,NA,NA,CLP
 2017-0620,2024,2024-05-05,2024-05-05,14.8,aquathol_k (gals),Endothall,S_2437,Y,Quamba,33001500,226.37,0.0654,CLP
 2017-0653,2024,2024-07-12,2024-07-12,5.54,,,S_2438,Y,Long,62006700,117.29,0.0472,EWM
-2017-0666,2024,2024-07-09,2024-07-09,428,sonarone (lbs),Fluridone,S_2440,Y,Clear,82016300,270.31,1.5834,EWM
-2017-0666,2024,2024-09-10,2024-09-10,428.9,sonarone (lbs),Fluridone,S_2441,Y,Clear,82016300,270.31,1.5867,EWM
-2017-0666,2024,2024-08-14,2024-08-14,428.9,sonarone (lbs),Fluridone,S_2443,Y,Clear,82016300,270.31,1.5867,EWM
 2017-0703,2024,2024-04-29,2024-04-29,10,diquat (gals),Diquat Dibromide,S_2444,Y,Skogman,30002200,129.77,0.0771,CLP
 2017-0729,2024,2024-08-28,2024-08-28,17.1,,,S_2445,Y,Scandinavian,61004100,229.73,0.0744,EWM
 2017-0735,2024,2024-04-29,2024-04-29,9.14,flumioxazin (lbs),Flumioxazin,S_2446,Y,Alimagnet,19002100,NA,NA,CLP
@@ -535,9 +531,6 @@ permit_number,treatment_year,start_date,end_date,treatment_size,chemicals_units,
 2022-1235,2024,2024-05-10,2024-05-10,11.2,diquat (gals),Diquat Dibromide,S_2719,Y,Minnetonka-Maxwell Bay,27013311,166.47,0.0673,CLP
 2022-1789,2024,2024-04-25,2024-04-25,0.59,aquathol_k (gals),Endothall,S_2720,Y,Nancy,27067700,NA,NA,CLP
 2022-1832,2024,2024-05-14,2024-05-14,6.67,flumioxazin (lbs),Flumioxazin,S_2721,Y,Bass,22007400,152.24,0.0438,CLP
-2022-1986,2024,2024-06-24,2024-06-24,403,sonarone (lbs),Fluridone,S_2722,Y,Owasso,62005600,284.18,1.4181,EWM
-2022-1986,2024,2024-04-29,2024-04-29,403,fluridone (gals),Fluridone,S_2723,Y,Owasso,62005600,284.18,1.4181,EWM
-2022-1986,2024,2024-08-14,2024-08-14,374.96,sonarone (lbs),Fluridone,S_2724,Y,Owasso,62005600,284.18,1.3194,EWM
 2022-2614,2024,2024-09-11,2024-09-11,0.14,,,S_2730,Y,Hanks,18004400,48.08,0.0029,EWM
 2022-2615,2024,2024-09-11,2024-09-11,0.15,,,S_2731,Y,Portage,18005000,116.21,0.0013,EWM
 2022-2814,2024,2024-09-23,2024-09-23,0.05,other (gals),Other,S_2732,Y,Haughey,27018700,NA,NA,PHR
@@ -921,10 +914,8 @@ permit_number,treatment_year,start_date,end_date,treatment_size,chemicals_units,
 2017-0526,2024,2024-09-12,2024-09-12,NA,diquat (gals),Diquat Dibromide,S_2425,N,Olson,82010300,87.38,NA,EWM
 2017-1978,2024,2024-04-11,2024-04-11,NA,fluridone (gals),Fluridone,S_2510,N,Jane,82010400,109.71,NA,EWM
 2017-1978,2024,2024-05-22,2024-05-22,NA,fluridone (gals),Fluridone,S_2510,N,Jane,82010400,109.71,NA,EWM
-2018-0182,2024,2024-08-19,2024-08-20,NA,copper_triethanola (gals),Copper Complex,S_2539,N,Koronis (main lake),73020002,1146.64,NA,SS
 2018-0897,2024,2024-06-27,2024-06-27,NA,diquat (gals),Diquat Dibromide,S_2570,N,Pickerel,03028700,137.68,NA,FR
 2018-0897,2024,2024-07-31,2024-07-31,NA,diquat (gals),Diquat Dibromide,S_2570,N,Pickerel,03028700,137.68,NA,FR
-2018-3528,2024,2024-05-22,2024-05-22,NA,fluridone (gals),Fluridone,S_2602,N,Crooked,02008400,84.02,NA,EWM
 2019-0858,2024,2024-04-29,2024-04-29,NA,"alligare (gals), diquat (gals)","2,4-D, Diquat Dibromide",S_2612,N,Skogman,30002200,129.77,NA,EWM
 2019-0858,2024,2024-07-19,2024-07-19,NA,"alligare (gals), diquat (gals)","2,4-D, Diquat Dibromide",S_2612,N,Skogman,30002200,129.77,NA,EWM
 2019-2723,2024,2024-07-31,2024-07-31,NA,diquat (gals),Diquat Dibromide,S_2631,N,Grants,21015000,64.31,NA,FR
@@ -941,7 +932,6 @@ permit_number,treatment_year,start_date,end_date,treatment_size,chemicals_units,
 2023-0185,2024,2024-04-29,2024-04-29,NA,fluridone (gals),Fluridone,S_2743,N,Lotus,10000600,182.41,NA,EWM
 2023-0185,2024,2024-05-21,2024-05-21,NA,fluridone (gals),Fluridone,S_2743,N,Lotus,10000600,182.41,NA,EWM
 2023-0468,2024,2024-05-08,2024-05-09,NA,aquathol_k (gals),Endothall,S_2747,N,Clear,81001401,563.67,NA,CLP
-2023-2342,2024,2024-10-01,2024-10-01,NA,copper_ethnolamine (gals),Copper Complex,S_2760,N,Long,34006600,154.02,NA,SS
 2023-2739,2024,2024-04-23,2024-04-23,NA,fluridone (gals),Fluridone,S_2765,N,Fredrickson Slough,71011000,NA,NA,EWM
 2023-2739,2024,2024-06-13,2024-06-13,NA,fluridone (gals),Fluridone,S_2765,N,Fredrickson Slough,71011000,NA,NA,EWM
 2024-3011,2024,2024-09-04,2024-09-04,NA,imazapyr (gals),Imazapyr,S_2800,N,Horseshoe,30000300,NA,NA,PHR
@@ -1050,7 +1040,6 @@ permit_number,treatment_year,start_date,end_date,treatment_size,chemicals_units,
 2018-3392,2025,2025-08-05,2025-08-05,NA,glyphosate (gals),Glyphosate,S_3017,N,Unnamed,19006200,NA,NA,FR
 2018-3392,2025,2025-08-20,2025-08-20,NA,glyphosate (gals),Glyphosate,S_3017,N,Unnamed,19006200,NA,NA,FR
 2018-3392,2025,2025-09-10,2025-09-10,NA,glyphosate (gals),Glyphosate,S_3017,N,Unnamed,19006200,NA,NA,FR
-2020-1556,2025,2025-05-08,2025-05-08,NA,fluridone (gals),Fluridone,S_3073,N,Oak,10009300,360.47,NA,"CLP, EWM"
 2020-1556,2025,2025-06-18,2025-06-18,NA,fluridone (gals),Fluridone,S_3073,N,Oak,10009300,360.47,NA,"CLP, EWM"
 2023-2342,2025,2025-06-26,2025-06-26,NA,copper_ethnolamine (gals),Copper Complex,S_3158,N,Long,34006600,154.02,NA,SS
 2023-2342,2025,2025-08-19,2025-08-19,NA,copper_ethnolamine (gals),Copper Complex,S_3158,N,Long,34006600,154.02,NA,SS
@@ -1070,9 +1059,6 @@ permit_number,treatment_year,start_date,end_date,treatment_size,chemicals_units,
 2017-2950,2024,2024-08-14,2024-08-14,NA,"copper_sulfate (lbs), hydrothol_liquid (gals)","Copper Sulfate, Endothall",S_2524,N,Rice,73019600,832.55,NA,SS
 2017-2950,2024,2024-09-12,2024-09-12,NA,"copper_sulfate (lbs), hydrothol_liquid (gals)","Copper Sulfate, Endothall",S_2524,N,Rice,73019600,832.55,NA,SS
 2017-2950,2024,2024-10-15,2024-10-15,NA,"copper_sulfate (lbs), hydrothol_liquid (gals)","Copper Sulfate, Endothall",S_2524,N,Rice,73019600,832.55,NA,SS
-2023-2720,2024,2024-08-09,2024-08-09,NA,copper_triethanola (gals),Copper Complex,S_2764,N,Clearwater,86025200,NA,NA,SS
-2023-2720,2024,2024-08-30,2024-08-30,NA,copper_triethanola (gals),Copper Complex,S_2764,N,Clearwater,86025200,NA,NA,SS
-2023-2720,2024,2024-10-10,2024-10-10,NA,copper_triethanola (gals),Copper Complex,S_2764,N,Clearwater,86025200,NA,NA,SS
 2023-2866,2024,2024-06-11,2024-06-11,NA,"glyphosate (gals), imazapyr (gals)","Glyphosate, Imazapyr",S_2767,N,Unnamed,19029400,NA,NA,FR
 2023-2866,2024,2024-07-01,2024-07-01,NA,"glyphosate (gals), imazapyr (gals)","Glyphosate, Imazapyr",S_2767,N,Unnamed,19029400,NA,NA,FR
 2023-2866,2024,2024-07-30,2024-07-30,NA,"glyphosate (gals), imazapyr (gals)","Glyphosate, Imazapyr",S_2767,N,Unnamed,19029400,NA,NA,FR
@@ -1212,7 +1198,6 @@ permit_number,treatment_year,start_date,end_date,treatment_size,chemicals_units,
 2017-0616,2017,2017-05-01,2017-05-31,41.7,aquathol_k (gals),Endothall,S_100,Y,East Rush,13006901,1136.44,0.0367,CLP
 2018-1045,2018,2018-05-01,2018-05-31,41.3,aquathol_k (gals),Endothall,S_586,Y,East Rush,13006901,1136.44,0.0363,CLP
 2017-1097,2022,2022-05-01,2022-05-31,41.3,diquat (gals),Diquat Dibromide,S_1703,Y,Minnewashta,10000900,337.89,0.1222,CLP
-2017-1985,2022,2022-10-01,2022-10-31,41.25,alligare (gals),"2,4-D",S_1741,Y,Bay,18003400,878.98,0.0469,EWM
 2017-2634,2018,2018-07-01,2018-07-31,40.74,alligare (gals),"2,4-D",S_493,Y,Forest,82015900,1561.19,0.0261,EWM
 2017-3409,2017,2017-08-01,2017-08-31,40.2,diquat (gals),Diquat Dibromide,S_329,Y,Forest,82015900,1561.19,0.0257,FR
 2017-1028,2017,2017-06-01,2017-06-30,40.1,alligare (gals),"2,4-D",S_187,Y,George,02009100,383.26,0.1046,EWM
@@ -1294,7 +1279,6 @@ permit_number,treatment_year,start_date,end_date,treatment_size,chemicals_units,
 2017-1154,2017,2017-04-01,2017-04-30,28.6,aquathol_k (gals),Endothall,S_227,Y,Bald Eagle,62000200,589.06,0.0486,CLP
 2017-1083,2019,2019-05-01,2019-05-31,28.6,diquat (gals),Diquat Dibromide,S_724,Y,Coon,02004200,1331.96,0.0215,CLP
 2017-0819,2017,2017-08-01,2017-08-31,28.35,alligare (gals),"2,4-D",S_146,Y,Alexander,49007900,843.85,0.0336,EWM
-2017-1985,2020,2020-10-01,2020-10-31,28.33,,,S_1056,Y,Bay,18003400,878.98,0.0322,EWM
 2017-0040,2017,2017-05-01,2017-05-31,28.3,aquathol_k (gals),Endothall,S_42,Y,Cedar Island,73013300,NA,NA,CLP
 2018-0093,2020,2020-05-01,2020-05-31,28.3,diquat (gals),Diquat Dibromide,S_1083,Y,Two Rivers,73013800,221.09,0.128,CLP
 16W-3A097,2016,2016-05-01,2016-05-31,28.1,other (gals),Other,S_16,Y,Minnetonka-St. Albans Bay,27013304,103.16,0.2724,CLP
@@ -2505,7 +2489,6 @@ permit_number,treatment_year,start_date,end_date,treatment_size,chemicals_units,
 2017-1050,2020,2020-04-01,2020-04-30,NA,fluridone (gals),Fluridone,S_1012,N,Benton,41004300,2649.41,NA,CLP
 2017-0562,2020,2020-04-01,2020-04-30,NA,fluridone (gals),Fluridone,S_965,N,Cedar,70009100,792.5,NA,CLP
 2017-0562,2020,2020-05-01,2020-05-31,NA,fluridone (gals),Fluridone,S_965,N,Cedar,70009100,792.5,NA,CLP
-2022-0248,2022,2022-07-01,2022-07-31,NA,fluridone (gals),Fluridone,S_1960,N,Clear,81001401,563.67,NA,EWM
 2017-0742,2020,2020-05-01,2020-05-31,NA,fluridone (gals),Fluridone,S_980,N,Diamond,27012500,405.02,NA,CLP
 2017-0742,2022,2022-05-01,2022-05-31,NA,fluridone (gals),Fluridone,S_1669,N,Diamond,27012500,405.02,NA,CLP
 2022-0324,2022,2022-04-01,2022-04-30,NA,fluridone (gals),Fluridone,S_1966,N,Stay,41003400,NA,NA,CLP
@@ -2514,7 +2497,6 @@ permit_number,treatment_year,start_date,end_date,treatment_size,chemicals_units,
 2020-2953,2022,2022-08-01,2022-08-31,NA,diquat (gals),Diquat Dibromide,S_1902,N,U.S. Lock & Dam #8 Pool (main channel),28000599,NA,NA,FR
 2017-1310,2017,2017-06-01,2017-06-30,NA,diquat (gals),Diquat Dibromide,S_241,N,Detroit,03038100,1868.58,NA,FR
 2017-1310,2017,2017-07-01,2017-07-31,NA,diquat (gals),Diquat Dibromide,S_241,N,Detroit,03038100,1868.58,NA,FR
-2019-0880,2020,2020-05-01,2020-05-31,NA,fluridone (gals),Fluridone,S_1183,N,Cleary,70002200,144.74,NA,CLP
 2019-0880,2022,2022-05-01,2022-05-31,NA,fluridone (gals),Fluridone,S_1847,N,Cleary,70002200,144.74,NA,CLP
 2017-0562,2022,2022-05-01,2022-05-31,NA,diquat (gals),Diquat Dibromide,S_1653,N,Cedar,70009100,792.5,NA,CLP
 2017-0389,2020,2020-05-01,2020-05-31,NA,"aquathol_k (gals), diquat (gals)","Endothall, Diquat Dibromide",S_941,N,Sarah,27019100,NA,NA,CLP
@@ -2527,7 +2509,6 @@ permit_number,treatment_year,start_date,end_date,treatment_size,chemicals_units,
 2018-0182,2019,2019-09-01,2019-09-30,NA,copper_ethnolamine (gals),Copper Complex,S_800,N,Koronis (main lake),73020002,1146.64,NA,SS
 2017-1310,2019,2019-06-01,2019-06-30,NA,diquat (gals),Diquat Dibromide,S_735,N,Detroit,03038100,1868.58,NA,FR
 2017-1310,2019,2019-07-01,2019-07-31,NA,diquat (gals),Diquat Dibromide,S_735,N,Detroit,03038100,1868.58,NA,FR
-2022-0318,2022,2022-11-01,2022-11-30,NA,fluridone (gals),Fluridone,S_1964,N,Colby,82009400,NA,NA,CLP
 2017-1312,2018,2018-06-01,2018-06-30,NA,diquat (gals),Diquat Dibromide,S_452,N,Sallie,03035900,576.81,NA,FR
 2017-1312,2018,2018-08-01,2018-08-31,NA,diquat (gals),Diquat Dibromide,S_452,N,Sallie,03035900,576.81,NA,FR
 2020-0611,2020,2020-04-01,2020-04-30,NA,fluridone (gals),Fluridone,S_1235,N,Como,62005500,65.65,NA,CLP
@@ -2563,11 +2544,9 @@ permit_number,treatment_year,start_date,end_date,treatment_size,chemicals_units,
 2017-3409,2018,2018-08-01,2018-08-31,NA,diquat (gals),Diquat Dibromide,S_504,N,Forest,82015900,1561.19,NA,FR
 2017-1310,2022,2022-06-01,2022-06-30,NA,diquat (gals),Diquat Dibromide,S_1713,N,Detroit,03038100,1868.58,NA,FR
 2017-1310,2022,2022-08-01,2022-08-31,NA,diquat (gals),Diquat Dibromide,S_1713,N,Detroit,03038100,1868.58,NA,FR
-2017-1312,2022,2022-08-01,2022-08-31,NA,diquat (gals),Diquat Dibromide,S_1715,N,Sallie,03035900,576.81,NA,FR
 2017-1210,2021,2021-09-01,2021-09-30,NA,diquat (gals),Diquat Dibromide,S_1354,N,Big Marine,82005200,1180.44,NA,EWM
 2017-1486,2019,2019-07-01,2019-07-31,NA,alligare (gals),"2,4-D",S_742,N,Minnewaska,61013000,3290.84,NA,EWM
 2017-1486,2019,2019-08-01,2019-08-31,NA,alligare (gals),"2,4-D",S_742,N,Minnewaska,61013000,3290.84,NA,EWM
-2022-0322,2022,2022-11-01,2022-11-30,NA,fluridone (gals),Fluridone,S_1965,N,Unnamed (Ravine),82008700,18.63,NA,CLP
 2017-1313,2021,2021-08-01,2021-08-31,NA,diquat (gals),Diquat Dibromide,S_1365,N,Melissa,03047500,899.47,NA,FR
 2018-3356,2019,2019-08-01,2019-08-31,NA,"copper_ethnolamine (gals), copper_triethanola (gals), komeen_crystal (lbs)",Copper Complex,S_878,N,Koronis (main lake),73020002,1146.64,NA,SS
 2018-3356,2019,2019-09-01,2019-09-30,NA,"copper_ethnolamine (gals), copper_triethanola (gals), komeen_crystal (lbs)",Copper Complex,S_878,N,Koronis (main lake),73020002,1146.64,NA,SS
@@ -2601,7 +2580,6 @@ permit_number,treatment_year,start_date,end_date,treatment_size,chemicals_units,
 2018-0238,2019,2019-07-01,2019-07-31,NA,diquat (gals),Diquat Dibromide,S_803,N,Detroit,03038100,1868.58,NA,FR
 2017-1311,2021,2021-06-01,2021-06-30,NA,diquat (gals),Diquat Dibromide,S_1363,N,Curfman,03036300,NA,NA,FR
 2017-1311,2021,2021-08-01,2021-08-31,NA,diquat (gals),Diquat Dibromide,S_1363,N,Curfman,03036300,NA,NA,FR
-2017-3409,2020,2020-09-01,2020-09-30,NA,diquat (gals),Diquat Dibromide,S_1075,N,Forest,82015900,1561.19,NA,FR
 2017-0565,2020,2020-05-01,2020-05-31,NA,"aquathol_k (gals), diquat (gals)","Endothall, Diquat Dibromide",S_966,N,Augusta,86028400,60.94,NA,CLP
 2017-0565,2020,2020-08-01,2020-08-31,NA,"aquathol_k (gals), diquat (gals)","Endothall, Diquat Dibromide",S_966,N,Augusta,86028400,60.94,NA,CLP
 2017-1311,2019,2019-06-01,2019-06-30,NA,diquat (gals),Diquat Dibromide,S_736,N,Curfman,03036300,NA,NA,FR
@@ -2636,7 +2614,6 @@ permit_number,treatment_year,start_date,end_date,treatment_size,chemicals_units,
 2017-1210,2020,2020-09-01,2020-09-30,NA,diquat (gals),Diquat Dibromide,S_1023,N,Big Marine,82005200,1180.44,NA,EWM
 2019-2885,2019,2019-09-01,2019-09-30,NA,imazapyr (gals),Imazapyr,S_922,N,North Center,13003200,NA,NA,PHR
 2019-2885,2019,2019-10-01,2019-10-31,NA,imazapyr (gals),Imazapyr,S_922,N,North Center,13003200,NA,NA,PHR
-2018-0175,2020,2020-09-01,2020-09-30,NA,,,S_1090,N,Ruth,18021200,207.08,NA,EWM
 2017-2950,2018,2018-07-01,2018-07-31,NA,"copper_ethnolamine (gals), copper_sulfate (lbs), hydrothol_liquid (gals), komeen_liquid (gals)","Copper Complex, Copper Sulfate, Endothall",S_500,N,Rice,73019600,832.55,NA,SS
 2017-2950,2018,2018-08-01,2018-08-31,NA,"copper_ethnolamine (gals), copper_sulfate (lbs), hydrothol_liquid (gals), komeen_liquid (gals)","Copper Complex, Copper Sulfate, Endothall",S_500,N,Rice,73019600,832.55,NA,SS
 2017-2950,2019,2019-07-01,2019-07-31,NA,"copper_sulfate (lbs), hydrothol_liquid (gals)","Copper Sulfate, Endothall",S_777,N,Rice,73019600,832.55,NA,SS
@@ -2788,10 +2765,7 @@ permit_number,treatment_year,start_date,end_date,treatment_size,chemicals_units,
 2017-0525,2022,2022-06-01,2022-06-30,NA,"diquat (gals), fluridone (gals)","Diquat Dibromide, Fluridone",S_1649,N,DeMontreville,82010100,142.62,NA,EWM
 2017-0525,2022,2022-10-01,2022-10-31,NA,"diquat (gals), fluridone (gals)","Diquat Dibromide, Fluridone",S_1649,N,DeMontreville,82010100,142.62,NA,EWM
 2017-0525,2022,2022-11-01,2022-11-30,NA,"diquat (gals), fluridone (gals)","Diquat Dibromide, Fluridone",S_1649,N,DeMontreville,82010100,142.62,NA,EWM
-2022-0385,2022,2022-06-01,2022-06-30,NA,fluridone (gals),Fluridone,S_1973,N,Staring,27007800,156.22,NA,EWM
 2022-0385,2022,2022-07-01,2022-07-31,NA,fluridone (gals),Fluridone,S_1973,N,Staring,27007800,156.22,NA,EWM
-2017-0384,2020,2020-06-01,2020-06-30,NA,fluridone (gals),Fluridone,S_940,N,Josephine,62005700,78.88,NA,"CLP, EWM"
-2017-0384,2020,2020-07-01,2020-07-31,NA,fluridone (gals),Fluridone,S_940,N,Josephine,62005700,78.88,NA,"CLP, EWM"
 2017-0526,2022,2022-06-01,2022-06-30,NA,"diquat (gals), fluridone (gals)","Diquat Dibromide, Fluridone",S_1650,N,Olson,82010300,87.38,NA,EWM
 2017-0526,2022,2022-10-01,2022-10-31,NA,"diquat (gals), fluridone (gals)","Diquat Dibromide, Fluridone",S_1650,N,Olson,82010300,87.38,NA,EWM
 2017-0526,2022,2022-11-01,2022-11-30,NA,"diquat (gals), fluridone (gals)","Diquat Dibromide, Fluridone",S_1650,N,Olson,82010300,87.38,NA,EWM
@@ -3455,485 +3429,529 @@ permit_number,treatment_year,start_date,end_date,treatment_size,chemicals_units,
 2017-0365,2021,2021-05-12,2021-05-12,7,Tribune (gal),Diquat Dibromide,P_17,Y,Long,47017700,787.03,0.0089,CLP
 2017-0365,2021,2021-05-12,2021-05-12,18.5,Aquathol K (gal),Endothall,P_16,Y,Long,47017700,787.03,0.0235,CLP
 2017-0365,2024,2024-05-08,2024-05-08,48.8,Tribune (gal),Diquat Dibromide,P_18,Y,Long,47017700,787.03,0.062,CLP
-2017-0377,2022,2022-06-02,2022-06-02,5.8,Aquathol K (gal),Endothall,P_19,Y,Pelican,56078600,1608.25,0.0036,CLP
-2017-0378,2022,2022-06-03,2022-06-03,8.4,Aquathol K (gal),Endothall,P_20,Y,Little Pelican,56076100,NA,NA,CLP
-2017-0384,2020,2020-04-30,2020-04-30,117,Sonar A.S. (gal),Fluridone,P_21,Y,Josephine,62005700,78.88,1.4833,"CLP, EWM"
-2017-0389,2021,2021-05-16,2021-05-16,66.2,Aquathol K (gal),Endothall,P_22,Y,Sarah,27019100,NA,NA,CLP
-2017-0389,2021,2021-05-19,2021-05-23,29.05,Tribune (gal),Diquat Dibromide,P_23,Y,Sarah,27019100,NA,NA,CLP
-2017-0389,2022,2022-05-26,2022-05-26,67.51,"Aquathol K (gal), Tribune (gal)","Endothall, Diquat Dibromide","P_24, P_25",Y,Sarah,27019100,NA,NA,CLP
-2017-0389,2023,2023-05-23,2023-05-23,4.4,Tribune (gal),Diquat Dibromide,P_26,Y,Sarah,27019100,NA,NA,CLP
-2017-0389,2025,2025-05-08,2025-05-08,26.7,FlumigardSC (gal),Flumioxazin,P_27,Y,Sarah,27019100,NA,NA,CLP
-2017-039,2020,2020-05-21,2020-05-21,1.7,Aquathol K (gal),Endothall,P_28,Y,NA,NA,NA,NA,NA
-2017-0407,2022,2022-05-17,2022-05-17,7.7,Tribune (gal),Diquat Dibromide,P_29,Y,Lucy,10000700,68.27,0.1128,CLP
-2017-0417,2020,2020-06-03,2020-06-03,5,Tribune (gal),Diquat Dibromide,P_30,Y,Lower Prior,70002600,589.7,0.0085,EWM
-2017-0417,2022,2022-06-10,2022-06-10,5,Tribune (gal),Diquat Dibromide,P_31,Y,Lower Prior,70002600,589.7,0.0085,EWM
-2017-0417,2023,2023-06-19,2023-06-19,7.3999999999999995,Tribune (gal),Diquat Dibromide,P_32,Y,Lower Prior,70002600,589.7,0.0125,EWM
-2017-0422,2020,2020-07-17,2020-07-17,15,"2,4-D Amine (gal)",NA,P_33,Y,Fish,27011800,80.41,0.1865,UNKNOWN
-2017-0434,2020,2020-08-18,2020-08-18,8.43,ProcellaCOR EC (PDU),Florpyrauxifen-benzyl,P_35,Y,Sturgeon,58006700,727.33,0.0116,EWM
-2017-0434,2020,2020-08-18,2020-08-18,27.63,"2,4-D Amine (gal)",NA,P_34,Y,Sturgeon,58006700,727.33,0.038,EWM
-2017-0434,2022,2022-07-29,2022-07-29,42.69,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_36,Y,Sturgeon,58006700,727.33,0.0587,EWM
-2017-0434,2025,2025-08-20,2025-08-20,5.92,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_37,Y,Sturgeon,58006700,727.33,0.0081,EWM
-2017-0437,2020,2020-08-18,2020-08-18,10,ProcellaCOR EC (PDU),Florpyrauxifen-benzyl,P_38,Y,Sand,58008100,234.85,0.0426,EWM
-2017-0437,2022,2022-07-29,2022-07-29,13.95,ProcellaCOR EC (PDU),Florpyrauxifen-benzyl,P_39,Y,Sand,58008100,234.85,0.0594,EWM
-2017-0442,2020,2020-07-17,2020-07-17,1.6500000000000001,"2,4-D Amine (gal)",NA,P_40,Y,Big,71008200,116.41,0.0142,EWM
-2017-0442,2023,2023-07-21,2023-07-21,4.5,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_41,Y,Big,71008200,116.41,0.0387,EWM
-2017-0445,2020,2020-07-17,2020-07-17,13.299999999999999,"2,4-D Amine (gal)",NA,P_42,Y,Mitchell,71008100,90.38,0.1472,EWM
-2017-0447,2022,2024-05-23,2024-05-23,11.9,Aquathol K (gal),Endothall,P_43,Y,Ann,86019000,282.16,0.0422,CLP
-2017-0447,2024,2024-05-14,2024-05-14,11.9,Aquathol K (gal),Endothall,P_44,Y,Ann,86019000,282.16,0.0422,CLP
-2017-0511,2023,2023-05-09,2023-05-09,6.58,Aquathol K (gal),Endothall,P_45,Y,East Jefferson,40009201,331.52,0.0198,CLP
-2017-0512,2021,2021-05-19,2021-05-19,29.9,Aquathol K (gal),Endothall,P_46,Y,Middle Jefferson,40009204,654.93,0.0457,CLP
-2017-0512,2022,2022-05-18,2022-05-18,27.6,Aquathol K (gal),Endothall,P_47,Y,Middle Jefferson,40009204,654.93,0.0421,CLP
-2017-0512,2024,2024-05-03,2024-05-03,18.689999999999998,Aquathol K (gal),Endothall,P_48,Y,Middle Jefferson,40009204,654.93,0.0285,CLP
-2017-0513,2021,2021-05-19,2021-05-19,7.720000000000001,Aquathol K (gal),Endothall,P_49,Y,West Jefferson,40009202,348.68,0.0221,CLP
-2017-0522,2020,2020-04-30,2020-04-30,9,Tribune (gal),Diquat Dibromide,P_50,Y,Hyland,27004800,83.91,0.1073,CLP
-2017-0522,2021,2021-04-05,2021-04-05,84,Sonar A.S. (gal),Fluridone,P_51,Y,Hyland,27004800,83.91,1.0011,CLP
-2017-0522,2024,2024-04-02,2024-04-02,37,Sonar A.S. (gal),Fluridone,P_52,Y,Hyland,27004800,83.91,0.4409,CLP
-2017-0525,2023,2023-05-02,2023-05-02,157.06,Sonar A.S. (gal),Fluridone,P_53,Y,DeMontreville,82010100,142.62,1.1012,EWM
-2017-0526,2021,2021-06-02,2021-06-02,9.2,Tribune (gal),Diquat Dibromide,P_54,Y,Olson,82010300,87.38,0.1053,EWM
-2017-0533,2021,2021-05-26,2021-05-26,8.2,Aquathol K (gal),Endothall,P_55,Y,Detroit,03038100,1868.58,0.0044,CLP
-2017-0534,2021,2021-05-26,2021-05-26,4.7,Aquathol K (gal),Endothall,P_56,Y,Sallie,03035900,576.81,0.0081,CLP
-2017-0534,2021,2021-05-26,2021-05-26,7.6,Tribune (gal),Diquat Dibromide,P_57,Y,Sallie,03035900,576.81,0.0132,CLP
-2017-0534,2022,2022-06-03,2022-06-03,7.6,Tribune (gal),Diquat Dibromide,P_58,Y,Sallie,03035900,576.81,0.0132,CLP
-2017-0562,2022,2022-06-07,2022-06-07,132.6,Tribune (gal),Diquat Dibromide,P_59,Y,Cedar,70009100,792.5,0.1673,CLP
-2017-0562,2023,2023-04-14,2023-04-14,793,Sonar A.S. (gal),Fluridone,P_60,Y,Cedar,70009100,792.5,1.0006,CLP
-2017-0566,2021,2021-05-17,2021-05-17,16.5,Tribune (gal),Diquat Dibromide,P_61,Y,McMahon,70005000,162.26,0.1017,CLP
-2017-0573,2021,2021-05-07,2021-05-07,35,Tribune (gal),Diquat Dibromide,P_62,Y,Rebecca,27019200,122.72,0.2852,"EWM, CLP"
-2017-0582,2021,2021-05-24,2021-05-24,17.64,Tribune (gal),Diquat Dibromide,P_63,Y,O'Dowd,70009500,273.58,0.0645,CLP
-2017-0600,2021,2021-07-16,2021-07-16,5.3,ProcellaCOR (oz),Florpyrauxifen-benzyl,P_64,Y,Fish,86018300,54.16,0.0979,EWM
-2017-0600,2022,2022-09-28,2022-09-28,3.3,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_65,Y,Fish,86018300,54.16,0.0609,EWM
-2017-0600,2024,2024-07-12,2024-07-12,7.9,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_66,Y,Fish,86018300,54.16,0.1459,EWM
-2017-0620,2020,2020-05-19,2020-05-19,27.8,Aquathol K (gal),Endothall,P_67,Y,Quamba,33001500,226.37,0.1228,CLP
-2017-0621,2020,2020-05-04,2020-05-04,40.9,Dibrox (gal),Diquat Dibromide,P_68,Y,Linwood,02002600,484.91,0.0843,CLP
-2017-0621,2021,2021-05-05,2021-05-05,42.3,Dibrox (gal),Diquat Dibromide,P_69,Y,Linwood,02002600,484.91,0.0872,CLP
-2017-0645,2021,2021-05-24,2021-05-24,7.42,Tribune (gal),Diquat Dibromide,P_70,Y,Thole,70012001,118.52,0.0626,CLP
-2017-0653,2020,2020-07-20,2020-07-20,4.91,Dibrox (gal),Diquat Dibromide,P_71,Y,Long,62006700,117.29,0.0419,EWM
-2017-0653,2025,2025-07-02,2025-07-02,8.79,ProcellaCOR EC (PDU),Florpyrauxifen-benzyl,P_72,Y,Long,62006700,117.29,0.0749,EWM
-2017-0663,2022,2022-05-22,2022-05-22,5.12,Aquathol K (gal),Endothall,P_73,Y,Brooks,86026400,58.31,0.0878,CLP
-2017-0663,2023,2022-05-15,2022-05-15,2,Aquathol K (gal),Endothall,P_74,Y,Brooks,86026400,58.31,0.0343,CLP
-2017-0663,2024,2024-04-24,2024-04-24,7.12,Aquathol K (gal),Endothall,P_75,Y,Brooks,86026400,58.31,0.1221,CLP
-2017-0666,2024,2024-05-30,2024-05-30,428.9,Sonar A.S. (gal),Fluridone,P_76,Y,Clear,82016300,270.31,1.5867,EWM
-2017-0667,2020,2020-05-12,2020-05-12,5.31,Aquathol K (gal),Endothall,P_77,Y,Clear,82016300,270.31,0.0196,CLP
-2017-0671,2020,2020-05-15,2020-05-15,24,Aquathol K (gal),Endothall,P_78,Y,Limestone,86016300,97.93,0.2451,CLP
-2017-0671,2021,2021-05-05,2021-05-05,23.959999999999997,Aquathol K (gal),Endothall,P_79,Y,Limestone,86016300,97.93,0.2447,CLP
-2017-0729,2020,2020-08-06,2020-08-06,9.72,Dibrox (gal),Diquat Dibromide,P_80,Y,Scandinavian,61004100,229.73,0.0423,EWM
-2017-0729,2022,2022-07-15,2022-07-15,32.5,"2,4-D Amine (gal)",NA,P_81,Y,Scandinavian,61004100,229.73,0.1415,EWM
-2017-0729,2025,2025-07-17,2025-07-17,42.5,"2,4-D Amine (gal)",NA,P_82,Y,Scandinavian,61004100,229.73,0.185,EWM
-2017-0742,2020,2020-04-13,2020-04-13,405,Sonar A.S. (gal),Fluridone,P_83,Y,Diamond,27012500,405.02,1,CLP
-2017-0742,2021,2021-04-07,2021-04-07,405,Sonar A.S. (gal),Fluridone,P_84,Y,Diamond,27012500,405.02,1,CLP
-2017-0742,2022,2022-04-20,2022-04-20,405,Sonar A.S. (gal),Fluridone,P_85,Y,Diamond,27012500,405.02,1,CLP
-2017-0742,2023,2023-05-15,2023-05-15,45.1,Tribune (gal),Diquat Dibromide,P_86,Y,Diamond,27012500,405.02,0.1114,CLP
-2017-0742,2024,2024-04-24,2024-04-24,59.7,Tribune (gal),Diquat Dibromide,P_87,Y,Diamond,27012500,405.02,0.1474,CLP
-2017-0743,2020,2020-05-27,2020-05-27,2.73,Aquathol K (gal),Endothall,P_88,Y,Gun,01009900,370.28,0.0074,CLP
-2017-0753,2021,2021-05-07,2021-05-07,9.1,Dibrox (gal),Diquat Dibromide,P_89,Y,Mooney,27013400,NA,NA,CLP
-2017-0820,2020,2020-05-19,2020-05-19,13.5,Tribune (gal),Diquat Dibromide,P_90,Y,Cedar,86022700,276.72,0.0488,CLP
-2017-0823,2024,2024-08-26,2024-08-26,28.8,Platoon (gal),"2,4-D",P_91,Y,Linwood,02002600,484.91,0.0594,EWM
-2017-0825,2020,2020-08-20,2020-08-20,6.82,"2,4-D Amine (gal)",NA,P_92,Y,Middle Spunk,73012800,79.01,0.0863,EWM
-2017-0825,2021,2021-08-09,2021-08-09,1.23,Platoon (gal),"2,4-D",P_93,Y,Middle Spunk,73012800,79.01,0.0156,EWM
-2017-0825,2022,2022-08-04,2022-08-04,18.3,"2,4-D Amine (gal)",NA,P_94,Y,Middle Spunk,73012800,79.01,0.2316,EWM
-2017-0828,2020,2020-07-22,2020-07-22,17.2,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_95,Y,Pulaski (main bay),86005302,138.77,0.1239,EWM
-2017-0828,2021,2021-07-09,2021-07-09,16.7,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_96,Y,Pulaski (main bay),86005302,138.77,0.1203,EWM
-2017-0830,2021,2021-05-26,2021-05-26,1.17,Aquathol K (gal),Endothall,P_97,Y,Lewis,33003200,80.88,0.0145,CLP
-2017-0830,2024,2025-04-29,2025-04-29,5.13,Propeller (lbs),NA,P_98,Y,Lewis,33003200,80.88,0.0634,CLP
-2017-0857,2021,2021-05-06,2021-05-06,63.21,Tribune (gal),Diquat Dibromide,P_99,Y,Medicine,27010400,434.53,0.1455,CLP
-2017-0857,2022,2022-05-16,2022-05-16,119.5,"Galleon SC (gal), Kammo Plus (gal), Tribune (gal)","Penoxsulam, Limonene, Diquat Dibromide","P_100, P_101, P_102",Y,Medicine,27010400,434.53,0.275,CLP
-2017-0871,2020,2020-05-27,2020-05-27,2.5,Aquathol K (gal),Endothall,P_103,Y,Indian,86022300,57.13,0.0438,CLP
-2017-0871,2021,2021-05-05,2021-05-05,4.6,Aquathol K (gal),Endothall,P_104,Y,Indian,86022300,57.13,0.0805,CLP
-2017-0871,2022,2022-05-23,2022-05-23,2.73,Aquathol K (gal),Endothall,P_105,Y,Indian,86022300,57.13,0.0478,CLP
-2017-0873,2020,2020-07-01,2020-07-01,8.5,"2,4-D Amine (gal)",NA,P_106,Y,Indian,86022300,57.13,0.1488,EWM
-2017-0873,2022,2022-07-25,2022-07-25,5.75,"2,4-D Amine (gal)",NA,P_107,Y,Indian,86022300,57.13,0.1006,EWM
-2017-0892,2022,2022-05-17,2022-05-17,14.39,Aquathol K (gal),Endothall,P_108,Y,Beebe,86002300,179.49,0.0802,CLP
-2017-0892,2023,2023-05-07,2023-05-07,14.39,Aquathol K (gal),Endothall,P_109,Y,Beebe,86002300,179.49,0.0802,CLP
-2017-0917,2020,2020-05-12,2020-05-12,59.309999999999995,Aquathol K (gal),Endothall,P_110,Y,Forest,82015900,1561.19,0.038,CLP
-2017-0968,2021,2021-05-10,2021-05-10,5.1,Aquathol K (gal),Endothall,P_111,Y,Crystal,27003400,NA,NA,CLP
-2017-0973,2020,2020-05-08,2020-05-08,5.18,Aquathol K (gal),Endothall,P_112,Y,Sebie,18016100,NA,NA,CLP
-2017-1005,2021,2021-05-19,2021-05-19,7.8,Aquathol K (gal),Endothall,P_113,Y,Upper South Long,18009600,292.08,0.0267,CLP
-2017-1005,2022,2022-06-01,2022-06-01,4.4,Aquathol K (gal),Endothall,P_114,Y,Upper South Long,18009600,292.08,0.0151,CLP
-2017-1027,2020,2020-05-11,2020-05-11,46.9,Dibrox (gal),Diquat Dibromide,P_115,Y,George,02009100,383.26,0.1224,CLP
-2017-1027,2021,2021-05-24,2021-05-24,28.330000000000002,Dibrox (gal),Diquat Dibromide,P_116,Y,George,02009100,383.26,0.0739,CLP
-2017-1028,2022,2022-05-27,2022-05-27,37.65,Tribune (gal),Diquat Dibromide,P_117,Y,George,02009100,383.26,0.0982,EWM
-2017-1028,2024,2024-05-20,2024-05-20,37.1,Dibrox (gal),Diquat Dibromide,P_118,Y,George,02009100,383.26,0.0968,EWM
-2017-1028,2025,2025-05-14,2025-05-14,32.230000000000004,Diquat Herbicide (gal),Diquat Dibromide,P_119,Y,George,02009100,383.26,0.0841,EWM
-2017-1032,2023,2023-06-28,2023-06-28,11,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_120,Y,Charlotte,86001100,89.71,0.1226,EWM
-2017-1034,2020,2020-07-09,2020-07-09,6.9,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_121,Y,Granite,86021700,118.18,0.0584,EWM
-2017-1034,2025,2025-09-22,2025-09-22,6.5,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_122,Y,Granite,86021700,118.18,0.055,EWM
-2017-1036,2022,2022-05-26,2022-05-26,14.3,Aquathol K (gal),Endothall,P_123,Y,Marie,73001400,124.97,0.1144,CLP
-2017-1037,2020,2020-05-15,2020-05-15,4.8,Tribune (gal),Diquat Dibromide,P_124,Y,Minnetonka-Carsons Bay,27013303,78.86,0.0609,CLP
-2017-1037,2021,2021-05-24,2021-05-24,14.1,Tribune (gal),Diquat Dibromide,P_125,Y,Minnetonka-Carsons Bay,27013303,78.86,0.1788,CLP
-2017-1037,2022,2022-06-01,2022-06-01,23.4,Tribune (gal),Diquat Dibromide,P_126,Y,Minnetonka-Carsons Bay,27013303,78.86,0.2967,CLP
-2017-1038,2020,2020-07-10,2020-07-10,4.95,"Kammo Plus (gal), ProcellaCOR EC (oz), Tribune (gal)","Limonene, Florpyrauxifen-benzyl, Diquat Dibromide","P_127, P_128, P_129",Y,Minnetonka-Carsons Bay,27013303,78.86,0.0628,EWM
-2017-1038,2021,2021-06-29,2021-06-29,10.5,"ProcellaCOR (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_130, P_131",Y,Minnetonka-Carsons Bay,27013303,78.86,0.1331,EWM
-2017-1038,2022,2022-08-09,2022-08-09,12,Tribune (gal),Diquat Dibromide,P_132,Y,Minnetonka-Carsons Bay,27013303,78.86,0.1522,EWM
-2017-1038,2025,2025-04-29,2025-04-29,115,Sonar A.S. (gal),Fluridone,P_133,Y,Minnetonka-Carsons Bay,27013303,78.86,1.4583,EWM
-2017-1039,2020,2020-07-08,2020-07-08,33.25,"ProcellaCOR EC (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_134, P_135",Y,Minnetonka-Grays Bay,27013301,164.54,0.2021,EWM
-2017-1039,2021,2021-06-29,2021-06-29,22.98,"ProcellaCOR (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_136, P_137",Y,Minnetonka-Grays Bay,27013301,164.54,0.1397,EWM
-2017-1041,2021,2021-06-18,2021-06-18,11.6,"ProcellaCOR EC (gal), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_138, P_139",Y,Minnetonka-Upper Lake,27013305,1699.3,0.0068,EWM
-2017-1041,2022,2022-07-01,2022-07-01,12,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_140,Y,Minnetonka-Upper Lake,27013305,1699.3,0.0071,EWM
-2017-1042,2020,2020-05-29,2020-05-29,12.7,Tribune (gal),Diquat Dibromide,P_141,Y,Minnetonka-St. Albans Bay,27013304,103.16,0.1231,CLP
-2017-1042,2021,2021-05-26,2021-05-26,28.2,Tribune (gal),Diquat Dibromide,P_142,Y,Minnetonka-St. Albans Bay,27013304,103.16,0.2734,CLP
-2017-1043,2020,2020-07-23,2020-07-23,3.84,"Kammo Plus (gal), ProcellaCOR EC (oz), Tribune (gal)","Limonene, Florpyrauxifen-benzyl, Diquat Dibromide","P_143, P_144, P_145",Y,Minnetonka-St. Albans Bay,27013304,103.16,0.0372,EWM
-2017-1043,2022,2022-05-11,2022-05-11,160,Sonar A.S. (gal),Fluridone,P_147,Y,Minnetonka-St. Albans Bay,27013304,103.16,1.551,EWM
-2017-1043,2022,2022-06-09,2022-06-09,100,Sonar A.S. (gal),Fluridone,P_146,Y,Minnetonka-St. Albans Bay,27013304,103.16,0.9694,EWM
-2017-1043,2022,2022-07-13,2022-07-13,160,Sonar (gal),NA,P_148,Y,Minnetonka-St. Albans Bay,27013304,103.16,1.551,EWM
-2017-1044,2020,2020-05-15,2020-05-15,47.7,Tribune (gal),Diquat Dibromide,P_149,Y,Minnetonka-North Arm,27013313,169.2,0.2819,CLP
-2017-1044,2021,2021-05-26,2021-05-26,50.1,Tribune (gal),Diquat Dibromide,P_150,Y,Minnetonka-North Arm,27013313,169.2,0.2961,CLP
-2017-1044,2025,2025-05-07,2025-05-07,53.62,Tribune (gal),Diquat Dibromide,P_151,Y,Minnetonka-North Arm,27013313,169.2,0.3169,CLP
-2017-1047,2020,2020-06-11,2020-06-11,17,Tribune (gal),Diquat Dibromide,P_152,Y,Minnetonka-Crystal Bay,27013310,317.36,0.0536,EWM
-2017-1047,2022,2022-07-26,2022-07-26,52.9,ProcellaCOR (oz),Florpyrauxifen-benzyl,P_153,Y,Minnetonka-Crystal Bay,27013310,317.36,0.1667,EWM
-2017-1050,2020,2020-05-14,2020-05-14,1034,Sonar A.S. (gal),Fluridone,P_154,Y,Benton,41004300,2649.41,0.3903,CLP
-2017-1050,2021,2021-04-14,2021-04-14,1034,Sonar A.S. (gal),Fluridone,P_155,Y,Benton,41004300,2649.41,0.3903,CLP
-2017-1072,2020,2020-05-20,2020-05-20,43.2,Aquathol K (gal),Endothall,P_156,Y,Platte,18008800,1615.91,0.0267,CLP
-2017-1072,2021,2021-05-21,2021-05-21,42.3,Aquathol K (gal),Endothall,P_157,Y,Platte,18008800,1615.91,0.0262,CLP
-2017-1083,2021,2021-05-05,2021-05-05,9.2,Tribune (gal),Diquat Dibromide,P_158,Y,Coon,02004200,1331.96,0.0069,CLP
-2017-1092,2021,2021-07-12,2021-07-12,22.83,"ProcellaCOR EC (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_159, P_160",Y,Coon,02004200,1331.96,0.0171,EWM
-2017-1092,2022,2022-07-22,2022-07-22,40.3,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_161,Y,Coon,02004200,1331.96,0.0303,EWM
-2017-1097,2020,2020-05-19,2020-05-19,36.6,Dibrox (gal),Diquat Dibromide,P_162,Y,Minnewashta,10000900,337.89,0.1083,CLP
-2017-1097,2021,2021-05-18,2021-05-18,41.1,Dibrox (gal),Diquat Dibromide,P_163,Y,Minnewashta,10000900,337.89,0.1216,CLP
-2017-1154,2020,2020-05-04,2020-05-04,72.6,Diquat Herbicide (gal),Diquat Dibromide,P_164,Y,Bald Eagle,62000200,589.06,0.1232,CLP
-2017-1154,2022,2023-05-16,2023-05-16,68.92999999999999,Tribune (gal),Diquat Dibromide,P_165,Y,Bald Eagle,62000200,589.06,0.117,CLP
-2017-1210,2020,2020-07-16,2020-07-16,3.76,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_166,Y,Big Marine,82005200,1180.44,0.0032,EWM
-2017-1210,2022,2022-08-04,2022-08-04,5.18,"ProcellaCOR (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_167, P_168",Y,Big Marine,82005200,1180.44,0.0044,EWM
-2017-1297,2021,2021-05-05,2021-05-05,10,Aquathol K (gal),Endothall,P_169,Y,Farquar,19002300,63.58,0.1573,CLP
-2017-1297,2022,2022-05-10,2022-05-10,9.27,Aquathol K (gal),Endothall,P_170,Y,Farquar,19002300,63.58,0.1458,CLP
-2017-1306,2020,2020-05-11,2020-05-11,24.5,Aquathol K (gal),Endothall,P_171,Y,Cedar,66005200,667.27,0.0367,CLP
-2017-1306,2021,2021-05-12,2021-05-12,18.8,Aquathol K (gal),Endothall,P_172,Y,Cedar,66005200,667.27,0.0282,CLP
-2017-1306,2022,2022-05-10,2022-05-10,35,Aquathol K (gal),Endothall,P_173,Y,Cedar,66005200,667.27,0.0525,CLP
-2017-1306,2023,2023-05-11,2023-05-11,50,Aquathol K (gal),Endothall,P_174,Y,Cedar,66005200,667.27,0.0749,CLP
-2017-1307,2020,2020-05-06,2020-05-06,5.8,Aquathol K (gal),Endothall,P_176,Y,Clear,81001401,563.67,0.0103,CLP
-2017-1307,2020,2020-05-06,2020-05-06,24.2,Aquathol K (),Endothall,P_175,Y,Clear,81001401,563.67,0.0429,CLP
-2017-1312,2022,2022-06-28,2022-06-28,31.1,Tribune (gal),Diquat Dibromide,P_177,Y,Sallie,03035900,576.81,0.053900000000000003,FR
-2017-1313,2021,2021-06-28,2021-06-28,24,Tribune (gal),Diquat Dibromide,P_178,Y,Melissa,03047500,899.47,0.0267,FR
-2017-1367,2023,2023-08-25,2023-08-25,3.06,Platoon (gal),"2,4-D",P_179,Y,East Lake Sylvia,86028900,209.54,0.0146,EWM
-2017-1379,2022,2022-08-22,2022-08-22,44.4,"2,4-D Amine (gal)",NA,P_180,Y,Howard,86019900,317.59,0.1398,EWM
-2017-1486,2020,2020-08-21,2020-08-21,18.14,"2,4-D Amine (gal)",NA,P_181,Y,Minnewaska,61013000,3290.84,0.0055,EWM
-2017-1486,2021,2021-07-16,2021-07-16,16.74,"2,4-D Amine (gal)",NA,P_182,Y,Minnewaska,61013000,3290.84,0.0051,EWM
-2017-1486,2022,2022-09-13,2022-09-13,5.27,"2,4-D Amine (gal)",NA,P_183,Y,Minnewaska,61013000,3290.84,0.0016,EWM
-2017-1500,2022,2022-06-22,2022-06-22,37.099999999999994,"2,4-D Amine (gal)",NA,P_184,Y,Ballantyne,07005400,328.59,0.1129,EWM
-2017-1500,2023,2023-06-27,2023-06-27,10.6,"2,4-D Amine (gal)",NA,P_185,Y,Ballantyne,07005400,328.59,0.0323,EWM
-2017-1507,2020,2020-05-12,2020-05-12,10.1,Tribune (gal),Diquat Dibromide,P_186,Y,Maple,86013400,NA,NA,CLP
-2017-1507,2021,2021-05-11,2021-05-11,10.1,Tribune (gal),Diquat Dibromide,P_187,Y,Maple,86013400,NA,NA,CLP
-2017-1512,2020,2020-07-10,2020-07-10,11,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_188,Y,Chub,09000800,172.92,0.0636,EWM
-2017-1512,2021,2021-06-24,2021-06-24,13.2,ProcellaCOR (oz),Florpyrauxifen-benzyl,P_189,Y,Chub,09000800,172.92,0.0763,EWM
-2017-1565,2021,2021-05-17,2021-05-17,16.46,Tribune (gal),Diquat Dibromide,P_190,Y,Marion,19002600,417.99,0.0394,CLP
-2017-1707,2022,2022-05-19,2022-05-19,9.6,Aquathol K (gal),Endothall,P_191,Y,Mayo,18040800,156.39,0.0614,CLP
-2017-1709,2020,2020-05-12,2020-05-12,5.140000000000001,Aquathol K (gal),Endothall,P_192,Y,Bone,82005400,119.4,0.043,CLP
-2017-1709,2021,2021-05-26,2021-05-26,4.38,Aquathol K (gal),Endothall,P_193,Y,Bone,82005400,119.4,0.0367,CLP
-2017-1779,2023,2023-05-30,2023-05-30,42.6,Aquathol K (gal),Endothall,P_194,Y,Smith,21001600,363.97,0.117,CLP
-2017-1825,2020,2020-05-15,2020-05-15,58.74,Aquathol K (gal),Endothall,P_195,Y,Tetonka,40003100,551.22,0.1066,CLP
-2017-1825,2021,2021-05-18,2021-05-18,58.74,Aquathol K (gal),Endothall,P_196,Y,Tetonka,40003100,551.22,0.1066,CLP
-2017-1826,2025,2025-05-05,2025-05-05,5.5,FlumigardSC (gal),Flumioxazin,P_197,Y,Grave,18011000,NA,NA,CLP
-2017-1827,2022,2023-05-15,2023-05-15,19.9,Aquathol K (gal),Endothall,P_198,Y,Crow Wing,18015500,202.02,0.0985,CLP
-2017-1881,2020,2020-05-15,2020-05-15,27.3,Tribune (gal),Diquat Dibromide,P_199,Y,Minnetonka-Upper Lake,27013305,1699.3,0.0161,CLP
-2017-1881,2022,2022-06-01,2022-06-01,25,Tribune (gal),Diquat Dibromide,P_200,Y,Minnetonka-Upper Lake,27013305,1699.3,0.0147,CLP
-2017-1978,2020,2020-09-18,2020-09-18,6.71,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_201,Y,Jane,82010400,109.71,0.0612,EWM
-2017-1982,2020,2020-05-29,2020-05-29,6.52,Tribune (gal),Diquat Dibromide,P_202,Y,Silver,62000100,71.82,0.0908,"EWM, CLP"
-2017-1984,2024,2024-10-09,2024-10-09,4.41,Platoon (gal),"2,4-D",P_203,Y,Unnamed,29055400,NA,NA,NA
-2017-1985,2020,2020-06-22,2020-06-22,16.415,"2,4-D Amine (gal)",NA,P_204,Y,Bay,18003400,878.98,0.0187,EWM
-2017-1985,2021,2021-06-22,2021-06-22,7.288,Platoon (gal),"2,4-D",P_207,Y,Bay,18003400,878.98,0.0083,EWM
-2017-1985,2021,2021-10-11,2021-10-11,6.5,Dibrox (gal),Diquat Dibromide,P_206,Y,Bay,18003400,878.98,0.0074,EWM
-2017-1985,2021,2021-10-11,2021-10-12,83.34,"2,4-D Amine (gal)",NA,P_205,Y,Bay,18003400,878.98,0.0948,EWM
-2017-1985,2022,2022-06-27,2022-06-27,7.2219999999999995,"2,4-D Amine (gal)",NA,P_208,Y,Bay,18003400,878.98,0.0082,EWM
-2017-1985,2024,2024-10-08,2024-10-09,33.68,Platoon (gal),"2,4-D",P_209,Y,Bay,18003400,878.98,0.0383,EWM
-2017-2060,2023,2023-07-21,2023-07-21,1.7,Cutrine-Plus (gal),NA,P_210,Y,West Lake Sylvia,86027900,297.1,0.0057,SS
-2017-2067,2022,2022-06-22,2022-06-22,12,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_211,Y,Elmo,82010600,66.38,0.1808,EWM
-2017-2067,2023,2023-06-16,2023-06-16,12,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_212,Y,Elmo,82010600,66.38,0.1808,EWM
-2017-2184,2020,2020-05-13,2020-05-13,5.9,Tribune (gal),Diquat Dibromide,P_213,Y,Crooked,02008400,84.02,0.0702,CLP
-2017-2184,2021,2021-05-18,2021-05-18,1.9,Tribune (gal),Diquat Dibromide,P_214,Y,Crooked,02008400,84.02,0.0226,CLP
-2017-2726,2021,2021-06-22,2021-06-22,29.08,Tribune (gal),Diquat Dibromide,P_215,Y,Sarah,27019100,NA,NA,EWM
-2017-2726,2022,2022-07-01,2022-07-01,8.76,Tribune (gal),Diquat Dibromide,P_216,Y,Sarah,27019100,NA,NA,EWM
-2017-2726,2023,2023-06-23,2023-06-23,2.8,Tribune (gal),Diquat Dibromide,P_218,Y,Sarah,27019100,NA,NA,EWM
-2017-2726,2023,2023-10-02,2023-10-02,23.12,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_217,Y,Sarah,27019100,NA,NA,EWM
-2017-2765,2021,2021-06-08,2021-06-08,21.2,"2,4-D Amine (gal)",NA,P_219,Y,Rays,40005600,151.1,0.1403,EWM
-2017-2771,2020,2020-07-08,2020-07-08,1,"Kammo Plus (gal), Tribune (gal)","Limonene, Diquat Dibromide","P_220, P_221",Y,Minnetonka-Grays Bay,27013301,164.54,0.0061,EWM
-2017-2870,2021,2021-07-15,2021-07-15,23.85,Weedar 64 (gal),"2,4-D",P_223,Y,White Bear,82016700,1334.41,0.0179,EWM
-2017-2870,2021,2021-07-15,2021-07-15,26.669999999999998,Triclopyr 3 (gal),Triclopyr,P_222,Y,White Bear,82016700,1334.41,0.02,EWM
-2017-2870,2022,2022-07-13,2022-07-13,32.7,Triclopyr 3 (gal),Triclopyr,P_224,Y,White Bear,82016700,1334.41,0.0245,EWM
-2017-3015,2020,2020-09-09,2020-09-09,0.76,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_225,Y,Bear,09003400,70.07,0.0108,EWM
-2017-3315,2020,2020-07-02,2020-07-02,16.6,"ProcellaCOR (gal), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_226, P_227",Y,Turtle,62006100,284.18,0.0584,EWM
-2017-3315,2021,2021-06-30,2021-06-30,29.85,"ProcellaCOR (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_228, P_229",Y,Turtle,62006100,284.18,0.105,EWM
-2017-3315,2022,2022-06-28,2022-06-28,42.6,"ProcellaCOR (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_230, P_231",Y,Turtle,62006100,284.18,0.1499,EWM
-2017-3409,2020,2020-08-06,2020-08-06,5.91,Tribune (gal),Diquat Dibromide,P_232,Y,Forest,82015900,1561.19,0.0038,FR
-2017-365,2022,2022-05-22,2022-05-22,43.62,Tribune (gal),Diquat Dibromide,P_233,Y,NA,NA,NA,NA,NA
-2017-459,2020,2020-07-01,2020-07-01,6,"2,4-D Amine (gal)",NA,P_234,Y,NA,NA,NA,NA,NA
-2018-0004,2021,2021-08-05,2021-08-05,4.6,"ProcellaCOR (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_235, P_236",Y,Roosevelt,11004300,302.23,0.0152,EWM
-2018-0035,2021,2021-08-04,2021-08-04,0.27,ProcellaCOR (oz),Florpyrauxifen-benzyl,P_237,Y,Girl,11017400,265.94,0.001,EWM
-2018-0093,2021,2021-05-11,2021-05-11,28.4,Tribune (gal),Diquat Dibromide,P_238,Y,Two Rivers,73013800,221.09,0.1285,CLP
-2018-0093,2022,2022-05-25,2022-05-25,7.8,Tribune (gal),Diquat Dibromide,P_239,Y,Two Rivers,73013800,221.09,0.0353,CLP
-2018-0117,2022,2022-05-10,2022-05-10,12.799999999999999,Aquathol K (gal),Endothall,P_240,Y,Winsted,43001200,382.44,0.0335,CLP
-2018-0118,2020,2020-05-05,2020-05-05,35.2,Aquathol K (gal),Endothall,P_241,Y,Pearl,73003700,558.63,0.063,CLP
-2018-0118,2025,2025-05-14,2025-05-14,39.58,Diquat Herbicide (gal),Diquat Dibromide,P_242,Y,Pearl,73003700,558.63,0.0709,CLP
-2018-0126,2020,2020-05-22,2020-05-22,18.580000000000002,Aquathol K (gal),Endothall,P_243,Y,North Center,13003200,NA,NA,CLP
-2018-0127,2020,2020-07-09,2020-07-09,9.42,"2,4-D Amine (gal)",NA,P_244,Y,North Center,13003200,NA,NA,EWM
-2018-0129,2020,2020-05-22,2020-05-22,14.16,Aquathol K (gal),Endothall,P_245,Y,South Center,13002700,544.51,0.026,CLP
-2018-0175,2020,2020-07-31,2020-07-31,3.6,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_246,Y,Ruth,18021200,207.08,0.0174,EWM
-2018-0175,2022,2022-10-04,2022-10-04,11.9,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_247,Y,Ruth,18021200,207.08,0.0575,EWM
-2018-0180,2020,2020-09-10,2020-09-10,2.24,Dibrox (gal),Diquat Dibromide,P_248,Y,Clearwater,86025200,NA,NA,EWM
-2018-0180,2021,2021-08-23,2021-08-23,5.27,Dibrox (gal),Diquat Dibromide,P_249,Y,Clearwater,86025200,NA,NA,EWM
-2018-0182,2024,2024-07-08,2024-07-10,138.10999999999999,Mizzen (gal),NA,P_250,Y,Koronis (main lake),73020002,1146.64,0.1204,SS
-2018-0187,2020,2020-05-26,2020-05-26,8,Aquathol K (gal),Endothall,P_251,Y,Latimer,77010500,83.07,0.0963,CLP
-2018-0241,2020,2020-05-26,2020-05-26,7.4,Aquathol K (gal),Endothall,P_252,Y,Margaret,11022200,170.02,0.0435,CLP
-2018-0244,2022,2022-08-04,2022-08-04,4.5,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_253,Y,Upper Mission,18024200,285.46,0.0158,CLP
-2018-0247,2022,2022-08-04,2022-08-04,4.5,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_254,Y,Upper Mission,18024200,285.46,0.0158,EWM
-2018-0293,2020,2020-05-05,2020-05-05,36.35,Aquathol K (gal),Endothall,P_255,Y,Fannie,30004300,268.23,0.1355,CLP
-2018-0293,2021,2021-05-07,2021-05-07,27.599999999999998,Aquathol K (gal),Endothall,P_256,Y,Fannie,30004300,268.23,0.1029,CLP
-2018-0293,2022,2022-05-24,2022-05-24,6.6,Tribune (gal),Diquat Dibromide,P_258,Y,Fannie,30004300,268.23,0.0246,CLP
-2018-0293,2022,2022-05-24,2022-05-24,13.3,Aquathol K (gal),Endothall,P_257,Y,Fannie,30004300,268.23,0.0496,CLP
-2018-0293,2024,2024-05-09,2024-05-09,18.96,Flumioxazin 51WDG Prime (),Flumioxazin,P_259,Y,Fannie,30004300,268.23,0.0707,CLP
-2018-0293,2025,2025-05-12,2025-05-12,38.15,Flumioxazin 51WDG Prime (),Flumioxazin,P_260,Y,Fannie,30004300,268.23,0.1422,CLP
-2018-0294,2020,2020-05-28,2020-05-28,9.15,Diquat SPC 2 L (),Diquat Dibromide,P_261,Y,Upper Twin,27004201,123.5,0.0741,CLP
-2018-0332,2021,2021-08-26,2021-08-26,2.07,"ProcellaCOR EC (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_262, P_263",Y,Bad Axe,29020800,NA,NA,EWM
-2018-0332,2025,2025-07-24,2025-07-24,2,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_264,Y,Bad Axe,29020800,NA,NA,EWM
-2018-0333,2021,2021-07-27,2021-07-27,11.2,ProcellaCOR (oz),Florpyrauxifen-benzyl,P_265,Y,French,86027300,166.94,0.0671,EWM
-2018-0333,2023,2023-09-26,2023-09-26,7.8,ProcellaCOR (oz),Florpyrauxifen-benzyl,P_266,Y,French,86027300,166.94,0.0467,EWM
-2018-0334,2021,2021-05-24,2021-05-24,18.7,Aquathol K (gal),Endothall,P_267,Y,Ida,21012300,1751.07,0.0107,CLP
-2018-0334,2022,2022-06-03,2022-06-03,13.8,Aquathol K (gal),Endothall,P_268,Y,Ida,21012300,1751.07,0.0079,CLP
-2018-0334,2024,2024-05-23,2024-05-23,12.7,Semera (lbs),Flumioxazin,P_269,Y,Ida,21012300,1751.07,0.0073,CLP
-2018-0371,2025,2025-05-08,2025-05-08,16.45,FlumigardSC (oz),Flumioxazin,P_270,Y,Alexander,49007900,843.85,0.0195,CLP
-2018-0395,2020,2020-05-04,2020-05-04,7.9,Aquathol K (gal),Endothall,P_271,Y,Limestone,86016300,97.93,0.0807,CLP
-2018-0395,2021,2021-05-01,2021-05-01,7.9,Aquathol K (gal),Endothall,P_272,Y,Limestone,86016300,97.93,0.0807,CLP
-2018-0395,2022,2022-05-23,2022-05-23,7.9,Aquathol K (gal),Endothall,P_273,Y,Limestone,86016300,97.93,0.0807,CLP
-2018-0408,2020,2020-05-22,2020-05-22,1.9,Aquathol K (gal),Endothall,P_274,Y,Serpent,18009000,301.12,0.0063,CLP
-2018-0408,2021,2021-05-17,2021-05-17,5,Aquathol K (gal),Endothall,P_275,Y,Serpent,18009000,301.12,0.0166,CLP
-2018-0408,2022,2022-06-01,2022-06-01,13.7,Aquathol K (gal),Endothall,P_276,Y,Serpent,18009000,301.12,0.0455,CLP
-2018-0543,2020,2020-05-21,2020-05-21,9.24,Aquathol K (gal),Endothall,P_277,Y,Fish Trap,49013700,357.29,0.0259,CLP
-2018-0543,2022,2022-06-06,2022-06-06,40.5,Aquathol K (gal),Endothall,P_278,Y,Fish Trap,49013700,357.29,0.1134,CLP
-2018-0543,2024,2024-05-08,2024-05-08,39,Aquathol K (gal),Endothall,P_279,Y,Fish Trap,49013700,357.29,0.1092,CLP
-2018-0544,2020,2020-05-12,2020-05-12,15,Tribune (gal),Diquat Dibromide,P_280,Y,Pleasant,86025100,291.24,0.0515,CLP
-2018-0611,2022,2023-05-30,2023-05-30,65,Aquathol K (gal),Endothall,P_281,Y,Big Pine,56013000,2375.96,0.0274,CLP
-2018-0668,2020,2020-05-22,2020-05-22,32.3,Aquathol K (gal),Endothall,P_282,Y,Grand,73005500,233.22,0.1385,CLP
-2018-0668,2021,2021-05-07,2021-05-07,32.410000000000004,Aquathol K (gal),Endothall,P_283,Y,Grand,73005500,233.22,0.139,CLP
-2018-0668,2023,2023-05-20,2023-05-20,29.9,Aquathol K (gal),Endothall,P_284,Y,Grand,73005500,233.22,0.1282,CLP
-2018-0668,2024,2024-04-24,2024-04-24,33,Aquathol K (gal),Endothall,P_285,Y,Grand,73005500,233.22,0.1415,CLP
-2018-0670,2020,2020-05-15,2020-05-15,32,Aquathol K (gal),Endothall,P_286,Y,Briggs,71014600,219.68,0.1457,CLP
-2018-0670,2021,2021-05-05,2021-05-05,32.25,Aquathol K (gal),Endothall,P_287,Y,Briggs,71014600,219.68,0.1468,CLP
-2018-0670,2023,2023-05-23,2023-05-23,25.3,Aquathol K (gal),Endothall,P_288,Y,Briggs,71014600,219.68,0.1152,CLP
-2018-0670,2025,2025-04-30,2025-04-30,27.8,FlumigardSC (gal),Flumioxazin,P_289,Y,Briggs,71014600,219.68,0.1265,CLP
-2018-0672,2020,2020-05-15,2020-05-15,8,Aquathol K (gal),Endothall,P_290,Y,Julia,71014500,151.82,0.0527,CLP
-2018-0672,2021,2021-05-05,2021-05-05,10.5,Aquathol K (gal),Endothall,P_291,Y,Julia,71014500,151.82,0.0692,CLP
-2018-0672,2022,2022-05-26,2022-05-26,3.7,Aquathol K (gal),Endothall,P_292,Y,Julia,71014500,151.82,0.0244,CLP
-2018-0728,2022,2022-06-03,2022-06-03,30.87,Aquathol K (gal),Endothall,P_293,Y,Orono,71001300,246.64,0.1252,CLP
-2018-0728,2022,2023-05-24,2023-05-25,30.87,Flumigard SC (gal),NA,P_294,Y,Orono,71001300,246.64,0.1252,CLP
-2018-0750,2022,2022-05-23,2022-05-23,7.6,Tribune (gal),Diquat Dibromide,"P_295, P_296",Y,Cedar,86022700,276.72,0.0275,CLP
-2018-0787,2020,2020-05-04,2020-05-04,20,Aquathol K (gal),Endothall,P_297,Y,Roberds,66001800,486.89,0.0411,CLP
-2018-0787,2022,2022-05-23,2022-05-23,20,Aquathol K (gal),Endothall,P_298,Y,Roberds,66001800,486.89,0.0411,CLP
-2018-0833,2024,2024-05-05,2024-05-05,11,Aquathol K (gal),Endothall,P_299,Y,Ann,33004000,591.81,0.0186,CLP
-2018-0834,2021,2021-05-17,2021-05-17,9.7,Aquathol K (gal),Endothall,P_300,Y,North Long,18037200,4018.38,0.0024,CLP
-2018-0849,2020,2020-05-22,2020-05-22,18,"Cygnet Plus (gal), Tribune (gal)","Limonene, Diquat Dibromide","P_301, P_302",Y,North Brown's,73014700,124.49,0.1446,CLP
-2018-0849,2021,2021-05-24,2021-05-24,18,Aquathol K (gal),Endothall,P_303,Y,North Brown's,73014700,124.49,0.1446,CLP
-2018-0881,2020,2020-05-26,2020-05-26,12.2,Aquathol K (gal),Endothall,P_304,Y,Norway,11030700,514.88,0.0237,CLP
-2018-0881,2021,2021-05-27,2021-05-27,7.1,Aquathol K (gal),Endothall,P_305,Y,Norway,11030700,514.88,0.0138,CLP
-2018-0898,2020,2020-05-22,2020-05-22,15.760000000000002,Aquathol K (gal),Endothall,P_306,Y,Blue,30010700,NA,NA,CLP
-2018-0898,2021,2021-05-17,2021-05-17,16,Diquat Herbicide (gal),Diquat Dibromide,P_307,Y,Blue,30010700,NA,NA,CLP
-2018-0898,2023,2023-05-23,2023-05-23,16,Tribune (gal),Diquat Dibromide,P_308,Y,Blue,30010700,NA,NA,CLP
-2018-0910,2024,2024-04-29,2024-04-29,8.2,Tribune (gal),Diquat Dibromide,P_309,Y,Constance,86005100,86.43,0.0949,CLP
-2018-0912,2020,2020-05-20,2020-05-20,6.06,Aquathol K (gal),Endothall,P_310,Y,Bass,86023400,95.96,0.0632,CLP
-2018-0912,2021,2021-05-19,2021-05-19,11.4,Aquathol K (gal),Endothall,P_311,Y,Bass,86023400,95.96,0.1188,CLP
-2018-0912,2022,2022-05-19,2022-05-19,2.5,Aquathol K (gal),Endothall,P_312,Y,Bass,86023400,95.96,0.0261,CLP
-2018-1014,2020,2020-05-06,2020-05-06,23.7,Dibrox (gal),Diquat Dibromide,P_313,Y,Duck,07005300,247.13,0.0959,CLP
-2018-1015,2020,2020-05-20,2020-05-20,50.5,Dibrox (gal),Diquat Dibromide,P_314,Y,Green,30013600,357.1,0.1414,CLP
-2018-1016,2021,2021-05-05,2021-05-05,7.8,Aquathol K (gal),Endothall,P_315,Y,Long,30007200,381.58,0.0204,CLP
-2018-1041,2020,2020-07-15,2020-07-15,6.65,"ProcellaCOR EC (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_316, P_317",Y,Medicine,27010400,434.53,0.0153,UNKNOWN
-2018-1044,2021,2021-05-05,2021-05-05,24.689999999999998,Aquathol K (gal),Endothall,P_318,Y,West Rush,13006902,902.79,0.0273,CLP
-2018-1045,2020,2020-05-12,2020-05-12,39.58,Aquathol K (gal),Endothall,P_319,Y,East Rush,13006901,1136.44,0.0348,CLP
-2018-1045,2021,2021-05-05,2021-05-05,24.53,Aquathol K (gal),Endothall,P_320,Y,East Rush,13006901,1136.44,0.0216,CLP
-2018-1045,2023,2023-05-31,2023-05-31,37.95,Semera (lbs?),Flumioxazin,P_321,Y,East Rush,13006901,1136.44,0.0334,CLP
-2018-1087,2021,2021-05-28,2021-05-28,30,Aquathol K (gal),Endothall,P_322,Y,Upper Cormorant,03058800,522.84,0.0574,CLP
-2018-1097,2021,2021-05-06,2021-05-06,1,Aquathol K (gal),Endothall,P_323,Y,Big Watab,73010200,57.18,0.0175,CLP
-2018-1132,2022,2022-05-23,2022-05-23,11,Aquathol K (gal),Endothall,P_324,Y,Chisago,13001200,NA,NA,CLP
-2018-1159,2020,2020-05-27,2020-05-27,16,Aquathol K (gal),Endothall,P_325,Y,Fish,33003600,505.76,0.0316,CLP
-2018-1159,2021,2021-05-12,2021-05-12,23,Aquathol K (gal),Endothall,P_326,Y,Fish,33003600,505.76,0.0455,CLP
-2018-1159,2023,2023-05-21,2023-05-21,17.2,Aquathol K (gal),Endothall,P_327,Y,Fish,33003600,505.76,0.034,CLP
-2018-1159,2024,2024-05-05,2024-05-05,16,Aquathol K (gal),Endothall,P_328,Y,Fish,33003600,505.76,0.0316,CLP
-2018-1228,2020,2020-05-16,2020-05-16,46.5,Aquathol K (gal),Endothall,P_329,Y,Eagle,71006700,319.49,0.1455,CLP
-2018-1380,2022,2022-07-16,2022-07-16,3.7,Tribune (gal),Diquat Dibromide,P_330,Y,Beebe,86002300,179.49,0.0206,EWM
-2018-1459,2023,2023-07-06,2023-07-07,51.1,"2,4-D Amine ()",NA,P_331,Y,Goose,13008300,NA,NA,EWM
-2018-1459,2024,2024-07-08,2024-07-08,51.1,"2,4-D Amine (gal)",NA,P_332,Y,Goose,13008300,NA,NA,EWM
-2018-1459,2025,2025-07-10,2025-07-10,51.1,Weedar 64 (),"2,4-D",P_333,Y,Goose,13008300,NA,NA,EWM
-2018-1512,2020,2020-05-19,2020-05-19,9.9,Tribune (gal),Diquat Dibromide,P_334,Y,Weaver,27011700,73.24,0.1352,CLP
-2018-1512,2022,2022-06-01,2022-06-01,10.1,"Aquathol K (gal), Tribune (gal)","Endothall, Diquat Dibromide","P_335, P_336",Y,Weaver,27011700,73.24,0.1379,CLP
-2018-1664,2020,2020-05-19,2020-05-19,1.3,Aquathol K (gal),Endothall,P_337,Y,West Lake Sylvia,86027900,297.1,0.0044,CLP
-2018-1664,2023,2023-05-26,2023-05-26,3.5700000000000003,Aquathol K (gal),Endothall,P_338,Y,West Lake Sylvia,86027900,297.1,0.012,CLP
-2018-1864,2021,2021-05-26,2021-05-26,8.9,Tribune (gal),Diquat Dibromide,P_339,Y,Muskrat,03036000,64.18,0.1387,CLP
-2018-2165,2023,2023-08-25,2023-08-25,1.79,Platoon (gal),"2,4-D",P_340,Y,West Lake Sylvia,86027900,297.1,0.006,EWM
-2018-2174,2020,2020-06-23,2020-06-23,23.5,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_341,Y,Maple,86013400,NA,NA,EWM
-2018-2174,2021,2021-07-20,2021-07-20,38.9,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_342,Y,Maple,86013400,NA,NA,EWM
-2018-2398,2022,2022-08-25,2022-08-25,1, (),NA,P_343,Y,Town Line,11019000,697.66,0.0014,EWM
-2018-2661,2021,2021-09-22,2021-09-22,14,"ProcellaCOR (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_344, P_345",Y,Shamineau,49012700,630.54,0.0222,EWM
-2018-2938,2020,2020-07-09,2020-07-09,0.1,"Cide-Kick 2.5 Gal (gal), Tribune  (gal)","Limonene, NA","P_346, P_347",Y,Granite,86021700,118.18,8e-4,FR
-2018-3528,2021,2021-09-27,2021-09-27,11.3,"ProcellaCOR (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_348, P_349",Y,Crooked,02008400,84.02,0.1345,EWM
-2018-3528,2024,2024-04-11,2024-04-11,115,Sonar A.S. (gal),Fluridone,P_350,Y,Crooked,02008400,84.02,1.3687,EWM
-2019-0017,2020,2020-10-02,2020-10-02,11.3,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_351,Y,Emily,18020300,720.62,0.0157,EWM
-2019-0018,2020,2020-10-02,2020-10-02,4.3,ProcellaCOR (oz),Florpyrauxifen-benzyl,P_352,Y,Mary,18018500,139.41,0.0308,EWM
-2019-0027,2020,2020-05-06,2020-05-06,80.7,Aquathol K (gal),Endothall,P_353,Y,Washington,40011700,1131.37,0.0713,CLP
-2019-0027,2021,2021-05-11,2021-05-11,80.7,Aquathol K (gal),Endothall,P_354,Y,Washington,40011700,1131.37,0.0713,CLP
-2019-0039,2020,2020-07-10,2020-07-10,3.1,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_355,Y,Henderson,34011600,31.49,0.0984,EWM
-2019-0258,2020,2020-05-26,2020-05-26,17.5,Aquathol K (gal),Endothall,P_356,Y,South Lida,56074702,321.03,0.0545,CLP
-2019-0258,2021,2021-06-03,2021-06-03,13,Aquathol K (gal),Endothall,P_357,Y,South Lida,56074702,321.03,0.0405,CLP
-2019-0258,2022,2022-06-02,2022-06-02,5.5,Aquathol K (gal),Endothall,P_358,Y,South Lida,56074702,321.03,0.0171,CLP
-2019-0258,2025,2025-05-22,2025-05-22,22.4,FlumigardSC (gal),Flumioxazin,P_359,Y,South Lida,56074702,321.03,0.0698,CLP
-2019-0627,2020,2020-10-08,2020-10-08,0.86,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_360,Y,Crookneck,49013300,144.83,0.0059,EWM
-2019-0859,2022,2023-05-15,2023-05-15,39.7,Aquathol K (gal),Endothall,P_361,Y,Francis,30008000,270.42,0.1468,CLP
-2019-0880,2020,2020-04-14,2020-04-14,145,Sonar A.S. (gal),Fluridone,P_362,Y,Cleary,70002200,144.74,1.0018,CLP
-2019-0880,2021,2021-04-07,2021-04-07,145,Sonar A.S. (gal),Fluridone,P_363,Y,Cleary,70002200,144.74,1.0018,CLP
-2019-0880,2022,2022-04-20,2022-04-20,145,Sonar A.S. (gal),Fluridone,P_364,Y,Cleary,70002200,144.74,1.0018,CLP
-2019-1039,2021,2021-05-26,2021-05-26,6,Tribune (gal),Diquat Dibromide,P_365,Y,Long,56078400,287.04,0.0209,CLP
-2019-1061,2022,2022-05-19,2022-05-19,7.28,Tribune (gal),Diquat Dibromide,P_366,Y,Upper Prior,70007200,310.51,0.0234,CLP
-2019-1068,2024,2024-04-30,2024-04-30,5.5,Aquathol K (gal),Endothall,P_367,Y,Green Prairie Fish,49003500,92.99,0.0591,CLP
-2019-1068,2025,2025-05-08,2025-05-08,5.8100000000000005,FlumigardSC (oz),Flumioxazin,P_368,Y,Green Prairie Fish,49003500,92.99,0.0625,CLP
-2019-1137,2021,2021-05-25,2021-05-25,14,Tribune (gal),Diquat Dibromide,P_369,Y,Rogers,19008000,102.34,0.1368,CLP
-2019-1303,2020,2020-05-22,2020-05-22,3.54,Aquathol K (gal),Endothall,P_370,Y,Shields,82016200,25.53,0.1387,CLP
-2019-1303,2021,2021-05-26,2021-05-26,3.18,Aquathol K (gal),Endothall,P_371,Y,Shields,82016200,25.53,0.1246,CLP
-2019-1303,2022,2022-05-27,2022-05-27,3.27,Aquathol K (gal),Endothall,P_372,Y,Shields,82016200,25.53,0.1281,CLP
-2019-1328,2020,2020-05-21,2020-05-21,8.32,"ProcellaCOR EC (gal), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_373, P_374",Y,Long,82011800,35.94,0.2315,EWM
-2019-1460,2020,2020-05-22,2020-05-22,3.11,Aquathol K (gal),Endothall,P_375,Y,Moody,13002300,NA,NA,CLP
-2019-1475,2022,2023-05-15,2023-05-15,2.5,Semera (lbs),Flumioxazin,P_376,Y,Long,49001500,68.59,0.0364,CLP
-2019-1554,2022,2022-05-24,2022-05-24,10,Galleon SC (qt),Penoxsulam,P_377,Y,Josephine,62005700,78.88,0.1268,CLP
-2019-1554,2024,2024-04-15,2024-04-15,8.15,Flumigard SC (oz),NA,P_378,Y,Josephine,62005700,78.88,0.1033,CLP
-2019-1617,2020,2020-05-15,2020-05-15,18.9,Tribune (gal),Diquat Dibromide,P_379,Y,Minnetonka-Lower Lake,27013302,2059.41,0.0092,CLP
-2019-1617,2020,2020-07-10,2020-07-10,3.49,"Kammo Plus (gal), ProcellaCOR EC (oz), Tribune (gal)","Limonene, Florpyrauxifen-benzyl, Diquat Dibromide","P_380, P_381, P_382",Y,Minnetonka-Lower Lake,27013302,2059.41,0.0017,CLP
-2019-1617,2025,2025-05-06,2025-05-06,45.9,Tribune (gal),Diquat Dibromide,P_383,Y,Minnetonka-Lower Lake,27013302,2059.41,0.0223,CLP
-2019-1846,2021,2021-05-26,2021-05-26,7.9,Aquathol K (gal),Endothall,P_384,Y,Curfman,03036300,NA,NA,CLP
-2019-1846,2022,2022-06-03,2022-06-03,7.2,Aquathol K (gal),Endothall,P_385,Y,Curfman,03036300,NA,NA,CLP
-2019-2082,2022,2022-06-22,2022-06-22,218,Sonar A.S. (gal),Fluridone,P_386,Y,Comfort,13005300,88.03,2.4764,EWM
-2019-2082,2022,2022-07-28,2022-07-28,218,Sonar A.S. (oz),Fluridone,P_387,Y,Comfort,13005300,88.03,2.4764,EWM
-2019-2135,2020,2020-05-26,2020-05-26,4.7,Aquathol K (gal),Endothall,P_388,Y,Upper South Long,18009600,292.08,0.0161,EWM
-2019-2135,2020,2020-07-22,2020-07-22,8.3,Aquathol K (oz),Endothall,P_389,Y,Upper South Long,18009600,292.08,0.0284,EWM
-2019-2135,2022,2022-10-04,2022-10-04,1.9,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_390,Y,Upper South Long,18009600,292.08,0.0065,EWM
-2019-2394,2020,2020-08-04,2020-08-04,9.9,"2,4-D Amine (gal)",NA,P_391,Y,Waverly,86011400,146.75,0.0675,EWM
-2019-2394,2021,2021-08-13,2021-08-13,13.200000000000001,Platoon (gal),"2,4-D",P_392,Y,Waverly,86011400,146.75,0.0899,EWM
-2019-2512,2022,2022-07-27,2022-07-27,10,ProcellaCOR EC (PDU),Florpyrauxifen-benzyl,P_393,Y,Erie,47006400,115.68,0.0864,EWM
-2019-2512,2022,2023-06-29,2023-06-29,6.7,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_394,Y,Erie,47006400,115.68,0.0579,EWM
-2019-3016,2021,2021-08-25,2021-08-25,3.08,"ProcellaCOR EC (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_395, P_396",Y,Frances,40005700,568.07,0.0054,EWM
-2019-3016,2023,2023-08-24,2023-08-24,11,"2,4-D Amine (gal)",NA,P_397,Y,Frances,40005700,568.07,0.0194,EWM
-2019-3106,2022,2022-08-04,2022-08-04,3.1,ProcellaCOR EC (gal),Florpyrauxifen-benzyl,P_398,Y,White Sand,18037900,282.54,0.011,EWM
-2019-3248,2020,2020-08-10,2020-08-10,3.2,"2,4-D Amine (gal)",NA,P_399,Y,Fannie,30004300,268.23,0.0119,EWM
-2019-3431,2020,2020-05-15,2020-05-15,9,Aquathol K (gal),Endothall,P_400,Y,Darling,21008000,553.89,0.0162,CLP
-2019-3431,2022,2022-06-03,2022-06-03,26,Tribune (gal),Diquat Dibromide,P_401,Y,Darling,21008000,553.89,0.0469,CLP
-2020-0043,2020,2020-05-13,2020-05-13,29.11,Tribune (gal),Diquat Dibromide,P_402,Y,Coon,02004200,1331.96,0.0219,CLP
-2020-0043,2021,2021-05-05,2021-05-05,26.2,Tribune (gal),Diquat Dibromide,P_403,Y,Coon,02004200,1331.96,0.0197,CLP
-2020-0108,2020,2020-06-02,2020-06-02,18,Aquathol K (),Endothall,P_404,Y,Jennie,47001500,1064.03,0.0169,CLP
-2020-0120,2024,2024-04-30,2024-04-30,11,Schooner 51.0% WDG (lbs),NA,P_405,Y,Knaus,73008600,209.7,0.0525,CLP
-2020-0139,2020,2020-05-19,2020-05-19,22.05,Aquathol K (gal),Endothall,P_406,Y,Lower Cullen,18040300,201.25,0.1096,CLP
-2020-0139,2025,2025-05-14,2025-05-14,8.6,FlumigardSC (gal),Flumioxazin,P_407,Y,Lower Cullen,18040300,201.25,0.0427,CLP
-2020-0140,2020,2020-05-18,2020-05-19,9.37,Aquathol K (gal),Endothall,P_408,Y,Middle Cullen,18037700,137.49,0.0682,CLP
-2020-0140,2020,2020-05-19,2020-05-19,3.8,Aquathol Super K (lbs),Endothall,P_409,Y,Middle Cullen,18037700,137.49,0.0276,CLP
-2020-0140,2021,2021-05-19,2021-05-19,5.5,Aquathol K (gal),Endothall,P_410,Y,Middle Cullen,18037700,137.49,0.04,CLP
-2020-0140,2025,2025-05-14,2025-05-14,3.6,FlumigardSC (gal),Flumioxazin,P_411,Y,Middle Cullen,18037700,137.49,0.0262,CLP
-2020-0141,2020,2020-05-18,2020-05-18,10.81,Aquathol K (gal),Endothall,P_412,Y,Upper Cullen,18037600,232.78,0.0464,CLP
-2020-0141,2021,2021-05-19,2021-05-19,7.7,Aquathol K (gal),Endothall,P_413,Y,Upper Cullen,18037600,232.78,0.0331,CLP
-2020-0141,2022,2022-05-26,2022-05-26,12.8,Aquathol K (gal),Endothall,P_414,Y,Upper Cullen,18037600,232.78,0.055,CLP
-2020-0141,2025,2025-05-14,2025-05-14,8.6,FlumigardSC (gal),Flumioxazin,P_415,Y,Upper Cullen,18037600,232.78,0.0369,CLP
-2020-0145,2022,2022-06-07,2022-06-07,6.9,Tribune (gal),Diquat Dibromide,P_417,Y,Keller (main bay),62001002,73.32,0.0941,CLP
-2020-0145,2022,2022-10-26,2022-10-26,5,Tribune (),Diquat Dibromide,P_416,Y,Keller (main bay),62001002,73.32,0.0682,CLP
-2020-0147,2022,2022-06-07,2022-06-07,5.8,Tribune (gal),Diquat Dibromide,P_418,Y,Gervais,62000700,94.42,0.0614,CLP
-2020-0148,2022,2022-06-07,2022-06-07,10.6,Tribune (gal),Diquat Dibromide,P_420,Y,Kohlman,62000600,82.9,0.1279,CLP
-2020-0148,2022,2022-10-26,2022-10-26,5.3,Tribune (),Diquat Dibromide,P_419,Y,Kohlman,62000600,82.9,0.0639,CLP
-2020-0172,2020,2020-05-15,2020-05-15,27.3,Aquathol K (gal),Endothall,P_421,Y,Clearwater,86025200,NA,NA,CLP
-2020-0172,2021,2021-05-12,2021-05-12,23.509999999999998,Aquathol K (gal),Endothall,P_422,Y,Clearwater,86025200,NA,NA,CLP
-2020-0177,2020,2020-10-07,2020-10-07,36.4,ProcellaCOR EC (PDU),Florpyrauxifen-benzyl,P_423,Y,Clearwater,18003800,338.34,0.1076,EWM
-2020-0177,2021,2021-09-30,2021-09-30,0.54,"ProcellaCOR EC (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_424, P_425",Y,Clearwater,18003800,338.34,0.0016,EWM
-2020-0181,2020,2020-05-19,2020-05-19,23,Dibrox (gal),Diquat Dibromide,P_426,Y,Rice,02000800,371.22,0.062,CLP
-2020-0181,2021,2021-05-10,2021-05-10,23,Dibrox (gal),Diquat Dibromide,P_427,Y,Rice,02000800,371.22,0.062,CLP
-2020-0181,2022,2022-05-27,2022-05-27,28.7,Tribune (gal),Diquat Dibromide,P_428,Y,Rice,02000800,371.22,0.0773,CLP
-2020-0185,2020,2020-05-21,2020-05-21,7,Aquathol K (gal),Endothall,P_429,Y,South Long,18013600,451.45,0.0155,CLP
-2020-0185,2021,2021-05-22,2021-05-22,28,Aquathol K (gal),Endothall,P_430,Y,South Long,18013600,451.45,0.062,CLP
-2020-0191,2025,2025-05-09,2025-05-09,30,Diquat Herbicide (gal),Diquat Dibromide,P_431,Y,NA,NA,NA,NA,NA
-2020-0208,2020,2020-09-18,2020-09-18,10,"2,4-D Amine (gal)",NA,P_432,Y,McKinney,31037000,NA,NA,EWM
-2020-0208,2022,2022-09-12,2022-09-12,14.63,Captain (gal),Copper Complex,P_433,Y,McKinney,31037000,NA,NA,EWM
-2020-0211,2020,2020-07-13,2020-07-13,21.29,"Kammo Plus (gal), Tribune (gal)","Limonene, Diquat Dibromide","P_434, P_435",Y,Minnetonka-Upper Lake,27013305,1699.3,0.0125,EWM
-2020-0211,2021,2021-06-26,2021-06-26,1.4,"ProcellaCOR EC (gal), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_436, P_438",Y,Minnetonka-Upper Lake,27013305,1699.3,8e-4,EWM
-2020-0211,2021,2021-07-16,2021-07-16,10.6,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_437,Y,Minnetonka-Upper Lake,27013305,1699.3,0.0062,EWM
-2020-0211,2022,2022-07-25,2022-07-25,4,"ProcellaCOR EC (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_439, P_440",Y,Minnetonka-Upper Lake,27013305,1699.3,0.0024,EWM
-2020-0212,2020,2020-05-27,2020-05-27,11.85,Aquathol K (gal),Endothall,P_441,Y,Winona,85001100,NA,NA,CLP
-2020-0903,2021,2021-05-12,2021-05-12,40.64,Tribune (gal),Diquat Dibromide,P_442,Y,Centerville,02000600,288.64,0.1408,CLP
-2020-0903,2022,2022-05-17,2022-05-17,40.76,Diquat Herbicide (gal),Diquat Dibromide,P_443,Y,Centerville,02000600,288.64,0.1412,CLP
-2020-0903,2022,2023-05-16,2023-05-16,40.81,Tribune (gal),Diquat Dibromide,P_444,Y,Centerville,02000600,288.64,0.1414,CLP
-2020-0903,2024,2024-04-15,2024-04-15,42.489999999999995,Diquat Herbicide (gal),Diquat Dibromide,P_445,Y,Centerville,02000600,288.64,0.1472,CLP
-2020-0924,2025,2025-05-13,2025-05-13,2.7,FlumigardSC (gal),Flumioxazin,P_446,Y,Little Birch,77008900,271.94,0.0099,CLP
-2020-1556,2021,2021-05-13,2021-05-13,24.9,Tribune (gal),Diquat Dibromide,P_447,Y,Oak,10009300,360.47,0.0691,"CLP, EWM"
-2020-1556,2025,2025-04-16,2025-04-16,360,Sonar A.S. (gal),Fluridone,P_448,Y,Oak,10009300,360.47,0.9987,"CLP, EWM"
-2020-2645,2020,2020-08-20,2020-08-20,9.9,"2,4-D Amine (gal)",NA,P_449,Y,Lower Spunk,73012300,129.34,0.0765,EWM
-2020-2645,2021,2021-08-09,2021-08-09,5.18,Platoon (gal),"2,4-D",P_450,Y,Lower Spunk,73012300,129.34,0.04,EWM
-2020-3342,2021,2021-05-06,2021-05-06,15.6,Dibrox (gal),Diquat Dibromide,P_451,Y,Florence,30003500,120.2,0.1298,CLP
-2020-3342,2022,2022-05-23,2022-05-23,15,Tribune (gal),Diquat Dibromide,P_452,Y,Florence,30003500,120.2,0.1248,CLP
-2020-3343,2021,2021-05-06,2021-05-06,4.59,Dibrox (gal),Diquat Dibromide,P_453,Y,Elms,30003600,40.8,0.1125,CLP
-2020-3343,2024,2024-04-29,2024-04-29,5,Diquat Herbicide (gal),Diquat Dibromide,P_454,Y,Elms,30003600,40.8,0.1225,CLP
-2021-0006,2022,2022-05-24,2022-05-24,164,Galleon SC (gal),Penoxsulam,P_455,Y,Irene,21007600,240.38,0.6823,CLP
-2021-0081,2022,2022-05-17,2022-05-17,10.64,Aquathol K (gal),Endothall,P_456,Y,Wilhelm,86002000,106.73,0.0997,CLP
-2021-0100,2021,2021-04-28,2021-04-28,9.6,Aquathol K (gal),Endothall,P_457,Y,Dean,86004100,126.94,0.0756,CLP
-2021-0100,2021,2021-05-02,2021-05-02,6,Tribune (gal),Diquat Dibromide,P_458,Y,Dean,86004100,126.94,0.0473,CLP
-2021-0311,2021,2021-05-05,2021-05-05,8.4,Aquathol K (gal),Endothall,P_459,Y,Allie,65000600,509.12,0.0165,CLP
-2021-0312,2021,2021-05-05,2021-05-05,13,Aquathol K (gal),Endothall,P_460,Y,Preston,65000200,660.85,0.0197,CLP
-2021-0312,2022,2022-05-23,2022-05-23,8,Aquathol K (gal),Endothall,P_461,Y,Preston,65000200,660.85,0.0121,CLP
-2021-0371,2021,2021-07-22,2021-07-22,1.72,Captain (gal),Copper Complex,P_462,Y,Lower Twin,27004203,26.6,0.0647,EWM
-2021-0388,2021,2021-05-11,2021-05-11,3.5,Aquathol K (gal),Endothall,P_463,Y,Minnie-Belle,47011900,175.76,0.0199,CLP
-2021-0389,2022,2022-07-29,2022-07-29,41.2,ProcellaCOR EC (PDU),Florpyrauxifen-benzyl,P_464,Y,Minnie-Belle,47011900,175.76,0.2344,EWM
-2021-0413,2022,2022-06-01,2022-06-01,65.26,Tribune (gal),Diquat Dibromide,P_465,Y,Byllesby,19000600,935.97,0.0697,CLP
-2021-0413,2023,2023-05-31,2023-05-31,30.23,Tribune (gal),Diquat Dibromide,P_466,Y,Byllesby,19000600,935.97,0.0323,CLP
-2021-0413,2025,2025-05-30,2025-05-30,29.06,FlumigardSC (gal),Flumioxazin,P_467,Y,Byllesby,19000600,935.97,0.031,CLP
-2021-0430,2021,2021-05-14,2021-05-14,1.28,Tribune (gal),Diquat Dibromide,P_468,Y,Unnamed,27027500,NA,NA,CLP
-2021-0437,2021,2021-05-19,2021-05-19,115,Diquat SPC 2 L (gal),Diquat Dibromide,P_469,Y,Jennie,47001500,1064.03,0.1081,CLP
-2021-0451,2021,2021-05-28,2021-05-28,33.56,Aquathol K (gal),Endothall,P_470,Y,Osakis,77021500,3389.01,0.0099,CLP
-2021-0465,2021,2021-05-12,2021-05-12,12.3,Tribune (gal),Diquat Dibromide,P_473,Y,Johanna,62007800,92.93,0.1324,CLP
-2021-0466,2021,2021-05-13,2021-05-13,2,Aquathol K (gal),Endothall,P_474,Y,Rice,73019600,832.55,0.0024,CLP
-2021-0466,2021,2021-05-13,2021-05-13,5.8,Tribune (gal),Diquat Dibromide,P_475,Y,Rice,73019600,832.55,0.007,CLP
-2021-0466,2022,2022-05-23,2022-05-23,16.4,Aquathol K (gal),Endothall,P_476,Y,Rice,73019600,832.55,0.0197,CLP
-2021-0483,2021,2021-04-28,2021-04-28,8,Aquathol K (gal),Endothall,P_477,Y,Martha,86000900,71.05,0.1126,CLP
-2021-0483,2022,2022-05-11,2022-05-11,10,Aquathol K (gal),Endothall,P_478,Y,Martha,86000900,71.05,0.1407,CLP
-2021-0484,2021,2021-06-22,2021-06-22,56.8,"2,4-D Amine (gal)",NA,P_479,Y,Clear,81001401,563.67,0.1008,EWM
-2021-1320,2021,2021-07-05,2021-07-05,27.8,"2,4-D Amine (gal)",NA,P_480,Y,Hunt,66004700,148.64,0.187,CLP
-2021-1772,2021,2021-05-24,2021-05-24,18.26,Tribune (gal),Diquat Dibromide,P_481,Y,Minnetonka-Grays Bay,27013301,164.54,0.111,CLP
-2021-1772,2025,2025-05-13,2025-05-13,27,Tribune (gal),Diquat Dibromide,P_482,Y,Minnetonka-Grays Bay,27013301,164.54,0.1641,CLP
-2021-2453,2023,2023-10-10,2023-10-10,1.8,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_483,Y,Crooked,18004100,NA,NA,EWM
-2021-2453,2025,2025-09-17,2025-09-17,1.17,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_484,Y,Crooked,18004100,NA,NA,EWM
-2021-3343,2022,2022-06-17,2022-06-17,14.05,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_486,Y,Spring,70005400,282.83,0.0497,EWM
-2021-3343,2022,2022-08-19,2022-08-19,5.05,ProcellaCOR (oz),Florpyrauxifen-benzyl,P_485,Y,Spring,70005400,282.83,0.0179,EWM
-2022-0173,2022,2022-06-22,2022-06-22,12.94,Weedar 64 (gal),"2,4-D",P_487,Y,Kroon,13001300,140.32,0.0922,EWM
-2022-0173,2024,2024-06-03,2024-06-03,20.1,Weedar 64 (gal),"2,4-D",P_488,Y,Kroon,13001300,140.32,0.1432,EWM
-2022-0175,2022,2022-06-22,2022-06-22,11.95,Weedar 64 (gal),"2,4-D",P_489,Y,Chisago,13001200,NA,NA,EWM
-2022-0175,2024,2024-06-24,2024-06-24,88.8,Weedar 64 (gal),"2,4-D",P_490,Y,Chisago,13001200,NA,NA,EWM
-2022-0176,2022,2022-05-18,2022-05-18,17.2,Aquathol K (gal),Endothall,P_491,Y,Circle,66002700,837.56,0.0205,CLP
-2022-0176,2022,2023-05-16,2023-05-16,29.200000000000003,FlumigardSC (gal),Flumioxazin,P_492,Y,Circle,66002700,837.56,0.0349,CLP
-2022-0180,2022,2022-05-24,2022-05-24,22.5,Aquathol K (gal),Endothall,P_493,Y,German,40006300,522.41,0.0431,CLP
-2022-0242,2022,2022-06-10,2022-06-10,25,Galleon SC (quarts),Penoxsulam,P_494,Y,Leech,11020300,NA,NA,"NA, NA, NA"
-2022-0248,2022,2022-06-14,2022-06-14,648,Sonar A.S. (gal),Fluridone,P_495,Y,Clear,81001401,563.67,1.1496,EWM
-2022-0272,2022,2022-05-23,2022-05-23,11,Diquat Herbicide (gal),Diquat Dibromide,P_496,Y,Pioneer,13003400,NA,NA,"EWM, CLP"
-2022-0315,2022,2022-06-01,2022-06-01,16,Aquathol K (gal),Endothall,P_497,Y,Edward,18030500,1397.32,0.0115,CLP
-2022-0318,2022,2022-10-05,2022-10-05,70.94,Sonar A.S. (gal),Fluridone,P_498,Y,Colby,82009400,NA,NA,CLP
-2022-0321,2022,2023-05-11,2023-05-11,6.89,Tribune (gal),Diquat Dibromide,P_499,Y,Markgrafs,82008900,NA,NA,CLP
-2022-0322,2022,2022-10-05,2022-10-05,27.18,Sonar A.S. (gal),Fluridone,P_500,Y,Unnamed (Ravine),82008700,18.63,1.4589,CLP
-2022-0338,2022,2022-06-15,2022-06-15,6.4,Tribune (),Diquat Dibromide,P_501,Y,Lobster,21014400,NA,NA,CLP
-2022-0338,2025,2025-05-25,2025-05-25,5.6,Diquat Herbicide (),Diquat Dibromide,P_502,Y,Lobster,21014400,NA,NA,CLP
-2022-0347,2022,2022-06-01,2022-06-01,30.13,Tribune (gal),Diquat Dibromide,P_503,Y,Minnetonka-Upper Lake,27013305,1699.3,0.0177,CLP
-2022-0350,2022,2022-06-01,2022-06-01,52.3,Tribune (gal),Diquat Dibromide,P_504,Y,Minnetonka-Lower Lake,27013302,2059.41,0.0254,CLP
-2022-0385,2022,2022-05-11,2022-05-11,155,Sonar A.S. (gal),Fluridone,P_505,Y,Staring,27007800,156.22,0.9922,EWM
-2022-0400,2022,2022-05-17,2022-05-17,36.51,Diquat Herbicide (gal),Diquat Dibromide,P_506,Y,Peltier,02000400,514.79,0.0709,CLP
-2022-0400,2022,2023-05-16,2023-05-16,32.78,Tribune (gal),Diquat Dibromide,P_507,Y,Peltier,02000400,514.79,0.0637,CLP
-2022-1398,2022,2022-07-25,2022-07-25,10.97,"2,4-D Amine (gal)",NA,P_508,Y,French,66003800,379.03,0.0289,EWM
-2022-1398,2022,2023-06-22,2023-06-22,11.64,ProcellaCOR (gal),Florpyrauxifen-benzyl,P_509,Y,French,66003800,379.03,0.0307,EWM
-2022-1832,2023,2023-05-26,2023-05-26,6.67,Semera (lbs),Flumioxazin,P_510,Y,Bass,22007400,152.24,0.0438,CLP
-2022-1832,2025,2025-05-08,2025-05-08,17.3,FlumigardSC (gal),Flumioxazin,P_511,Y,Bass,22007400,152.24,0.1136,CLP
-2022-1986,2024,2024-03-21,2024-03-21,374.9,Sonar A.S. (gal),Fluridone,P_512,Y,Owasso,62005600,284.18,1.3192,EWM
-2022-1986,2025,2025-08-11,2025-08-11,8.95,Triclopyr 3 (gal),Triclopyr,P_513,Y,Owasso,62005600,284.18,0.0315,EWM
-2022-2614,2023,2023-10-11,2023-10-11,0.5,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_514,Y,Hanks,18004400,48.08,0.0104,EWM
-2022-2615,2023,2023-10-10,2023-10-10,1.5,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_515,Y,Portage,18005000,116.21,0.0129,EWM
-2023-0167,2024,2024-05-09,2024-05-09,32.2,Aquathol K (gal),Endothall,P_516,Y,Jennie,47001500,1064.03,0.0303,CLP
-2023-0301,2024,2024-05-08,2024-05-08,39.8,Semera (oz),Flumioxazin,P_517,Y,Andrew,21008500,322.67,0.1233,CLP
-2023-0301,2025,2025-05-22,2025-05-22,32.3,Flumigard (oz),Flumioxazin,P_518,Y,Andrew,21008500,322.67,0.1001,CLP
-2023-0381,2023,2023-07-27,2023-07-27,1.9,ProcellaCOR EC (quarts),Florpyrauxifen-benzyl,P_519,Y,Rabour,13007900,37.82,0.0502,EWM
-2023-0468,2023,2023-05-09,2023-05-09,74.4,Aquathol K (gal),Endothall,P_520,Y,Clear,81001401,563.67,0.132,CLP
-2023-1190,2023,2023-07-24,2023-07-24,0.5,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_521,Y,Mandall,13007400,33.29,0.015,EWM
-2023-1190,2025,2025-07-10,2025-07-10,0.5,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_522,Y,Mandall,13007400,33.29,0.015,EWM
-2023-1638,2022,2023-06-06,2023-06-06,3.8,Diquat (),NA,P_523,Y,Gervais,62000700,94.42,0.0402,CLP
-2023-2342,2024,2024-08-07,2024-08-07,0.51,Komeen Descend (gal),Copper Complex,P_524,Y,Long,34006600,154.02,0.0033,SS
-2023-2655,2024,2024-08-06,2024-08-06,0.5,Hydrothol 191 (gal),NA,P_525,Y,Long,29016100,698.84,7e-4,SS
-2023-2655,2024,2024-10-02,2024-10-02,0.25,Komeen Descend (gal),Copper Complex,P_526,Y,Long,29016100,698.84,4e-4,SS
-2023-2720,2024,2024-07-26,2024-07-26,4.4,Mizzen (gal),NA,P_527,Y,Clearwater,86025200,NA,NA,SS
-2024-0112,2025,2025-04-29,2025-04-29,15.600000000000001,FlumigardSC (oz),Flumioxazin,P_528,Y,Norway,34025100,2106.35,0.0074,CLP
-2024-0113,2025,2025-04-29,2025-04-29,28.3,FlumigardSC (oz),Flumioxazin,P_529,Y,Games,34022400,247.82,0.1142,CLP
-2024-0169,2025,2025-04-30,2025-04-30,4.2,Galleon SC (gal),Penoxsulam,P_530,Y,Holiday,27009000,NA,NA,CLP
-2025-0025,2025,2025-05-07,2025-05-07,6.85,FlumigardSC (gal),Flumioxazin,P_531,Y,Island,03015300,482.53,0.0142,CLP
-2025-0088,2025,2025-05-22,2025-05-22,8.4,FlumigardSC (gal),Flumioxazin,P_532,Y,Cowdry,21010300,85.98,0.0977,CLP
-2025-0951,2025,2025-06-09,2025-06-09,3,Komeen Descend (gal),Copper Complex,P_533,Y,Middle Cullen,18037700,137.49,0.0218,SS
-2025-1273,2025,2025-05-09,2025-05-09,5.09,Tribune (gal),Diquat Dibromide,P_534,Y,Thompson,71009600,55.36,0.0919,CLP
-2025-1371,2025,2025-05-02,2025-05-02,36.2,Aquathol K (gal),Endothall,P_535,Y,Gorman,40003200,521.1,0.0695,CLP
-2025-2868,2025,2025-08-26,2025-08-26,2,Tribune (gal),Diquat Dibromide,P_536,Y,Byllesby,19000600,935.97,0.0021,FR
+2017-0365,2024,2025-04-26,2025-04-26,48.8,Tribune (gal),Diquat Dibromide,P_19,Y,Long,47017700,787.03,0.062,CLP
+2017-0377,2022,2022-06-02,2022-06-02,5.8,Aquathol K (gal),Endothall,P_20,Y,Pelican,56078600,1608.25,0.0036,CLP
+2017-0378,2022,2022-06-03,2022-06-03,8.4,Aquathol K (gal),Endothall,P_21,Y,Little Pelican,56076100,NA,NA,CLP
+2017-0384,2020,2020-04-30,2020-04-30,117,Sonar A.S. (gal),Fluridone,P_22,Y,Josephine,62005700,78.88,1.4833,"CLP, EWM"
+2017-0384,2020,2020-06-17,2020-06-17,117,Sonar A.S. (gal),Fluridone,P_23,Y,Josephine,62005700,78.88,1.4833,"CLP, EWM"
+2017-0384,2020,2020-07-24,2020-07-24,117,Sonar A.S. (gal),Fluridone,P_24,Y,Josephine,62005700,78.88,1.4833,"CLP, EWM"
+2017-0389,2021,2021-05-16,2021-05-16,66.2,Aquathol K (gal),Endothall,P_25,Y,Sarah,27019100,NA,NA,CLP
+2017-0389,2021,2021-05-19,2021-05-23,29.05,Tribune (gal),Diquat Dibromide,P_26,Y,Sarah,27019100,NA,NA,CLP
+2017-0389,2022,2022-05-26,2022-05-26,67.51,"Aquathol K (gal), Tribune (gal)","Endothall, Diquat Dibromide","P_27, P_28",Y,Sarah,27019100,NA,NA,CLP
+2017-0389,2023,2023-05-23,2023-05-23,4.4,Tribune (gal),Diquat Dibromide,P_29,Y,Sarah,27019100,NA,NA,CLP
+2017-0389,2025,2025-05-08,2025-05-08,26.7,FlumigardSC (gal),Flumioxazin,P_30,Y,Sarah,27019100,NA,NA,CLP
+2017-039,2020,2020-05-21,2020-05-21,1.7,Aquathol K (gal),Endothall,P_31,Y,NA,NA,NA,NA,NA
+2017-0407,2022,2022-05-17,2022-05-17,7.7,Tribune (gal),Diquat Dibromide,P_32,Y,Lucy,10000700,68.27,0.1128,CLP
+2017-0417,2020,2020-06-03,2020-06-03,5,Tribune (gal),Diquat Dibromide,P_33,Y,Lower Prior,70002600,589.7,0.0085,EWM
+2017-0417,2022,2022-06-10,2022-06-10,5,Tribune (gal),Diquat Dibromide,P_34,Y,Lower Prior,70002600,589.7,0.0085,EWM
+2017-0417,2023,2023-06-19,2023-06-19,7.3999999999999995,Tribune (gal),Diquat Dibromide,P_35,Y,Lower Prior,70002600,589.7,0.0125,EWM
+2017-0422,2020,2020-07-17,2020-07-17,15,"2,4-D Amine (gal)",NA,P_36,Y,Fish,27011800,80.41,0.1865,UNKNOWN
+2017-0434,2020,2020-08-18,2020-08-18,8.43,ProcellaCOR EC (PDU),Florpyrauxifen-benzyl,P_38,Y,Sturgeon,58006700,727.33,0.0116,EWM
+2017-0434,2020,2020-08-18,2020-08-18,27.63,"2,4-D Amine (gal)",NA,P_37,Y,Sturgeon,58006700,727.33,0.038,EWM
+2017-0434,2022,2022-07-29,2022-07-29,42.69,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_39,Y,Sturgeon,58006700,727.33,0.0587,EWM
+2017-0434,2025,2025-08-20,2025-08-20,5.92,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_40,Y,Sturgeon,58006700,727.33,0.0081,EWM
+2017-0437,2020,2020-08-18,2020-08-18,10,ProcellaCOR EC (PDU),Florpyrauxifen-benzyl,P_41,Y,Sand,58008100,234.85,0.0426,EWM
+2017-0437,2022,2022-07-29,2022-07-29,13.95,ProcellaCOR EC (PDU),Florpyrauxifen-benzyl,P_42,Y,Sand,58008100,234.85,0.0594,EWM
+2017-0442,2020,2020-07-17,2020-07-17,1.6500000000000001,"2,4-D Amine (gal)",NA,P_43,Y,Big,71008200,116.41,0.0142,EWM
+2017-0442,2023,2023-07-21,2023-07-21,4.5,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_44,Y,Big,71008200,116.41,0.0387,EWM
+2017-0445,2020,2020-07-17,2020-07-17,13.299999999999999,"2,4-D Amine (gal)",NA,P_45,Y,Mitchell,71008100,90.38,0.1472,EWM
+2017-0447,2022,2024-05-23,2024-05-23,11.9,Aquathol K (gal),Endothall,P_46,Y,Ann,86019000,282.16,0.0422,CLP
+2017-0447,2024,2024-05-14,2024-05-14,11.9,Aquathol K (gal),Endothall,P_47,Y,Ann,86019000,282.16,0.0422,CLP
+2017-0511,2023,2023-05-09,2023-05-09,6.58,Aquathol K (gal),Endothall,P_48,Y,East Jefferson,40009201,331.52,0.0198,CLP
+2017-0512,2021,2021-05-19,2021-05-19,29.9,Aquathol K (gal),Endothall,P_49,Y,Middle Jefferson,40009204,654.93,0.0457,CLP
+2017-0512,2022,2022-05-18,2022-05-18,27.6,Aquathol K (gal),Endothall,P_50,Y,Middle Jefferson,40009204,654.93,0.0421,CLP
+2017-0512,2022,2023-05-09,2023-05-09,18.689999999999998,Aquathol K (gal),Endothall,P_51,Y,Middle Jefferson,40009204,654.93,0.0285,CLP
+2017-0512,2024,2024-05-03,2024-05-03,18.689999999999998,Aquathol K (gal),Endothall,P_52,Y,Middle Jefferson,40009204,654.93,0.0285,CLP
+2017-0513,2021,2021-05-19,2021-05-19,7.720000000000001,Aquathol K (gal),Endothall,P_53,Y,West Jefferson,40009202,348.68,0.0221,CLP
+2017-0522,2020,2020-04-30,2020-04-30,9,Tribune (gal),Diquat Dibromide,P_54,Y,Hyland,27004800,83.91,0.1073,CLP
+2017-0522,2021,2021-04-05,2021-04-05,84,Sonar A.S. (gal),Fluridone,P_55,Y,Hyland,27004800,83.91,1.0011,CLP
+2017-0522,2021,2021-04-28,2021-04-28,84,Sonar A.S. (gal),Fluridone,P_56,Y,Hyland,27004800,83.91,1.0011,CLP
+2017-0522,2024,2024-04-02,2024-04-02,37,Sonar A.S. (gal),Fluridone,P_57,Y,Hyland,27004800,83.91,0.4409,CLP
+2017-0522,2024,2024-04-29,2024-04-29,37,Sonar A.S. (gal),Fluridone,P_58,Y,Hyland,27004800,83.91,0.4409,CLP
+2017-0525,2023,2023-05-02,2023-05-02,157.06,Sonar A.S. (gal),Fluridone,P_59,Y,DeMontreville,82010100,142.62,1.1012,EWM
+2017-0526,2021,2021-06-02,2021-06-02,9.2,Tribune (gal),Diquat Dibromide,P_60,Y,Olson,82010300,87.38,0.1053,EWM
+2017-0533,2021,2021-05-26,2021-05-26,8.2,Aquathol K (gal),Endothall,P_61,Y,Detroit,03038100,1868.58,0.0044,CLP
+2017-0534,2021,2021-05-26,2021-05-26,4.7,Aquathol K (gal),Endothall,P_62,Y,Sallie,03035900,576.81,0.0081,CLP
+2017-0534,2021,2021-05-26,2021-05-26,7.6,Tribune (gal),Diquat Dibromide,P_63,Y,Sallie,03035900,576.81,0.0132,CLP
+2017-0534,2022,2022-06-03,2022-06-03,7.6,Tribune (gal),Diquat Dibromide,P_64,Y,Sallie,03035900,576.81,0.0132,CLP
+2017-0562,2022,2022-06-07,2022-06-07,132.6,Tribune (gal),Diquat Dibromide,P_65,Y,Cedar,70009100,792.5,0.1673,CLP
+2017-0562,2023,2023-04-14,2023-04-14,793,Sonar A.S. (gal),Fluridone,P_66,Y,Cedar,70009100,792.5,1.0006,CLP
+2017-0566,2021,2021-05-17,2021-05-17,16.5,Tribune (gal),Diquat Dibromide,P_67,Y,McMahon,70005000,162.26,0.1017,CLP
+2017-0573,2021,2021-05-07,2021-05-07,35,Tribune (gal),Diquat Dibromide,P_68,Y,Rebecca,27019200,122.72,0.2852,"EWM, CLP"
+2017-0582,2021,2021-05-24,2021-05-24,17.64,Tribune (gal),Diquat Dibromide,P_69,Y,O'Dowd,70009500,273.58,0.0645,CLP
+2017-0600,2021,2021-07-16,2021-07-16,5.3,ProcellaCOR (oz),Florpyrauxifen-benzyl,P_70,Y,Fish,86018300,54.16,0.0979,EWM
+2017-0600,2022,2022-09-28,2022-09-28,3.3,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_71,Y,Fish,86018300,54.16,0.0609,EWM
+2017-0600,2024,2024-07-12,2024-07-12,7.9,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_72,Y,Fish,86018300,54.16,0.1459,EWM
+2017-0620,2020,2020-05-19,2020-05-19,27.8,Aquathol K (gal),Endothall,P_73,Y,Quamba,33001500,226.37,0.1228,CLP
+2017-0621,2020,2020-05-04,2020-05-04,40.9,Dibrox (gal),Diquat Dibromide,P_74,Y,Linwood,02002600,484.91,0.0843,CLP
+2017-0621,2021,2021-05-05,2021-05-05,42.3,Dibrox (gal),Diquat Dibromide,P_75,Y,Linwood,02002600,484.91,0.0872,CLP
+2017-0645,2021,2021-05-24,2021-05-24,7.42,Tribune (gal),Diquat Dibromide,P_76,Y,Thole,70012001,118.52,0.0626,CLP
+2017-0653,2020,2020-07-20,2020-07-20,4.91,Dibrox (gal),Diquat Dibromide,P_77,Y,Long,62006700,117.29,0.0419,EWM
+2017-0653,2025,2025-07-02,2025-07-02,8.79,ProcellaCOR EC (PDU),Florpyrauxifen-benzyl,P_78,Y,Long,62006700,117.29,0.0749,EWM
+2017-0663,2022,2022-05-22,2022-05-22,5.12,Aquathol K (gal),Endothall,P_79,Y,Brooks,86026400,58.31,0.0878,CLP
+2017-0663,2023,2022-05-15,2022-05-15,2,Aquathol K (gal),Endothall,P_80,Y,Brooks,86026400,58.31,0.0343,CLP
+2017-0663,2023,2023-05-15,2023-05-15,3.12,Aquathol K (gal),Endothall,P_81,Y,Brooks,86026400,58.31,0.0535,CLP
+2017-0663,2024,2024-04-24,2024-04-24,7.12,Aquathol K (gal),Endothall,P_82,Y,Brooks,86026400,58.31,0.1221,CLP
+2017-0666,2024,2024-05-30,2024-05-30,428.9,Sonar A.S. (gal),Fluridone,P_83,Y,Clear,82016300,270.31,1.5867,EWM
+2017-0666,2024,2024-07-09,2024-07-09,428.9,Sonar A.S. (gal),Fluridone,P_84,Y,Clear,82016300,270.31,1.5867,EWM
+2017-0666,2024,2024-08-14,2024-08-14,428.9,Sonar A.S. (gal),Fluridone,P_85,Y,Clear,82016300,270.31,1.5867,EWM
+2017-0666,2024,2024-09-10,2024-09-10,428.9,Sonar A.S. (gal),Fluridone,P_86,Y,Clear,82016300,270.31,1.5867,EWM
+2017-0667,2020,2020-05-12,2020-05-12,5.31,Aquathol K (gal),Endothall,P_87,Y,Clear,82016300,270.31,0.0196,CLP
+2017-0671,2020,2020-05-15,2020-05-15,24,Aquathol K (gal),Endothall,P_88,Y,Limestone,86016300,97.93,0.2451,CLP
+2017-0671,2021,2021-05-05,2021-05-05,23.959999999999997,Aquathol K (gal),Endothall,P_89,Y,Limestone,86016300,97.93,0.2447,CLP
+2017-0729,2020,2020-08-06,2020-08-06,9.72,Dibrox (gal),Diquat Dibromide,P_90,Y,Scandinavian,61004100,229.73,0.0423,EWM
+2017-0729,2022,2022-07-15,2022-07-15,32.5,"2,4-D Amine (gal)",NA,P_91,Y,Scandinavian,61004100,229.73,0.1415,EWM
+2017-0729,2025,2025-07-17,2025-07-17,42.5,"2,4-D Amine (gal)",NA,P_92,Y,Scandinavian,61004100,229.73,0.185,EWM
+2017-0742,2020,2020-04-13,2020-04-13,405,Sonar A.S. (gal),Fluridone,P_93,Y,Diamond,27012500,405.02,1,CLP
+2017-0742,2021,2021-04-07,2021-04-07,405,Sonar A.S. (gal),Fluridone,P_94,Y,Diamond,27012500,405.02,1,CLP
+2017-0742,2021,2021-04-27,2021-04-27,405,Sonar A.S. (gal),Fluridone,P_95,Y,Diamond,27012500,405.02,1,CLP
+2017-0742,2022,2022-04-20,2022-04-20,405,Sonar A.S. (gal),Fluridone,P_96,Y,Diamond,27012500,405.02,1,CLP
+2017-0742,2023,2023-05-15,2023-05-15,45.1,Tribune (gal),Diquat Dibromide,P_97,Y,Diamond,27012500,405.02,0.1114,CLP
+2017-0742,2024,2024-04-24,2024-04-24,59.7,Tribune (gal),Diquat Dibromide,P_98,Y,Diamond,27012500,405.02,0.1474,CLP
+2017-0743,2020,2020-05-27,2020-05-27,2.73,Aquathol K (gal),Endothall,P_99,Y,Gun,01009900,370.28,0.0074,CLP
+2017-0753,2021,2021-05-07,2021-05-07,9.1,Dibrox (gal),Diquat Dibromide,P_100,Y,Mooney,27013400,NA,NA,CLP
+2017-0820,2020,2020-05-19,2020-05-19,13.5,Tribune (gal),Diquat Dibromide,P_101,Y,Cedar,86022700,276.72,0.0488,CLP
+2017-0823,2024,2024-08-26,2024-08-26,28.8,Platoon (gal),"2,4-D",P_102,Y,Linwood,02002600,484.91,0.0594,EWM
+2017-0825,2020,2020-08-20,2020-08-20,6.82,"2,4-D Amine (gal)",NA,P_103,Y,Middle Spunk,73012800,79.01,0.0863,EWM
+2017-0825,2021,2021-08-09,2021-08-09,1.23,Platoon (gal),"2,4-D",P_104,Y,Middle Spunk,73012800,79.01,0.0156,EWM
+2017-0825,2022,2022-08-04,2022-08-04,18.3,"2,4-D Amine (gal)",NA,P_105,Y,Middle Spunk,73012800,79.01,0.2316,EWM
+2017-0828,2020,2020-07-22,2020-07-22,17.2,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_106,Y,Pulaski (main bay),86005302,138.77,0.1239,EWM
+2017-0828,2021,2021-07-09,2021-07-09,16.7,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_107,Y,Pulaski (main bay),86005302,138.77,0.1203,EWM
+2017-0830,2021,2021-05-26,2021-05-26,1.17,Aquathol K (gal),Endothall,P_108,Y,Lewis,33003200,80.88,0.0145,CLP
+2017-0830,2024,2025-04-29,2025-04-29,5.13,Propeller (lbs),NA,P_109,Y,Lewis,33003200,80.88,0.0634,CLP
+2017-0857,2021,2021-05-06,2021-05-06,63.21,Tribune (gal),Diquat Dibromide,P_110,Y,Medicine,27010400,434.53,0.1455,CLP
+2017-0857,2022,2022-05-16,2022-05-16,119.5,"Galleon SC (gal), Kammo Plus (gal), Tribune (gal)","Penoxsulam, Limonene, Diquat Dibromide","P_111, P_112, P_113",Y,Medicine,27010400,434.53,0.275,CLP
+2017-0871,2020,2020-05-27,2020-05-27,2.5,Aquathol K (gal),Endothall,P_114,Y,Indian,86022300,57.13,0.0438,CLP
+2017-0871,2021,2021-05-05,2021-05-05,4.6,Aquathol K (gal),Endothall,P_115,Y,Indian,86022300,57.13,0.0805,CLP
+2017-0871,2022,2022-05-23,2022-05-23,2.73,Aquathol K (gal),Endothall,P_116,Y,Indian,86022300,57.13,0.0478,CLP
+2017-0873,2020,2020-07-01,2020-07-01,8.5,"2,4-D Amine (gal)",NA,P_117,Y,Indian,86022300,57.13,0.1488,EWM
+2017-0873,2022,2022-07-25,2022-07-25,5.75,"2,4-D Amine (gal)",NA,P_118,Y,Indian,86022300,57.13,0.1006,EWM
+2017-0873,2022,2023-06-27,2023-06-27,8,"2,4-D Amine (gal)",NA,P_119,Y,Indian,86022300,57.13,0.14,EWM
+2017-0892,2022,2022-05-17,2022-05-17,14.39,Aquathol K (gal),Endothall,P_120,Y,Beebe,86002300,179.49,0.0802,CLP
+2017-0892,2023,2023-05-07,2023-05-07,14.39,Aquathol K (gal),Endothall,P_121,Y,Beebe,86002300,179.49,0.0802,CLP
+2017-0917,2020,2020-05-12,2020-05-12,59.309999999999995,Aquathol K (gal),Endothall,P_122,Y,Forest,82015900,1561.19,0.038,CLP
+2017-0968,2021,2021-05-10,2021-05-10,5.1,Aquathol K (gal),Endothall,P_123,Y,Crystal,27003400,NA,NA,CLP
+2017-0973,2020,2020-05-08,2020-05-08,5.18,Aquathol K (gal),Endothall,P_124,Y,Sebie,18016100,NA,NA,CLP
+2017-1005,2021,2021-05-19,2021-05-19,7.8,Aquathol K (gal),Endothall,P_125,Y,Upper South Long,18009600,292.08,0.0267,CLP
+2017-1005,2022,2022-06-01,2022-06-01,4.4,Aquathol K (gal),Endothall,P_126,Y,Upper South Long,18009600,292.08,0.0151,CLP
+2017-1027,2020,2020-05-11,2020-05-11,46.9,Dibrox (gal),Diquat Dibromide,P_127,Y,George,02009100,383.26,0.1224,CLP
+2017-1027,2021,2021-05-24,2021-05-24,28.330000000000002,Dibrox (gal),Diquat Dibromide,P_128,Y,George,02009100,383.26,0.0739,CLP
+2017-1028,2022,2022-05-27,2022-05-27,37.65,Tribune (gal),Diquat Dibromide,P_129,Y,George,02009100,383.26,0.0982,EWM
+2017-1028,2022,2023-05-31,2023-05-31,39.81,Tribune (gal),Diquat Dibromide,P_130,Y,George,02009100,383.26,0.1039,EWM
+2017-1028,2024,2024-05-20,2024-05-20,37.1,Dibrox (gal),Diquat Dibromide,P_131,Y,George,02009100,383.26,0.0968,EWM
+2017-1028,2025,2025-05-14,2025-05-14,32.230000000000004,Diquat Herbicide (gal),Diquat Dibromide,P_132,Y,George,02009100,383.26,0.0841,EWM
+2017-1032,2023,2023-06-28,2023-06-28,11,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_133,Y,Charlotte,86001100,89.71,0.1226,EWM
+2017-1034,2020,2020-07-09,2020-07-09,6.9,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_134,Y,Granite,86021700,118.18,0.0584,EWM
+2017-1034,2025,2025-09-22,2025-09-22,6.5,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_135,Y,Granite,86021700,118.18,0.055,EWM
+2017-1036,2022,2022-05-26,2022-05-26,14.3,Aquathol K (gal),Endothall,P_136,Y,Marie,73001400,124.97,0.1144,CLP
+2017-1037,2020,2020-05-15,2020-05-15,4.8,Tribune (gal),Diquat Dibromide,P_137,Y,Minnetonka-Carsons Bay,27013303,78.86,0.0609,CLP
+2017-1037,2021,2021-05-24,2021-05-24,14.1,Tribune (gal),Diquat Dibromide,P_138,Y,Minnetonka-Carsons Bay,27013303,78.86,0.1788,CLP
+2017-1037,2022,2022-06-01,2022-06-01,23.4,Tribune (gal),Diquat Dibromide,P_139,Y,Minnetonka-Carsons Bay,27013303,78.86,0.2967,CLP
+2017-1038,2020,2020-07-10,2020-07-10,4.95,"Kammo Plus (gal), ProcellaCOR EC (oz), Tribune (gal)","Limonene, Florpyrauxifen-benzyl, Diquat Dibromide","P_140, P_141, P_142",Y,Minnetonka-Carsons Bay,27013303,78.86,0.0628,EWM
+2017-1038,2021,2021-06-29,2021-06-29,10.5,"ProcellaCOR (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_143, P_144",Y,Minnetonka-Carsons Bay,27013303,78.86,0.1331,EWM
+2017-1038,2022,2022-08-09,2022-08-09,12,Tribune (gal),Diquat Dibromide,P_145,Y,Minnetonka-Carsons Bay,27013303,78.86,0.1522,EWM
+2017-1038,2025,2025-04-29,2025-04-29,115,Sonar A.S. (gal),Fluridone,P_146,Y,Minnetonka-Carsons Bay,27013303,78.86,1.4583,EWM
+2017-1039,2020,2020-07-08,2020-07-08,33.25,"ProcellaCOR EC (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_147, P_148",Y,Minnetonka-Grays Bay,27013301,164.54,0.2021,EWM
+2017-1039,2021,2021-06-29,2021-06-29,22.98,"ProcellaCOR (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_149, P_150",Y,Minnetonka-Grays Bay,27013301,164.54,0.1397,EWM
+2017-1041,2021,2021-06-18,2021-06-18,11.6,"ProcellaCOR EC (gal), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_151, P_152",Y,Minnetonka-Upper Lake,27013305,1699.3,0.0068,EWM
+2017-1041,2022,2022-07-01,2022-07-01,12,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_153,Y,Minnetonka-Upper Lake,27013305,1699.3,0.0071,EWM
+2017-1042,2020,2020-05-29,2020-05-29,12.7,Tribune (gal),Diquat Dibromide,P_154,Y,Minnetonka-St. Albans Bay,27013304,103.16,0.1231,CLP
+2017-1042,2021,2021-05-26,2021-05-26,28.2,Tribune (gal),Diquat Dibromide,P_155,Y,Minnetonka-St. Albans Bay,27013304,103.16,0.2734,CLP
+2017-1043,2020,2020-07-23,2020-07-23,3.84,"Kammo Plus (gal), ProcellaCOR EC (oz), Tribune (gal)","Limonene, Florpyrauxifen-benzyl, Diquat Dibromide","P_156, P_157, P_158",Y,Minnetonka-St. Albans Bay,27013304,103.16,0.0372,EWM
+2017-1043,2022,2022-05-11,2022-05-11,160,Sonar A.S. (gal),Fluridone,P_160,Y,Minnetonka-St. Albans Bay,27013304,103.16,1.551,EWM
+2017-1043,2022,2022-06-09,2022-06-09,100,Sonar A.S. (gal),Fluridone,P_159,Y,Minnetonka-St. Albans Bay,27013304,103.16,0.9694,EWM
+2017-1043,2022,2022-07-13,2022-07-13,160,Sonar (gal),NA,P_161,Y,Minnetonka-St. Albans Bay,27013304,103.16,1.551,EWM
+2017-1044,2020,2020-05-15,2020-05-15,47.7,Tribune (gal),Diquat Dibromide,P_162,Y,Minnetonka-North Arm,27013313,169.2,0.2819,CLP
+2017-1044,2021,2021-05-26,2021-05-26,50.1,Tribune (gal),Diquat Dibromide,P_163,Y,Minnetonka-North Arm,27013313,169.2,0.2961,CLP
+2017-1044,2025,2025-05-07,2025-05-07,53.62,Tribune (gal),Diquat Dibromide,P_164,Y,Minnetonka-North Arm,27013313,169.2,0.3169,CLP
+2017-1047,2020,2020-06-11,2020-06-11,17,Tribune (gal),Diquat Dibromide,P_165,Y,Minnetonka-Crystal Bay,27013310,317.36,0.0536,EWM
+2017-1047,2022,2022-07-26,2022-07-26,52.9,ProcellaCOR (oz),Florpyrauxifen-benzyl,P_166,Y,Minnetonka-Crystal Bay,27013310,317.36,0.1667,EWM
+2017-1050,2020,2020-05-14,2020-05-14,1034,Sonar A.S. (gal),Fluridone,P_167,Y,Benton,41004300,2649.41,0.3903,CLP
+2017-1050,2021,2021-04-14,2021-04-14,1034,Sonar A.S. (gal),Fluridone,P_168,Y,Benton,41004300,2649.41,0.3903,CLP
+2017-1072,2020,2020-05-20,2020-05-20,43.2,Aquathol K (gal),Endothall,P_169,Y,Platte,18008800,1615.91,0.0267,CLP
+2017-1072,2021,2021-05-21,2021-05-21,42.3,Aquathol K (gal),Endothall,P_170,Y,Platte,18008800,1615.91,0.0262,CLP
+2017-1083,2021,2021-05-05,2021-05-05,9.2,Tribune (gal),Diquat Dibromide,P_171,Y,Coon,02004200,1331.96,0.0069,CLP
+2017-1092,2021,2021-07-12,2021-07-12,22.83,"ProcellaCOR EC (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_172, P_173",Y,Coon,02004200,1331.96,0.0171,EWM
+2017-1092,2022,2022-07-22,2022-07-22,40.3,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_174,Y,Coon,02004200,1331.96,0.0303,EWM
+2017-1097,2020,2020-05-19,2020-05-19,36.6,Dibrox (gal),Diquat Dibromide,P_175,Y,Minnewashta,10000900,337.89,0.1083,CLP
+2017-1097,2021,2021-05-18,2021-05-18,41.1,Dibrox (gal),Diquat Dibromide,P_176,Y,Minnewashta,10000900,337.89,0.1216,CLP
+2017-1154,2020,2020-05-04,2020-05-04,72.6,Diquat Herbicide (gal),Diquat Dibromide,P_177,Y,Bald Eagle,62000200,589.06,0.1232,CLP
+2017-1154,2022,2023-05-16,2023-05-16,68.92999999999999,Tribune (gal),Diquat Dibromide,P_178,Y,Bald Eagle,62000200,589.06,0.117,CLP
+2017-1210,2020,2020-07-16,2020-07-16,3.76,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_179,Y,Big Marine,82005200,1180.44,0.0032,EWM
+2017-1210,2022,2022-08-04,2022-08-04,5.18,"ProcellaCOR (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_180, P_181",Y,Big Marine,82005200,1180.44,0.0044,EWM
+2017-1297,2021,2021-05-05,2021-05-05,10,Aquathol K (gal),Endothall,P_182,Y,Farquar,19002300,63.58,0.1573,CLP
+2017-1297,2022,2022-05-10,2022-05-10,9.27,Aquathol K (gal),Endothall,P_183,Y,Farquar,19002300,63.58,0.1458,CLP
+2017-1306,2020,2020-05-11,2020-05-11,24.5,Aquathol K (gal),Endothall,P_184,Y,Cedar,66005200,667.27,0.0367,CLP
+2017-1306,2021,2021-05-12,2021-05-12,18.8,Aquathol K (gal),Endothall,P_185,Y,Cedar,66005200,667.27,0.0282,CLP
+2017-1306,2022,2022-05-10,2022-05-10,35,Aquathol K (gal),Endothall,P_186,Y,Cedar,66005200,667.27,0.0525,CLP
+2017-1306,2023,2023-05-11,2023-05-11,50,Aquathol K (gal),Endothall,P_187,Y,Cedar,66005200,667.27,0.0749,CLP
+2017-1307,2020,2020-05-06,2020-05-06,5.8,Aquathol K (gal),Endothall,P_189,Y,Clear,81001401,563.67,0.0103,CLP
+2017-1307,2020,2020-05-06,2020-05-06,24.2,Aquathol K (),Endothall,P_188,Y,Clear,81001401,563.67,0.0429,CLP
+2017-1312,2022,2022-06-28,2022-06-28,31.1,Tribune (gal),Diquat Dibromide,P_190,Y,Sallie,03035900,576.81,0.053900000000000003,FR
+2017-1312,2022,2022-08-01,2022-08-01,31.1,Tribune (gal),Diquat Dibromide,P_191,Y,Sallie,03035900,576.81,0.053900000000000003,FR
+2017-1313,2021,2021-06-28,2021-06-28,24,Tribune (gal),Diquat Dibromide,P_192,Y,Melissa,03047500,899.47,0.0267,FR
+2017-1367,2023,2023-08-25,2023-08-25,3.06,Platoon (gal),"2,4-D",P_193,Y,East Lake Sylvia,86028900,209.54,0.0146,EWM
+2017-1379,2022,2022-08-22,2022-08-22,44.4,"2,4-D Amine (gal)",NA,P_194,Y,Howard,86019900,317.59,0.1398,EWM
+2017-1486,2020,2020-08-21,2020-08-21,18.14,"2,4-D Amine (gal)",NA,P_195,Y,Minnewaska,61013000,3290.84,0.0055,EWM
+2017-1486,2021,2021-07-16,2021-07-16,16.74,"2,4-D Amine (gal)",NA,P_196,Y,Minnewaska,61013000,3290.84,0.0051,EWM
+2017-1486,2022,2022-09-13,2022-09-13,5.27,"2,4-D Amine (gal)",NA,P_197,Y,Minnewaska,61013000,3290.84,0.0016,EWM
+2017-1500,2022,2022-06-22,2022-06-22,37.099999999999994,"2,4-D Amine (gal)",NA,P_198,Y,Ballantyne,07005400,328.59,0.1129,EWM
+2017-1500,2023,2023-06-27,2023-06-27,10.6,"2,4-D Amine (gal)",NA,P_199,Y,Ballantyne,07005400,328.59,0.0323,EWM
+2017-1507,2020,2020-05-12,2020-05-12,10.1,Tribune (gal),Diquat Dibromide,P_200,Y,Maple,86013400,NA,NA,CLP
+2017-1507,2021,2021-05-11,2021-05-11,10.1,Tribune (gal),Diquat Dibromide,P_201,Y,Maple,86013400,NA,NA,CLP
+2017-1512,2020,2020-07-10,2020-07-10,11,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_202,Y,Chub,09000800,172.92,0.0636,EWM
+2017-1512,2021,2021-06-24,2021-06-24,13.2,ProcellaCOR (oz),Florpyrauxifen-benzyl,P_203,Y,Chub,09000800,172.92,0.0763,EWM
+2017-1565,2021,2021-05-17,2021-05-17,16.46,Tribune (gal),Diquat Dibromide,P_204,Y,Marion,19002600,417.99,0.0394,CLP
+2017-1707,2022,2022-05-19,2022-05-19,9.6,Aquathol K (gal),Endothall,P_205,Y,Mayo,18040800,156.39,0.0614,CLP
+2017-1707,2022,2023-05-23,2023-05-23,3.7,Aquathol K (gal),Endothall,P_206,Y,Mayo,18040800,156.39,0.0237,CLP
+2017-1709,2020,2020-05-12,2020-05-12,5.140000000000001,Aquathol K (gal),Endothall,P_207,Y,Bone,82005400,119.4,0.043,CLP
+2017-1709,2021,2021-05-26,2021-05-26,4.38,Aquathol K (gal),Endothall,P_208,Y,Bone,82005400,119.4,0.0367,CLP
+2017-1779,2023,2023-05-30,2023-05-30,42.6,Aquathol K (gal),Endothall,P_209,Y,Smith,21001600,363.97,0.117,CLP
+2017-1825,2020,2020-05-15,2020-05-15,58.74,Aquathol K (gal),Endothall,P_210,Y,Tetonka,40003100,551.22,0.1066,CLP
+2017-1825,2021,2021-05-18,2021-05-18,58.74,Aquathol K (gal),Endothall,P_211,Y,Tetonka,40003100,551.22,0.1066,CLP
+2017-1826,2025,2025-05-05,2025-05-05,5.5,FlumigardSC (gal),Flumioxazin,P_212,Y,Grave,18011000,NA,NA,CLP
+2017-1827,2022,2023-05-15,2023-05-15,19.9,Aquathol K (gal),Endothall,P_213,Y,Crow Wing,18015500,202.02,0.0985,CLP
+2017-1881,2020,2020-05-15,2020-05-15,27.3,Tribune (gal),Diquat Dibromide,P_214,Y,Minnetonka-Upper Lake,27013305,1699.3,0.0161,CLP
+2017-1881,2022,2022-06-01,2022-06-01,25,Tribune (gal),Diquat Dibromide,P_215,Y,Minnetonka-Upper Lake,27013305,1699.3,0.0147,CLP
+2017-1978,2020,2020-09-18,2020-09-18,6.71,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_216,Y,Jane,82010400,109.71,0.0612,EWM
+2017-1982,2020,2020-05-29,2020-05-29,6.52,Tribune (gal),Diquat Dibromide,P_217,Y,Silver,62000100,71.82,0.0908,"EWM, CLP"
+2017-1984,2024,2024-10-09,2024-10-09,4.41,Platoon (gal),"2,4-D",P_218,Y,Unnamed,29055400,NA,NA,NA
+2017-1985,2020,2020-06-22,2020-06-22,16.415,"2,4-D Amine (gal)",NA,P_219,Y,Bay,18003400,878.98,0.0187,EWM
+2017-1985,2020,2020-10-08,2020-10-09,23.406,"2,4-D Amine (gal)",NA,P_220,Y,Bay,18003400,878.98,0.0266,EWM
+2017-1985,2020,2020-10-19,2020-10-19,4.919,"2,4-D Amine (gal)",NA,P_221,Y,Bay,18003400,878.98,0.0056,EWM
+2017-1985,2021,2021-06-22,2021-06-22,7.288,Platoon (gal),"2,4-D",P_224,Y,Bay,18003400,878.98,0.0083,EWM
+2017-1985,2021,2021-10-11,2021-10-11,6.5,Dibrox (gal),Diquat Dibromide,P_223,Y,Bay,18003400,878.98,0.0074,EWM
+2017-1985,2021,2021-10-11,2021-10-12,83.34,"2,4-D Amine (gal)",NA,P_222,Y,Bay,18003400,878.98,0.0948,EWM
+2017-1985,2022,2022-06-27,2022-06-27,7.2219999999999995,"2,4-D Amine (gal)",NA,P_225,Y,Bay,18003400,878.98,0.0082,EWM
+2017-1985,2022,2022-10-03,2022-10-04,41.251,"2,4-D Amine (gal)",NA,P_226,Y,Bay,18003400,878.98,0.0469,EWM
+2017-1985,2024,2024-10-08,8024-10-01,33.68,Platoon (gal),"2,4-D",P_227,Y,Bay,18003400,878.98,0.0383,EWM
+2017-2060,2023,2023-07-21,2023-07-21,1.7,Cutrine-Plus (gal),NA,P_228,Y,West Lake Sylvia,86027900,297.1,0.0057,SS
+2017-2067,2022,2022-06-22,2022-06-22,12,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_229,Y,Elmo,82010600,66.38,0.1808,EWM
+2017-2067,2023,2023-06-16,2023-06-16,12,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_230,Y,Elmo,82010600,66.38,0.1808,EWM
+2017-2184,2020,2020-05-13,2020-05-13,5.9,Tribune (gal),Diquat Dibromide,P_231,Y,Crooked,02008400,84.02,0.0702,CLP
+2017-2184,2021,2021-05-18,2021-05-18,1.9,Tribune (gal),Diquat Dibromide,P_232,Y,Crooked,02008400,84.02,0.0226,CLP
+2017-2726,2021,2021-06-22,2021-06-22,29.08,Tribune (gal),Diquat Dibromide,P_233,Y,Sarah,27019100,NA,NA,EWM
+2017-2726,2022,2022-07-01,2022-07-01,8.76,Tribune (gal),Diquat Dibromide,P_234,Y,Sarah,27019100,NA,NA,EWM
+2017-2726,2023,2023-06-23,2023-06-23,2.8,Tribune (gal),Diquat Dibromide,P_236,Y,Sarah,27019100,NA,NA,EWM
+2017-2726,2023,2023-10-02,2023-10-02,23.12,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_235,Y,Sarah,27019100,NA,NA,EWM
+2017-2765,2021,2021-06-08,2021-06-08,21.2,"2,4-D Amine (gal)",NA,P_237,Y,Rays,40005600,151.1,0.1403,EWM
+2017-2771,2020,2020-07-08,2020-07-08,1,"Kammo Plus (gal), Tribune (gal)","Limonene, Diquat Dibromide","P_238, P_239",Y,Minnetonka-Grays Bay,27013301,164.54,0.0061,EWM
+2017-2870,2021,2021-07-15,2021-07-15,23.85,Weedar 64 (gal),"2,4-D",P_241,Y,White Bear,82016700,1334.41,0.0179,EWM
+2017-2870,2021,2021-07-15,2021-07-15,26.669999999999998,Triclopyr 3 (gal),Triclopyr,P_240,Y,White Bear,82016700,1334.41,0.02,EWM
+2017-2870,2022,2022-07-13,2022-07-13,32.7,Triclopyr 3 (gal),Triclopyr,P_242,Y,White Bear,82016700,1334.41,0.0245,EWM
+2017-3015,2020,2020-09-09,2020-09-09,0.76,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_243,Y,Bear,09003400,70.07,0.0108,EWM
+2017-3315,2020,2020-07-02,2020-07-02,16.6,"ProcellaCOR (gal), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_244, P_245",Y,Turtle,62006100,284.18,0.0584,EWM
+2017-3315,2021,2021-06-30,2021-06-30,29.85,"ProcellaCOR (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_246, P_247",Y,Turtle,62006100,284.18,0.105,EWM
+2017-3315,2022,2022-06-28,2022-06-28,42.6,"ProcellaCOR (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_248, P_249",Y,Turtle,62006100,284.18,0.1499,EWM
+2017-3409,2020,2020-08-06,2020-08-06,5.91,Tribune (gal),Diquat Dibromide,P_250,Y,Forest,82015900,1561.19,0.0038,FR
+2017-3409,2020,2020-09-02,2020-09-02,5.14,Tribune (gal),Diquat Dibromide,P_251,Y,Forest,82015900,1561.19,0.0033,FR
+2017-365,2022,2022-05-22,2022-05-22,43.62,Tribune (gal),Diquat Dibromide,P_252,Y,NA,NA,NA,NA,NA
+2017-459,2020,2020-07-01,2020-07-01,6,"2,4-D Amine (gal)",NA,P_253,Y,NA,NA,NA,NA,NA
+2017-459,2020,2020-07-31,2020-07-31,4,"2,4-D Amine (gal)",NA,P_254,Y,NA,NA,NA,NA,NA
+2018-0004,2021,2021-08-05,2021-08-05,4.6,"ProcellaCOR (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_255, P_256",Y,Roosevelt,11004300,302.23,0.0152,EWM
+2018-0035,2021,2021-08-04,2021-08-04,0.27,ProcellaCOR (oz),Florpyrauxifen-benzyl,P_257,Y,Girl,11017400,265.94,0.001,EWM
+2018-0093,2021,2021-05-11,2021-05-11,28.4,Tribune (gal),Diquat Dibromide,P_258,Y,Two Rivers,73013800,221.09,0.1285,CLP
+2018-0093,2022,2022-05-25,2022-05-25,7.8,Tribune (gal),Diquat Dibromide,P_259,Y,Two Rivers,73013800,221.09,0.0353,CLP
+2018-0117,2022,2022-05-10,2022-05-10,12.799999999999999,Aquathol K (gal),Endothall,P_260,Y,Winsted,43001200,382.44,0.0335,CLP
+2018-0118,2020,2020-05-05,2020-05-05,35.2,Aquathol K (gal),Endothall,P_261,Y,Pearl,73003700,558.63,0.063,CLP
+2018-0118,2025,2025-05-14,2025-05-14,39.58,Diquat Herbicide (gal),Diquat Dibromide,P_262,Y,Pearl,73003700,558.63,0.0709,CLP
+2018-0126,2020,2020-05-22,2020-05-22,18.580000000000002,Aquathol K (gal),Endothall,P_263,Y,North Center,13003200,NA,NA,CLP
+2018-0127,2020,2020-07-09,2020-07-09,9.42,"2,4-D Amine (gal)",NA,P_264,Y,North Center,13003200,NA,NA,EWM
+2018-0129,2020,2020-05-22,2020-05-22,14.16,Aquathol K (gal),Endothall,P_265,Y,South Center,13002700,544.51,0.026,CLP
+2018-0175,2020,2020-07-31,2020-07-31,3.6,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_266,Y,Ruth,18021200,207.08,0.0174,EWM
+2018-0175,2020,2020-09-24,2020-09-24,3,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_267,Y,Ruth,18021200,207.08,0.0145,EWM
+2018-0175,2022,2022-10-04,2022-10-04,11.9,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_268,Y,Ruth,18021200,207.08,0.0575,EWM
+2018-0180,2020,2020-09-10,2020-09-10,2.24,Dibrox (gal),Diquat Dibromide,P_269,Y,Clearwater,86025200,NA,NA,EWM
+2018-0180,2021,2021-08-23,2021-08-23,5.27,Dibrox (gal),Diquat Dibromide,P_270,Y,Clearwater,86025200,NA,NA,EWM
+2018-0182,2024,2024-07-08,2024-07-10,138.10999999999999,Mizzen (gal),NA,P_271,Y,Koronis (main lake),73020002,1146.64,0.1204,SS
+2018-0182,2024,2024-08-19,2024-08-19,77.28999999999999,Mizzen (gal),NA,P_272,Y,Koronis (main lake),73020002,1146.64,0.0674,SS
+2018-0187,2020,2020-05-26,2020-05-26,8,Aquathol K (gal),Endothall,P_273,Y,Latimer,77010500,83.07,0.0963,CLP
+2018-0241,2020,2020-05-26,2020-05-26,7.4,Aquathol K (gal),Endothall,P_274,Y,Margaret,11022200,170.02,0.0435,CLP
+2018-0244,2022,2022-08-04,2022-08-04,4.5,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_275,Y,Upper Mission,18024200,285.46,0.0158,CLP
+2018-0247,2022,2022-08-04,2022-08-04,4.5,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_276,Y,Upper Mission,18024200,285.46,0.0158,EWM
+2018-0293,2020,2020-05-05,2020-05-05,36.35,Aquathol K (gal),Endothall,P_277,Y,Fannie,30004300,268.23,0.1355,CLP
+2018-0293,2021,2021-05-07,2021-05-07,27.599999999999998,Aquathol K (gal),Endothall,P_278,Y,Fannie,30004300,268.23,0.1029,CLP
+2018-0293,2022,2022-05-24,2022-05-24,6.6,Tribune (gal),Diquat Dibromide,P_281,Y,Fannie,30004300,268.23,0.0246,CLP
+2018-0293,2022,2022-05-24,2022-05-24,13.3,Aquathol K (gal),Endothall,P_279,Y,Fannie,30004300,268.23,0.0496,CLP
+2018-0293,2022,2023-05-26,2023-05-26,12.28,Aquathol K (gal),Endothall,P_280,Y,Fannie,30004300,268.23,0.0458,CLP
+2018-0293,2024,2024-05-09,2024-05-09,18.96,Flumioxazin 51WDG Prime (),Flumioxazin,P_282,Y,Fannie,30004300,268.23,0.0707,CLP
+2018-0293,2025,2025-05-12,2025-05-12,38.15,Flumioxazin 51WDG Prime (),Flumioxazin,P_283,Y,Fannie,30004300,268.23,0.1422,CLP
+2018-0294,2020,2020-05-28,2020-05-28,9.15,Diquat SPC 2 L (),Diquat Dibromide,P_284,Y,Upper Twin,27004201,123.5,0.0741,CLP
+2018-0332,2021,2021-08-26,2021-08-26,2.07,"ProcellaCOR EC (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_285, P_286",Y,Bad Axe,29020800,NA,NA,EWM
+2018-0332,2025,2025-07-24,2025-07-24,2,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_287,Y,Bad Axe,29020800,NA,NA,EWM
+2018-0333,2021,2021-07-27,2021-07-27,11.2,ProcellaCOR (oz),Florpyrauxifen-benzyl,P_288,Y,French,86027300,166.94,0.0671,EWM
+2018-0333,2023,2023-09-26,2023-09-26,7.8,ProcellaCOR (oz),Florpyrauxifen-benzyl,P_289,Y,French,86027300,166.94,0.0467,EWM
+2018-0334,2021,2021-05-24,2021-05-24,18.7,Aquathol K (gal),Endothall,P_290,Y,Ida,21012300,1751.07,0.0107,CLP
+2018-0334,2022,2022-06-03,2022-06-03,13.8,Aquathol K (gal),Endothall,P_291,Y,Ida,21012300,1751.07,0.0079,CLP
+2018-0334,2024,2024-05-23,2024-05-23,12.7,Semera (lbs),Flumioxazin,P_292,Y,Ida,21012300,1751.07,0.0073,CLP
+2018-0371,2025,2025-05-08,2025-05-08,16.45,FlumigardSC (oz),Flumioxazin,P_293,Y,Alexander,49007900,843.85,0.0195,CLP
+2018-0395,2020,2020-05-04,2020-05-04,7.9,Aquathol K (gal),Endothall,P_294,Y,Limestone,86016300,97.93,0.0807,CLP
+2018-0395,2021,2021-05-01,2021-05-01,7.9,Aquathol K (gal),Endothall,P_295,Y,Limestone,86016300,97.93,0.0807,CLP
+2018-0395,2022,2022-05-23,2022-05-23,7.9,Aquathol K (gal),Endothall,P_296,Y,Limestone,86016300,97.93,0.0807,CLP
+2018-0408,2020,2020-05-22,2020-05-22,1.9,Aquathol K (gal),Endothall,P_297,Y,Serpent,18009000,301.12,0.0063,CLP
+2018-0408,2021,2021-05-17,2021-05-17,5,Aquathol K (gal),Endothall,P_298,Y,Serpent,18009000,301.12,0.0166,CLP
+2018-0408,2022,2022-06-01,2022-06-01,13.7,Aquathol K (gal),Endothall,P_299,Y,Serpent,18009000,301.12,0.0455,CLP
+2018-0543,2020,2020-05-21,2020-05-21,9.24,Aquathol K (gal),Endothall,P_300,Y,Fish Trap,49013700,357.29,0.0259,CLP
+2018-0543,2022,2022-06-06,2022-06-06,40.5,Aquathol K (gal),Endothall,P_301,Y,Fish Trap,49013700,357.29,0.1134,CLP
+2018-0543,2024,2024-05-08,2024-05-08,39,Aquathol K (gal),Endothall,P_302,Y,Fish Trap,49013700,357.29,0.1092,CLP
+2018-0544,2020,2020-05-12,2020-05-12,15,Tribune (gal),Diquat Dibromide,P_303,Y,Pleasant,86025100,291.24,0.0515,CLP
+2018-0611,2022,2023-05-30,2023-05-30,65,Aquathol K (gal),Endothall,P_304,Y,Big Pine,56013000,2375.96,0.0274,CLP
+2018-0668,2020,2020-05-22,2020-05-22,32.3,Aquathol K (gal),Endothall,P_305,Y,Grand,73005500,233.22,0.1385,CLP
+2018-0668,2021,2021-05-07,2021-05-07,32.410000000000004,Aquathol K (gal),Endothall,P_306,Y,Grand,73005500,233.22,0.139,CLP
+2018-0668,2023,2023-05-20,2023-05-20,29.9,Aquathol K (gal),Endothall,P_307,Y,Grand,73005500,233.22,0.1282,CLP
+2018-0668,2024,2024-04-24,2024-04-24,33,Aquathol K (gal),Endothall,P_308,Y,Grand,73005500,233.22,0.1415,CLP
+2018-0670,2020,2020-05-15,2020-05-15,32,Aquathol K (gal),Endothall,P_309,Y,Briggs,71014600,219.68,0.1457,CLP
+2018-0670,2021,2021-05-05,2021-05-05,32.25,Aquathol K (gal),Endothall,P_310,Y,Briggs,71014600,219.68,0.1468,CLP
+2018-0670,2023,2023-05-23,2023-05-23,25.3,Aquathol K (gal),Endothall,P_311,Y,Briggs,71014600,219.68,0.1152,CLP
+2018-0670,2025,2025-04-30,2025-04-30,27.8,FlumigardSC (gal),Flumioxazin,P_312,Y,Briggs,71014600,219.68,0.1265,CLP
+2018-0672,2020,2020-05-15,2020-05-15,8,Aquathol K (gal),Endothall,P_313,Y,Julia,71014500,151.82,0.0527,CLP
+2018-0672,2021,2021-05-05,2021-05-05,10.5,Aquathol K (gal),Endothall,P_314,Y,Julia,71014500,151.82,0.0692,CLP
+2018-0672,2022,2022-05-26,2022-05-26,3.7,Aquathol K (gal),Endothall,P_315,Y,Julia,71014500,151.82,0.0244,CLP
+2018-0728,2022,2022-06-03,2022-06-03,30.87,Aquathol K (gal),Endothall,P_316,Y,Orono,71001300,246.64,0.1252,CLP
+2018-0728,2022,2023-05-24,2023-05-25,30.87,Flumigard SC (gal),NA,P_317,Y,Orono,71001300,246.64,0.1252,CLP
+2018-0750,2022,2022-05-23,2022-05-23,7.6,Tribune (gal),Diquat Dibromide,"P_318, P_319",Y,Cedar,86022700,276.72,0.0275,CLP
+2018-0787,2020,2020-05-04,2020-05-04,20,Aquathol K (gal),Endothall,P_320,Y,Roberds,66001800,486.89,0.0411,CLP
+2018-0787,2022,2022-05-23,2022-05-23,20,Aquathol K (gal),Endothall,P_321,Y,Roberds,66001800,486.89,0.0411,CLP
+2018-0833,2024,2024-05-05,2024-05-05,11,Aquathol K (gal),Endothall,P_322,Y,Ann,33004000,591.81,0.0186,CLP
+2018-0834,2021,2021-05-17,2021-05-17,9.7,Aquathol K (gal),Endothall,P_323,Y,North Long,18037200,4018.38,0.0024,CLP
+2018-0849,2020,2020-05-22,2020-05-22,18,"Cygnet Plus (gal), Tribune (gal)","Limonene, Diquat Dibromide","P_324, P_325",Y,North Brown's,73014700,124.49,0.1446,CLP
+2018-0849,2021,2021-05-24,2021-05-24,18,Aquathol K (gal),Endothall,P_326,Y,North Brown's,73014700,124.49,0.1446,CLP
+2018-0881,2020,2020-05-26,2020-05-26,12.2,Aquathol K (gal),Endothall,P_327,Y,Norway,11030700,514.88,0.0237,CLP
+2018-0881,2021,2021-05-27,2021-05-27,7.1,Aquathol K (gal),Endothall,P_328,Y,Norway,11030700,514.88,0.0138,CLP
+2018-0898,2020,2020-05-22,2020-05-22,15.760000000000002,Aquathol K (gal),Endothall,P_329,Y,Blue,30010700,NA,NA,CLP
+2018-0898,2021,2021-05-17,2021-05-17,16,Diquat Herbicide (gal),Diquat Dibromide,P_330,Y,Blue,30010700,NA,NA,CLP
+2018-0898,2023,2023-05-23,2023-05-23,16,Tribune (gal),Diquat Dibromide,P_331,Y,Blue,30010700,NA,NA,CLP
+2018-0910,2024,2024-04-29,2024-04-29,8.2,Tribune (gal),Diquat Dibromide,P_332,Y,Constance,86005100,86.43,0.0949,CLP
+2018-0912,2020,2020-05-20,2020-05-20,6.06,Aquathol K (gal),Endothall,P_333,Y,Bass,86023400,95.96,0.0632,CLP
+2018-0912,2021,2021-05-19,2021-05-19,11.4,Aquathol K (gal),Endothall,P_334,Y,Bass,86023400,95.96,0.1188,CLP
+2018-0912,2022,2022-05-19,2022-05-19,2.5,Aquathol K (gal),Endothall,P_335,Y,Bass,86023400,95.96,0.0261,CLP
+2018-1014,2020,2020-05-06,2020-05-06,23.7,Dibrox (gal),Diquat Dibromide,P_336,Y,Duck,07005300,247.13,0.0959,CLP
+2018-1015,2020,2020-05-20,2020-05-20,50.5,Dibrox (gal),Diquat Dibromide,P_337,Y,Green,30013600,357.1,0.1414,CLP
+2018-1016,2021,2021-05-05,2021-05-05,7.8,Aquathol K (gal),Endothall,P_338,Y,Long,30007200,381.58,0.0204,CLP
+2018-1041,2020,2020-07-15,2020-07-15,6.65,"ProcellaCOR EC (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_339, P_340",Y,Medicine,27010400,434.53,0.0153,UNKNOWN
+2018-1044,2021,2021-05-05,2021-05-05,24.689999999999998,Aquathol K (gal),Endothall,P_341,Y,West Rush,13006902,902.79,0.0273,CLP
+2018-1045,2020,2020-05-12,2020-05-12,39.58,Aquathol K (gal),Endothall,P_342,Y,East Rush,13006901,1136.44,0.0348,CLP
+2018-1045,2021,2021-05-05,2021-05-05,24.53,Aquathol K (gal),Endothall,P_343,Y,East Rush,13006901,1136.44,0.0216,CLP
+2018-1045,2023,2023-05-31,2023-05-31,37.95,Semera (lbs?),Flumioxazin,P_344,Y,East Rush,13006901,1136.44,0.0334,CLP
+2018-1087,2021,2021-05-28,2021-05-28,30,Aquathol K (gal),Endothall,P_345,Y,Upper Cormorant,03058800,522.84,0.0574,CLP
+2018-1097,2021,2021-05-06,2021-05-06,1,Aquathol K (gal),Endothall,P_346,Y,Big Watab,73010200,57.18,0.0175,CLP
+2018-1132,2022,2022-05-23,2022-05-23,11,Aquathol K (gal),Endothall,P_347,Y,Chisago,13001200,NA,NA,CLP
+2018-1159,2020,2020-05-27,2020-05-27,16,Aquathol K (gal),Endothall,P_348,Y,Fish,33003600,505.76,0.0316,CLP
+2018-1159,2021,2021-05-12,2021-05-12,23,Aquathol K (gal),Endothall,P_349,Y,Fish,33003600,505.76,0.0455,CLP
+2018-1159,2023,2023-05-21,2023-05-21,17.2,Aquathol K (gal),Endothall,P_350,Y,Fish,33003600,505.76,0.034,CLP
+2018-1159,2024,2024-05-05,2024-05-05,16,Aquathol K (gal),Endothall,P_351,Y,Fish,33003600,505.76,0.0316,CLP
+2018-1228,2020,2020-05-16,2020-05-16,46.5,Aquathol K (gal),Endothall,P_352,Y,Eagle,71006700,319.49,0.1455,CLP
+2018-1380,2022,2022-07-16,2022-07-16,3.7,Tribune (gal),Diquat Dibromide,P_353,Y,Beebe,86002300,179.49,0.0206,EWM
+2018-1459,2023,2023-07-06,2023-07-07,51.1,"2,4-D Amine ()",NA,P_354,Y,Goose,13008300,NA,NA,EWM
+2018-1459,2024,2024-07-08,2024-07-08,51.1,"2,4-D Amine (gal)",NA,P_355,Y,Goose,13008300,NA,NA,EWM
+2018-1459,2025,2025-07-10,2025-07-10,51.1,Weedar 64 (),"2,4-D",P_356,Y,Goose,13008300,NA,NA,EWM
+2018-1512,2020,2020-05-19,2020-05-19,9.9,Tribune (gal),Diquat Dibromide,P_357,Y,Weaver,27011700,73.24,0.1352,CLP
+2018-1512,2022,2022-06-01,2022-06-01,10.1,"Aquathol K (gal), Tribune (gal)","Endothall, Diquat Dibromide","P_358, P_359",Y,Weaver,27011700,73.24,0.1379,CLP
+2018-1664,2020,2020-05-19,2020-05-19,1.3,Aquathol K (gal),Endothall,P_360,Y,West Lake Sylvia,86027900,297.1,0.0044,CLP
+2018-1664,2023,2023-05-26,2023-05-26,3.5700000000000003,Aquathol K (gal),Endothall,P_361,Y,West Lake Sylvia,86027900,297.1,0.012,CLP
+2018-1864,2021,2021-05-26,2021-05-26,8.9,Tribune (gal),Diquat Dibromide,P_362,Y,Muskrat,03036000,64.18,0.1387,CLP
+2018-2165,2023,2023-08-25,2023-08-25,1.79,Platoon (gal),"2,4-D",P_363,Y,West Lake Sylvia,86027900,297.1,0.006,EWM
+2018-2174,2020,2020-06-23,2020-06-23,23.5,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_364,Y,Maple,86013400,NA,NA,EWM
+2018-2174,2021,2021-07-20,2021-07-20,38.9,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_365,Y,Maple,86013400,NA,NA,EWM
+2018-2398,2022,2022-08-25,2022-08-25,1, (),NA,P_366,Y,Town Line,11019000,697.66,0.0014,EWM
+2018-2661,2021,2021-09-22,2021-09-22,14,"ProcellaCOR (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_367, P_368",Y,Shamineau,49012700,630.54,0.0222,EWM
+2018-2938,2020,2020-07-09,2020-07-09,0.1,"Cide-Kick 2.5 Gal (gal), Tribune  (gal)","Limonene, NA","P_369, P_370",Y,Granite,86021700,118.18,8e-4,FR
+2018-3528,2021,2021-09-27,2021-09-27,11.3,"ProcellaCOR (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_371, P_372",Y,Crooked,02008400,84.02,0.1345,EWM
+2018-3528,2024,2024-04-11,2024-04-11,115,Sonar A.S. (gal),Fluridone,P_373,Y,Crooked,02008400,84.02,1.3687,EWM
+2018-3528,2024,2024-05-22,2024-05-22,115,Sonar A.S. (gal),Fluridone,P_374,Y,Crooked,02008400,84.02,1.3687,EWM
+2019-0017,2020,2020-10-02,2020-10-02,11.3,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_375,Y,Emily,18020300,720.62,0.0157,EWM
+2019-0018,2020,2020-10-02,2020-10-02,4.3,ProcellaCOR (oz),Florpyrauxifen-benzyl,P_376,Y,Mary,18018500,139.41,0.0308,EWM
+2019-0027,2020,2020-05-06,2020-05-06,80.7,Aquathol K (gal),Endothall,P_377,Y,Washington,40011700,1131.37,0.0713,CLP
+2019-0027,2021,2021-05-11,2021-05-11,80.7,Aquathol K (gal),Endothall,P_378,Y,Washington,40011700,1131.37,0.0713,CLP
+2019-0039,2020,2020-07-10,2020-07-10,3.1,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_379,Y,Henderson,34011600,31.49,0.0984,EWM
+2019-0258,2020,2020-05-26,2020-05-26,17.5,Aquathol K (gal),Endothall,P_380,Y,South Lida,56074702,321.03,0.0545,CLP
+2019-0258,2021,2021-06-03,2021-06-03,13,Aquathol K (gal),Endothall,P_381,Y,South Lida,56074702,321.03,0.0405,CLP
+2019-0258,2022,2022-06-02,2022-06-02,5.5,Aquathol K (gal),Endothall,P_382,Y,South Lida,56074702,321.03,0.0171,CLP
+2019-0258,2025,2025-05-22,2025-05-22,22.4,FlumigardSC (gal),Flumioxazin,P_383,Y,South Lida,56074702,321.03,0.0698,CLP
+2019-0627,2020,2020-10-08,2020-10-08,0.86,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_384,Y,Crookneck,49013300,144.83,0.0059,EWM
+2019-0859,2022,2023-05-15,2023-05-15,39.7,Aquathol K (gal),Endothall,P_385,Y,Francis,30008000,270.42,0.1468,CLP
+2019-0880,2020,2020-04-14,2020-04-14,145,Sonar A.S. (gal),Fluridone,P_386,Y,Cleary,70002200,144.74,1.0018,CLP
+2019-0880,2020,2020-05-06,2020-05-06,145,Sonar A.S. (gal),Fluridone,P_387,Y,Cleary,70002200,144.74,1.0018,CLP
+2019-0880,2021,2021-04-07,2021-04-07,145,Sonar A.S. (gal),Fluridone,P_388,Y,Cleary,70002200,144.74,1.0018,CLP
+2019-0880,2022,2022-04-20,2022-04-20,145,Sonar A.S. (gal),Fluridone,P_389,Y,Cleary,70002200,144.74,1.0018,CLP
+2019-1039,2021,2021-05-26,2021-05-26,6,Tribune (gal),Diquat Dibromide,P_390,Y,Long,56078400,287.04,0.0209,CLP
+2019-1061,2022,2022-05-19,2022-05-19,7.28,Tribune (gal),Diquat Dibromide,P_391,Y,Upper Prior,70007200,310.51,0.0234,CLP
+2019-1068,2024,2024-04-30,2024-04-30,5.5,Aquathol K (gal),Endothall,P_392,Y,Green Prairie Fish,49003500,92.99,0.0591,CLP
+2019-1068,2025,2025-05-08,2025-05-08,5.8100000000000005,FlumigardSC (oz),Flumioxazin,P_393,Y,Green Prairie Fish,49003500,92.99,0.0625,CLP
+2019-1137,2021,2021-05-25,2021-05-25,14,Tribune (gal),Diquat Dibromide,P_394,Y,Rogers,19008000,102.34,0.1368,CLP
+2019-1303,2020,2020-05-22,2020-05-22,3.54,Aquathol K (gal),Endothall,P_395,Y,Shields,82016200,25.53,0.1387,CLP
+2019-1303,2021,2021-05-26,2021-05-26,3.18,Aquathol K (gal),Endothall,P_396,Y,Shields,82016200,25.53,0.1246,CLP
+2019-1303,2022,2022-05-27,2022-05-27,3.27,Aquathol K (gal),Endothall,P_397,Y,Shields,82016200,25.53,0.1281,CLP
+2019-1328,2020,2020-05-21,2020-05-21,8.32,"ProcellaCOR EC (gal), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_398, P_399",Y,Long,82011800,35.94,0.2315,EWM
+2019-1460,2020,2020-05-22,2020-05-22,3.11,Aquathol K (gal),Endothall,P_400,Y,Moody,13002300,NA,NA,CLP
+2019-1475,2022,2023-05-15,2023-05-15,2.5,Semera (lbs),Flumioxazin,P_401,Y,Long,49001500,68.59,0.0364,CLP
+2019-1554,2022,2022-05-24,2022-05-24,10,Galleon SC (qt),Penoxsulam,P_402,Y,Josephine,62005700,78.88,0.1268,CLP
+2019-1554,2024,2024-04-15,2024-04-15,8.15,Flumigard SC (oz),NA,P_403,Y,Josephine,62005700,78.88,0.1033,CLP
+2019-1617,2020,2020-05-15,2020-05-15,18.9,Tribune (gal),Diquat Dibromide,P_404,Y,Minnetonka-Lower Lake,27013302,2059.41,0.0092,CLP
+2019-1617,2020,2020-07-10,2020-07-10,3.49,"Kammo Plus (gal), ProcellaCOR EC (oz), Tribune (gal)","Limonene, Florpyrauxifen-benzyl, Diquat Dibromide","P_405, P_406, P_407",Y,Minnetonka-Lower Lake,27013302,2059.41,0.0017,CLP
+2019-1617,2025,2025-05-06,2025-05-06,45.9,Tribune (gal),Diquat Dibromide,P_408,Y,Minnetonka-Lower Lake,27013302,2059.41,0.0223,CLP
+2019-1846,2021,2021-05-26,2021-05-26,7.9,Aquathol K (gal),Endothall,P_409,Y,Curfman,03036300,NA,NA,CLP
+2019-1846,2022,2022-06-03,2022-06-03,7.2,Aquathol K (gal),Endothall,P_410,Y,Curfman,03036300,NA,NA,CLP
+2019-2082,2022,2022-06-22,2022-06-22,218,Sonar A.S. (gal),Fluridone,P_411,Y,Comfort,13005300,88.03,2.4764,EWM
+2019-2082,2022,2022-07-28,2022-07-28,218,Sonar A.S. (oz),Fluridone,P_412,Y,Comfort,13005300,88.03,2.4764,EWM
+2019-2135,2020,2020-05-26,2020-05-26,4.7,Aquathol K (gal),Endothall,P_413,Y,Upper South Long,18009600,292.08,0.0161,EWM
+2019-2135,2020,2020-07-22,2020-07-22,8.3,Aquathol K (oz),Endothall,P_414,Y,Upper South Long,18009600,292.08,0.0284,EWM
+2019-2135,2022,2022-10-04,2022-10-04,1.9,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_415,Y,Upper South Long,18009600,292.08,0.0065,EWM
+2019-2394,2020,2020-08-04,2020-08-04,9.9,"2,4-D Amine (gal)",NA,P_416,Y,Waverly,86011400,146.75,0.0675,EWM
+2019-2394,2021,2021-08-13,2021-08-13,13.200000000000001,Platoon (gal),"2,4-D",P_417,Y,Waverly,86011400,146.75,0.0899,EWM
+2019-2512,2022,2022-07-27,2022-07-27,10,ProcellaCOR EC (PDU),Florpyrauxifen-benzyl,P_418,Y,Erie,47006400,115.68,0.0864,EWM
+2019-2512,2022,2023-06-29,2023-06-29,6.7,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_419,Y,Erie,47006400,115.68,0.0579,EWM
+2019-3016,2021,2021-08-25,2021-08-25,3.08,"ProcellaCOR EC (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_420, P_421",Y,Frances,40005700,568.07,0.0054,EWM
+2019-3016,2023,2023-08-24,2023-08-24,11,"2,4-D Amine (gal)",NA,P_422,Y,Frances,40005700,568.07,0.0194,EWM
+2019-3106,2022,2022-08-04,2022-08-04,3.1,ProcellaCOR EC (gal),Florpyrauxifen-benzyl,P_423,Y,White Sand,18037900,282.54,0.011,EWM
+2019-3248,2020,2020-08-10,2020-08-10,3.2,"2,4-D Amine (gal)",NA,P_424,Y,Fannie,30004300,268.23,0.0119,EWM
+2019-3431,2020,2020-05-15,2020-05-15,9,Aquathol K (gal),Endothall,P_425,Y,Darling,21008000,553.89,0.0162,CLP
+2019-3431,2022,2022-06-03,2022-06-03,26,Tribune (gal),Diquat Dibromide,P_426,Y,Darling,21008000,553.89,0.0469,CLP
+2020-0043,2020,2020-05-13,2020-05-13,29.11,Tribune (gal),Diquat Dibromide,P_427,Y,Coon,02004200,1331.96,0.0219,CLP
+2020-0043,2021,2021-05-05,2021-05-05,26.2,Tribune (gal),Diquat Dibromide,P_428,Y,Coon,02004200,1331.96,0.0197,CLP
+2020-0108,2020,2020-06-02,2020-06-02,18,Aquathol K (),Endothall,P_429,Y,Jennie,47001500,1064.03,0.0169,CLP
+2020-0120,2024,2024-04-30,2024-04-30,11,Schooner 51.0% WDG (lbs),NA,P_430,Y,Knaus,73008600,209.7,0.0525,CLP
+2020-0139,2020,2020-05-19,2020-05-19,22.05,Aquathol K (gal),Endothall,P_431,Y,Lower Cullen,18040300,201.25,0.1096,CLP
+2020-0139,2025,2025-05-14,2025-05-14,8.6,FlumigardSC (gal),Flumioxazin,P_432,Y,Lower Cullen,18040300,201.25,0.0427,CLP
+2020-0140,2020,2020-05-18,2020-05-19,9.37,Aquathol K (gal),Endothall,P_433,Y,Middle Cullen,18037700,137.49,0.0682,CLP
+2020-0140,2020,2020-05-19,2020-05-19,3.8,Aquathol Super K (lbs),Endothall,P_435,Y,Middle Cullen,18037700,137.49,0.0276,CLP
+2020-0140,2020,2020-05-26,2020-05-26,5.5,Aquathol K (gal),Endothall,P_434,Y,Middle Cullen,18037700,137.49,0.04,CLP
+2020-0140,2021,2021-05-19,2021-05-19,5.5,Aquathol K (gal),Endothall,P_436,Y,Middle Cullen,18037700,137.49,0.04,CLP
+2020-0140,2025,2025-05-14,2025-05-14,3.6,FlumigardSC (gal),Flumioxazin,P_437,Y,Middle Cullen,18037700,137.49,0.0262,CLP
+2020-0141,2020,2020-05-18,2020-05-18,10.81,Aquathol K (gal),Endothall,P_438,Y,Upper Cullen,18037600,232.78,0.0464,CLP
+2020-0141,2021,2021-05-19,2021-05-19,7.7,Aquathol K (gal),Endothall,P_439,Y,Upper Cullen,18037600,232.78,0.0331,CLP
+2020-0141,2022,2022-05-26,2022-05-26,12.8,Aquathol K (gal),Endothall,P_440,Y,Upper Cullen,18037600,232.78,0.055,CLP
+2020-0141,2025,2025-05-14,2025-05-14,8.6,FlumigardSC (gal),Flumioxazin,P_441,Y,Upper Cullen,18037600,232.78,0.0369,CLP
+2020-0145,2022,2022-06-07,2022-06-07,6.9,Tribune (gal),Diquat Dibromide,P_444,Y,Keller (main bay),62001002,73.32,0.0941,CLP
+2020-0145,2022,2022-10-26,2022-10-26,5,Tribune (),Diquat Dibromide,P_442,Y,Keller (main bay),62001002,73.32,0.0682,CLP
+2020-0145,2022,2023-06-06,2023-06-06,5.9,Tribune (),Diquat Dibromide,P_443,Y,Keller (main bay),62001002,73.32,0.0805,CLP
+2020-0147,2022,2022-06-07,2022-06-07,5.8,Tribune (gal),Diquat Dibromide,P_445,Y,Gervais,62000700,94.42,0.0614,CLP
+2020-0148,2022,2022-06-07,2022-06-07,10.6,Tribune (gal),Diquat Dibromide,P_448,Y,Kohlman,62000600,82.9,0.1279,CLP
+2020-0148,2022,2022-10-26,2022-10-26,5.3,Tribune (),Diquat Dibromide,P_446,Y,Kohlman,62000600,82.9,0.0639,CLP
+2020-0148,2022,2023-06-06,2023-06-06,8,Tribune (),Diquat Dibromide,P_447,Y,Kohlman,62000600,82.9,0.0965,CLP
+2020-0172,2020,2020-05-15,2020-05-15,27.3,Aquathol K (gal),Endothall,P_449,Y,Clearwater,86025200,NA,NA,CLP
+2020-0172,2021,2021-05-12,2021-05-12,23.509999999999998,Aquathol K (gal),Endothall,P_450,Y,Clearwater,86025200,NA,NA,CLP
+2020-0177,2020,2020-10-07,2020-10-07,36.4,ProcellaCOR EC (PDU),Florpyrauxifen-benzyl,P_451,Y,Clearwater,18003800,338.34,0.1076,EWM
+2020-0177,2021,2021-09-30,2021-09-30,0.54,"ProcellaCOR EC (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_452, P_453",Y,Clearwater,18003800,338.34,0.0016,EWM
+2020-0181,2020,2020-05-19,2020-05-19,23,Dibrox (gal),Diquat Dibromide,P_454,Y,Rice,02000800,371.22,0.062,CLP
+2020-0181,2021,2021-05-10,2021-05-10,23,Dibrox (gal),Diquat Dibromide,P_455,Y,Rice,02000800,371.22,0.062,CLP
+2020-0181,2022,2022-05-27,2022-05-27,28.7,Tribune (gal),Diquat Dibromide,P_456,Y,Rice,02000800,371.22,0.0773,CLP
+2020-0185,2020,2020-05-21,2020-05-21,7,Aquathol K (gal),Endothall,P_457,Y,South Long,18013600,451.45,0.0155,CLP
+2020-0185,2021,2021-05-22,2021-05-22,28,Aquathol K (gal),Endothall,P_458,Y,South Long,18013600,451.45,0.062,CLP
+2020-0191,2025,2025-05-09,2025-05-09,30,Diquat Herbicide (gal),Diquat Dibromide,P_459,Y,NA,NA,NA,NA,NA
+2020-0208,2020,2020-09-18,2020-09-18,10,"2,4-D Amine (gal)",NA,P_460,Y,McKinney,31037000,NA,NA,EWM
+2020-0208,2022,2022-09-12,2022-09-12,14.63,Captain (gal),Copper Complex,P_461,Y,McKinney,31037000,NA,NA,EWM
+2020-0211,2020,2020-07-13,2020-07-13,21.29,"Kammo Plus (gal), Tribune (gal)","Limonene, Diquat Dibromide","P_462, P_463",Y,Minnetonka-Upper Lake,27013305,1699.3,0.0125,EWM
+2020-0211,2021,2021-06-26,2021-06-26,1.4,"ProcellaCOR EC (gal), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_464, P_466",Y,Minnetonka-Upper Lake,27013305,1699.3,8e-4,EWM
+2020-0211,2021,2021-07-16,2021-07-16,10.6,"ProcellaCOR EC (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_465, P_467",Y,Minnetonka-Upper Lake,27013305,1699.3,0.0062,EWM
+2020-0211,2022,2022-07-25,2022-07-25,4,"ProcellaCOR EC (oz), Tribune (gal)","Florpyrauxifen-benzyl, Diquat Dibromide","P_468, P_469",Y,Minnetonka-Upper Lake,27013305,1699.3,0.0024,EWM
+2020-0212,2020,2020-05-27,2020-05-27,11.85,Aquathol K (gal),Endothall,P_470,Y,Winona,85001100,NA,NA,CLP
+2020-0903,2021,2021-05-12,2021-05-12,40.64,Tribune (gal),Diquat Dibromide,P_471,Y,Centerville,02000600,288.64,0.1408,CLP
+2020-0903,2022,2022-05-17,2022-05-17,40.76,Diquat Herbicide (gal),Diquat Dibromide,P_472,Y,Centerville,02000600,288.64,0.1412,CLP
+2020-0903,2022,2023-05-16,2023-05-16,40.81,Tribune (gal),Diquat Dibromide,P_473,Y,Centerville,02000600,288.64,0.1414,CLP
+2020-0903,2024,2024-04-15,2024-04-15,42.489999999999995,Diquat Herbicide (gal),Diquat Dibromide,P_474,Y,Centerville,02000600,288.64,0.1472,CLP
+2020-0924,2025,2025-05-13,2025-05-13,2.7,FlumigardSC (gal),Flumioxazin,P_475,Y,Little Birch,77008900,271.94,0.0099,CLP
+2020-1556,2021,2021-05-13,2021-05-13,24.9,Tribune (gal),Diquat Dibromide,P_476,Y,Oak,10009300,360.47,0.0691,"CLP, EWM"
+2020-1556,2025,2025-04-16,2025-04-16,360,Sonar A.S. (gal),Fluridone,P_477,Y,Oak,10009300,360.47,0.9987,"CLP, EWM"
+2020-1556,2025,2025-05-08,2025-05-08,380,Sonar A.S. (gal),Fluridone,P_478,Y,Oak,10009300,360.47,1.0542,"CLP, EWM"
+2020-2645,2020,2020-08-20,2020-08-20,9.9,"2,4-D Amine (gal)",NA,P_479,Y,Lower Spunk,73012300,129.34,0.0765,EWM
+2020-2645,2021,2021-08-09,2021-08-09,5.18,Platoon (gal),"2,4-D",P_480,Y,Lower Spunk,73012300,129.34,0.04,EWM
+2020-3342,2021,2021-05-06,2021-05-06,15.6,Dibrox (gal),Diquat Dibromide,P_481,Y,Florence,30003500,120.2,0.1298,CLP
+2020-3342,2022,2022-05-23,2022-05-23,15,Tribune (gal),Diquat Dibromide,P_482,Y,Florence,30003500,120.2,0.1248,CLP
+2020-3343,2021,2021-05-06,2021-05-06,4.59,Dibrox (gal),Diquat Dibromide,P_483,Y,Elms,30003600,40.8,0.1125,CLP
+2020-3343,2024,2024-04-29,2024-04-29,5,Diquat Herbicide (gal),Diquat Dibromide,P_484,Y,Elms,30003600,40.8,0.1225,CLP
+2021-0006,2022,2022-05-24,2022-05-24,164,Galleon SC (gal),Penoxsulam,P_485,Y,Irene,21007600,240.38,0.6823,CLP
+2021-0081,2022,2022-05-17,2022-05-17,10.64,Aquathol K (gal),Endothall,P_486,Y,Wilhelm,86002000,106.73,0.0997,CLP
+2021-0100,2021,2021-04-28,2021-04-28,9.6,Aquathol K (gal),Endothall,P_487,Y,Dean,86004100,126.94,0.0756,CLP
+2021-0100,2021,2021-05-02,2021-05-02,6,Tribune (gal),Diquat Dibromide,P_488,Y,Dean,86004100,126.94,0.0473,CLP
+2021-0311,2021,2021-05-05,2021-05-05,8.4,Aquathol K (gal),Endothall,P_489,Y,Allie,65000600,509.12,0.0165,CLP
+2021-0311,2021,2023-05-16,2023-05-16,3.762,Aquathol K (gal),Endothall,P_490,Y,Allie,65000600,509.12,0.0074,CLP
+2021-0312,2021,2021-05-05,2021-05-05,13,Aquathol K (gal),Endothall,P_491,Y,Preston,65000200,660.85,0.0197,CLP
+2021-0312,2022,2022-05-23,2022-05-23,8,Aquathol K (gal),Endothall,P_492,Y,Preston,65000200,660.85,0.0121,CLP
+2021-0371,2021,2021-07-22,2021-07-22,1.72,Captain (gal),Copper Complex,P_493,Y,Lower Twin,27004203,26.6,0.0647,EWM
+2021-0388,2021,2021-05-11,2021-05-11,3.5,Aquathol K (gal),Endothall,P_494,Y,Minnie-Belle,47011900,175.76,0.0199,CLP
+2021-0389,2022,2022-07-29,2022-07-29,41.2,ProcellaCOR EC (PDU),Florpyrauxifen-benzyl,P_495,Y,Minnie-Belle,47011900,175.76,0.2344,EWM
+2021-0413,2022,2022-06-01,2022-06-01,65.26,Tribune (gal),Diquat Dibromide,P_496,Y,Byllesby,19000600,935.97,0.0697,CLP
+2021-0413,2023,2023-05-31,2023-05-31,30.23,Tribune (gal),Diquat Dibromide,P_497,Y,Byllesby,19000600,935.97,0.0323,CLP
+2021-0413,2025,2025-05-30,2025-05-30,29.06,FlumigardSC (gal),Flumioxazin,P_498,Y,Byllesby,19000600,935.97,0.031,CLP
+2021-0430,2021,2021-05-14,2021-05-14,1.28,Tribune (gal),Diquat Dibromide,P_499,Y,Unnamed,27027500,NA,NA,CLP
+2021-0437,2021,2021-05-19,2021-05-19,115,Diquat SPC 2 L (gal),Diquat Dibromide,P_500,Y,Jennie,47001500,1064.03,0.1081,CLP
+2021-0451,2021,2021-05-28,2021-05-28,33.56,Aquathol K (gal),Endothall,P_501,Y,Osakis,77021500,3389.01,0.0099,CLP
+2021-0465,2021,2021-05-12,2021-05-12,12.3,Tribune (gal),Diquat Dibromide,P_504,Y,Johanna,62007800,92.93,0.1324,CLP
+2021-0466,2021,2021-05-13,2021-05-13,2,Aquathol K (gal),Endothall,P_505,Y,Rice,73019600,832.55,0.0024,CLP
+2021-0466,2021,2021-05-13,2021-05-13,5.8,Tribune (gal),Diquat Dibromide,P_506,Y,Rice,73019600,832.55,0.007,CLP
+2021-0466,2022,2022-05-23,2022-05-23,16.4,Aquathol K (gal),Endothall,P_507,Y,Rice,73019600,832.55,0.0197,CLP
+2021-0483,2021,2021-04-28,2021-04-28,8,Aquathol K (gal),Endothall,P_508,Y,Martha,86000900,71.05,0.1126,CLP
+2021-0483,2022,2022-05-11,2022-05-11,10,Aquathol K (gal),Endothall,P_509,Y,Martha,86000900,71.05,0.1407,CLP
+2021-0484,2021,2021-06-22,2021-06-22,56.8,"2,4-D Amine (gal)",NA,P_510,Y,Clear,81001401,563.67,0.1008,EWM
+2021-1320,2021,2021-07-05,2021-07-05,27.8,"2,4-D Amine (gal)",NA,P_511,Y,Hunt,66004700,148.64,0.187,CLP
+2021-1772,2021,2021-05-24,2021-05-24,18.26,Tribune (gal),Diquat Dibromide,P_512,Y,Minnetonka-Grays Bay,27013301,164.54,0.111,CLP
+2021-1772,2025,2025-05-13,2025-05-13,27,Tribune (gal),Diquat Dibromide,P_513,Y,Minnetonka-Grays Bay,27013301,164.54,0.1641,CLP
+2021-2453,2023,2023-10-10,2023-10-10,1.8,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_514,Y,Crooked,18004100,NA,NA,EWM
+2021-2453,2025,2025-09-17,2025-09-17,1.17,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_515,Y,Crooked,18004100,NA,NA,EWM
+2021-3343,2022,2022-06-17,2022-06-17,14.05,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_517,Y,Spring,70005400,282.83,0.0497,EWM
+2021-3343,2022,2022-08-19,2022-08-19,5.05,ProcellaCOR (oz),Florpyrauxifen-benzyl,P_516,Y,Spring,70005400,282.83,0.0179,EWM
+2022-0173,2022,2022-06-22,2022-06-22,12.94,Weedar 64 (gal),"2,4-D",P_518,Y,Kroon,13001300,140.32,0.0922,EWM
+2022-0173,2024,2024-06-03,2024-06-03,20.1,Weedar 64 (gal),"2,4-D",P_519,Y,Kroon,13001300,140.32,0.1432,EWM
+2022-0175,2022,2022-06-22,2022-06-22,11.95,Weedar 64 (gal),"2,4-D",P_520,Y,Chisago,13001200,NA,NA,EWM
+2022-0175,2024,2024-06-24,2024-06-24,88.8,Weedar 64 (gal),"2,4-D",P_521,Y,Chisago,13001200,NA,NA,EWM
+2022-0176,2022,2022-05-18,2022-05-18,17.2,Aquathol K (gal),Endothall,P_522,Y,Circle,66002700,837.56,0.0205,CLP
+2022-0176,2022,2023-05-16,2023-05-16,29.200000000000003,FlumigardSC (gal),Flumioxazin,P_523,Y,Circle,66002700,837.56,0.0349,CLP
+2022-0180,2022,2022-05-24,2022-05-24,22.5,Aquathol K (gal),Endothall,P_524,Y,German,40006300,522.41,0.0431,CLP
+2022-0242,2022,2022-06-10,2022-06-10,25,Galleon SC (quarts),Penoxsulam,P_525,Y,Leech,11020300,NA,NA,"NA, NA, NA"
+2022-0248,2022,2022-06-14,2022-06-14,648,Sonar A.S. (gal),Fluridone,P_526,Y,Clear,81001401,563.67,1.1496,EWM
+2022-0248,2022,2022-07-18,2022-07-18,648,Sonar A.S. (gal),Fluridone,P_527,Y,Clear,81001401,563.67,1.1496,EWM
+2022-0272,2022,2022-05-23,2022-05-23,11,Diquat Herbicide (gal),Diquat Dibromide,P_528,Y,Pioneer,13003400,NA,NA,"EWM, CLP"
+2022-0315,2022,2022-06-01,2022-06-01,16,Aquathol K (gal),Endothall,P_529,Y,Edward,18030500,1397.32,0.0115,CLP
+2022-0318,2022,2022-10-05,2022-10-05,70.94,Sonar A.S. (gal),Fluridone,P_530,Y,Colby,82009400,NA,NA,CLP
+2022-0318,2022,2022-11-02,2022-11-02,70.94,Sonar A.S. (gal),Fluridone,P_531,Y,Colby,82009400,NA,NA,CLP
+2022-0318,2022,2023-04-25,2023-04-25,70.94,Sonar A.S. (gal),Fluridone,P_532,Y,Colby,82009400,NA,NA,CLP
+2022-0321,2022,2023-05-11,2023-05-11,6.89,Tribune (gal),Diquat Dibromide,P_533,Y,Markgrafs,82008900,NA,NA,CLP
+2022-0322,2022,2022-10-05,2022-10-05,27.18,Sonar A.S. (gal),Fluridone,P_534,Y,Unnamed (Ravine),82008700,18.63,1.4589,CLP
+2022-0322,2022,2022-11-02,2022-11-02,27.18,Sonar A.S. (gal),Fluridone,P_535,Y,Unnamed (Ravine),82008700,18.63,1.4589,CLP
+2022-0322,2022,2023-04-25,2023-04-25,27,Sonar A.S. (gal),Fluridone,P_536,Y,Unnamed (Ravine),82008700,18.63,1.4493,CLP
+2022-0338,2022,2022-06-15,2022-06-15,6.4,Tribune (),Diquat Dibromide,P_537,Y,Lobster,21014400,NA,NA,CLP
+2022-0338,2025,2025-05-25,2025-05-25,5.6,Diquat Herbicide (),Diquat Dibromide,P_538,Y,Lobster,21014400,NA,NA,CLP
+2022-0347,2022,2022-06-01,2022-06-01,30.13,Tribune (gal),Diquat Dibromide,P_539,Y,Minnetonka-Upper Lake,27013305,1699.3,0.0177,CLP
+2022-0350,2022,2022-06-01,2022-06-01,52.3,Tribune (gal),Diquat Dibromide,P_540,Y,Minnetonka-Lower Lake,27013302,2059.41,0.0254,CLP
+2022-0385,2022,2022-05-11,2022-05-11,155,Sonar A.S. (gal),Fluridone,P_541,Y,Staring,27007800,156.22,0.9922,EWM
+2022-0385,2022,2022-06-10,2022-06-10,40,Sonar A.S. (gal),Fluridone,P_542,Y,Staring,27007800,156.22,0.256,EWM
+2022-0400,2022,2022-05-17,2022-05-17,36.51,Diquat Herbicide (gal),Diquat Dibromide,P_543,Y,Peltier,02000400,514.79,0.0709,CLP
+2022-0400,2022,2023-05-16,2023-05-16,32.78,Tribune (gal),Diquat Dibromide,P_544,Y,Peltier,02000400,514.79,0.0637,CLP
+2022-1398,2022,2022-07-25,2022-07-25,10.97,"2,4-D Amine (gal)",NA,P_545,Y,French,66003800,379.03,0.0289,EWM
+2022-1398,2022,2023-06-22,2023-06-22,11.64,ProcellaCOR (gal),Florpyrauxifen-benzyl,P_546,Y,French,66003800,379.03,0.0307,EWM
+2022-1832,2023,2023-05-26,2023-05-26,6.67,Semera (lbs),Flumioxazin,P_547,Y,Bass,22007400,152.24,0.0438,CLP
+2022-1832,2025,2025-05-08,2025-05-08,17.3,FlumigardSC (gal),Flumioxazin,P_548,Y,Bass,22007400,152.24,0.1136,CLP
+2022-1986,2024,2024-03-21,2024-03-21,374.9,Sonar A.S. (gal),Fluridone,P_549,Y,Owasso,62005600,284.18,1.3192,EWM
+2022-1986,2024,2024-04-29,2024-04-29,374.9,Sonar A.S. (gal),Fluridone,P_550,Y,Owasso,62005600,284.18,1.3192,EWM
+2022-1986,2024,2024-06-24,2024-06-24,374.9,Sonar A.S. (gal),Fluridone,P_551,Y,Owasso,62005600,284.18,1.3192,EWM
+2022-1986,2024,2024-08-14,2024-08-14,374.9,Sonar A.S. (gal),Fluridone,P_552,Y,Owasso,62005600,284.18,1.3192,EWM
+2022-1986,2025,2025-08-11,2025-08-11,8.95,Triclopyr 3 (gal),Triclopyr,P_553,Y,Owasso,62005600,284.18,0.0315,EWM
+2022-2614,2023,2023-10-11,2023-10-11,0.5,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_554,Y,Hanks,18004400,48.08,0.0104,EWM
+2022-2615,2023,2023-10-10,2023-10-10,1.5,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_555,Y,Portage,18005000,116.21,0.0129,EWM
+2023-0167,2024,2024-05-09,2024-05-09,32.2,Aquathol K (gal),Endothall,P_556,Y,Jennie,47001500,1064.03,0.0303,CLP
+2023-0301,2024,2024-05-08,2024-05-08,39.8,Semera (oz),Flumioxazin,P_557,Y,Andrew,21008500,322.67,0.1233,CLP
+2023-0301,2025,2025-05-22,2025-05-22,32.3,Flumigard (oz),Flumioxazin,P_558,Y,Andrew,21008500,322.67,0.1001,CLP
+2023-0381,2023,2023-07-27,2023-07-27,1.9,ProcellaCOR EC (quarts),Florpyrauxifen-benzyl,P_559,Y,Rabour,13007900,37.82,0.0502,EWM
+2023-0468,2023,2023-05-09,2023-05-09,74.4,Aquathol K (gal),Endothall,P_560,Y,Clear,81001401,563.67,0.132,CLP
+2023-1190,2023,2023-07-24,2023-07-24,0.5,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_561,Y,Mandall,13007400,33.29,0.015,EWM
+2023-1190,2025,2025-07-10,2025-07-10,0.5,ProcellaCOR EC (oz),Florpyrauxifen-benzyl,P_562,Y,Mandall,13007400,33.29,0.015,EWM
+2023-1638,2022,2023-06-06,2023-06-06,3.8,Diquat (),NA,P_563,Y,Gervais,62000700,94.42,0.0402,CLP
+2023-2342,2024,2024-08-07,2024-08-07,0.51,Komeen Descend (gal),Copper Complex,P_564,Y,Long,34006600,154.02,0.0033,SS
+2023-2342,2024,2024-10-01,2024-10-01,0.51,Komeen Descend (gal),Copper Complex,P_565,Y,Long,34006600,154.02,0.0033,SS
+2023-2655,2024,2024-08-06,2024-08-06,0.5,Hydrothol 191 (gal),NA,P_566,Y,Long,29016100,698.84,7e-4,SS
+2023-2655,2024,2024-10-02,2024-10-02,0.25,Komeen Descend (gal),Copper Complex,P_567,Y,Long,29016100,698.84,4e-4,SS
+2023-2655,2024,2025-06-20,2025-06-20,0.5,Komeen Descend (gal),Copper Complex,P_568,Y,Long,29016100,698.84,7e-4,SS
+2023-2720,2024,2024-07-26,2024-07-26,4.4,Mizzen (gal),NA,P_569,Y,Clearwater,86025200,NA,NA,SS
+2023-2720,2024,2024-08-09,2024-08-09,4.4,Mizzen (gal),NA,P_570,Y,Clearwater,86025200,NA,NA,SS
+2023-2720,2024,2024-08-30,2024-08-30,4.4,Mizzen (gal),NA,P_571,Y,Clearwater,86025200,NA,NA,SS
+2023-2720,2024,2024-10-10,2024-10-10,4.4,Mizzen (gal),NA,P_572,Y,Clearwater,86025200,NA,NA,SS
+2024-0112,2025,2025-04-29,2025-04-29,15.600000000000001,FlumigardSC (oz),Flumioxazin,P_573,Y,Norway,34025100,2106.35,0.0074,CLP
+2024-0113,2025,2025-04-29,2025-04-29,28.3,FlumigardSC (oz),Flumioxazin,P_574,Y,Games,34022400,247.82,0.1142,CLP
+2024-0169,2025,2025-04-30,2025-04-30,4.2,Galleon SC (gal),Penoxsulam,P_575,Y,Holiday,27009000,NA,NA,CLP
+2025-0025,2025,2025-05-07,2025-05-07,6.85,FlumigardSC (gal),Flumioxazin,P_576,Y,Island,03015300,482.53,0.0142,CLP
+2025-0088,2025,2025-05-22,2025-05-22,8.4,FlumigardSC (gal),Flumioxazin,P_577,Y,Cowdry,21010300,85.98,0.0977,CLP
+2025-0951,2025,2025-06-09,2025-06-09,3,Komeen Descend (gal),Copper Complex,P_578,Y,Middle Cullen,18037700,137.49,0.0218,SS
+2025-1273,2025,2025-05-09,2025-05-09,5.09,Tribune (gal),Diquat Dibromide,P_579,Y,Thompson,71009600,55.36,0.0919,CLP
+2025-1371,2025,2025-05-02,2025-05-02,36.2,Aquathol K (gal),Endothall,P_580,Y,Gorman,40003200,521.1,0.0695,CLP
+2025-2868,2025,2025-08-26,2025-08-26,2,Tribune (gal),Diquat Dibromide,P_581,Y,Byllesby,19000600,935.97,0.0021,FR

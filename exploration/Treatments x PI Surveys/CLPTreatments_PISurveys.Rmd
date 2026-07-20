@@ -104,7 +104,7 @@ dat_dlnm <- dat_dlnm %>%
 
 
 #generates a list of CLP lakes
-dat_dlnm_clp_lakes <- as.character((dat_dlnm %>%
+clp_lakes_dat_dlnm <- as.character((dat_dlnm %>%
                                       group_by(DOW) %>%
                                       summarize(potamogeton_crispus=max(potamogeton_crispus)) %>%
                                       filter(potamogeton_crispus > 0))$DOW)
@@ -115,6 +115,9 @@ dat_dlnm <- dat_dlnm %>%
   mutate(
     survey_id = row_number() 
   )
+
+dat_dlnm <- dat_dlnm %>%
+  relocate(survey_id, .before = 1)
 
 ```
 
@@ -199,6 +202,12 @@ dat_dlnm_surveys_w_treatments <- dat_dlnm %>% #filter
 
 # Verify the new row count
 nrow(dat_dlnm_surveys_w_treatments)
+
+#generate list of DOWs for lakes we have survey data and CLP treatment history
+CLP_survey_trt_lakes <- dat_dlnm_surveys_w_treatments %>%
+  distinct(DOW) %>%
+  pull(DOW)
+
 
 
 write.csv(treatment_history_matrix, file = "~/IAPM Project/MAISRC-IAPM/exploration/Treatments x PI Surveys/treatment_history_matrix.csv")

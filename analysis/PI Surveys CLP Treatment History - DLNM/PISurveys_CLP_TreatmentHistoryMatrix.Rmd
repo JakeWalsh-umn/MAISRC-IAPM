@@ -3,18 +3,17 @@ title: "CLPTreatments_PISurveys"
 output: html_document
 ---
 
-```{r}
+```{r, results = "hide", fig.keep = "none"}
 library(tidyverse)
 library(arrow)
 library(readxl)
 library(lubridate)
 library(sf)
+library(here)
 
 library(mgcv)
-#library(gratia)
 library(dlnm)
 library(brms)
-#library(cmdstanr)
 
 library(ggplot2)
 library(ggplotplus)
@@ -24,29 +23,62 @@ library(cowplot)
 
 library(dtwclust)
 library(clusterCrit)
-library(readr)
-```
-
-Load in treatment data
-```{r}
-IAPM_treatments <- read_csv("~/IAPM Project/Data/all_IAPM_treatments.csv")
 ```
 
 
-From Jake's Attempt 1 at characterizing treatment histories by PI Survey. Starting with db_sub_pa from 1_Loading and preparing PI data.R
+Create CLP treatment database.
+```{r}
+all_IAPM_treatments <- read_csv(here("outputdata", "all_IAPM_treatments.csv"))
+
+
+CLP_treatments <- all_IAPM_treatments %>%
+ filter(species_code == "CLP") %>%
+  filter(!is.na(start_date))
+
+# #filtering out treatments where we only know the month
+# CLP_treatments <- CLP_treatments %>%
+#   # calculate the difference in start date to end date
+#   mutate(
+#     days_apart = as.numeric(difftime(end_date, start_date, units = "days"))
+#   ) %>%
+#   # 2. Keep only rows where they are 0 or 1 day apart (and drop NAs)
+#   filter(!is.na(days_apart), days_apart <= 1) %>%
+#   # 3. Remove the temporary calculation column
+#   select(-days_apart)
+```
+
+
+looking at only month window treatments
+```{r}
+#filtering out treatments where we only know the month
+month_CLP_treatments <- CLP_treatments %>%
+  # calculate the difference in start date to end date
+  mutate(
+    days_apart = as.numeric(difftime(end_date, start_date, units = "days"))
+  ) %>%
+  # 2. Keep only rows where they are 0 or 1 day apart (and drop NAs)
+  filter(!is.na(days_apart), days_apart > 25) %>%
+  # 3. Remove the temporary calculation column
+  select(-days_apart)
+```
+
+Summarize survey data to Date-DOW level
+Starting with db_sub_pa from 1_Loading and preparing PI data.R
 
 ```{r}
+#load in PI data
+db_sub_pa <- read_csv("~/IAPM Project/data/db_sub_pa.csv")
 
-# Lake Morphology data ----
-lake_basin_morphology <- read_sf("JakeOutput/lake_basin_morphology.shp")
-lake_basin_morphology_df <- st_drop_geometry(lake_basin_morphology)
-
-
-lake_basin_morphology <- st_transform(lake_basin_morphology, "epsg:4326")
-
+#load in lake LZ data, joing LZ acres
+MN_lake_basin_littoral_zone <- read_csv(here("data", "MN_lake_basin_littoral_zone_15_ft_std.csv"))
+CLP_treatments <- CLP_treatments %>%
+  left_join(
+    MN_lake_basin_littoral_zone %>% select(DOWLKNUM, LK_LZACRES), 
+    by = c("DOW" = "DOWLKNUM")
+  )
 
 ## Exploring DLNM possibilities ----
-#
+
 dat_dlnm <- db_sub_pa %>%
   filter(!is.na(depth_ft) & depth_ft <= 15) %>%
   mutate(SURVEY_START=as.Date(SURVEY_START),
@@ -72,127 +104,318 @@ dat_dlnm <- db_sub_pa %>%
                                              myriophyllum_sibiricum:potamogeton_robbinsii, 
                                              nitella_sp:potamogeton_strictifolius,
                                              fontinalis_sp:drepanocladus_sp,
-                                             nitella_furcata:vallisneria_sp))>0)) %>%
-  drop_na()
+                                             nitella_furcata:vallisneria_sp))>0))
 
-#dat_dlnm <- left_join(dat_dlnm,
- #                     lake_basin_morphology_df %>%
-  #                      filter(ISLAND=="N" & !is.na(LK_LZACR_1)) %>%
-   #                     dplyr::select(DOWLKNUM,
-    #                                  LK_LZACR_1),
-     #                 by=join_by(DOW==DOWLKNUM)) %>%
-#  drop_na()
+#decided not to remove NAs. Need to investigate this more
 
-
-##I think we don't need this but maybe we do
-#dat_dlnm <- left_join(dat_dlnm,
- #                     apm_permits_long %>%
-  #                      group_by(water_resource_numbers, year) %>%
-   #                     summarize(APM_approved_acres=mean(approved_acres)), # WRONG, NEED TO KEEP PERMIT ID AT EARLIER STEP
-    #                  by=join_by(DOW==water_resource_numbers, year==year))
-
-#dat_dlnm$APM_approved_acres[is.na(dat_dlnm$APM_approved_acres)] <- 0
-
-#dont need factor stuff. That is for GAM
-#dat_dlnm <- dat_dlnm %>%
- #mutate(DOW=factor(DOW),
-  #       fyear=factor(year))
+#join LZ acres to dat_dlnm
+dat_dlnm <- dat_dlnm %>%
+  left_join(
+    MN_lake_basin_littoral_zone %>% select(DOWLKNUM, LK_LZACRES), 
+    by = c("DOW" = "DOWLKNUM")
+  )
+  
 
 
-#dat_dlnm_ewm_lakes <- as.character((dat_dlnm %>%
-                                 #     group_by(DOW) %>%
-                                  #    summarize(myriophyllum_spicatum=max(myriophyllum_spicatum)) %>%
-                                   #   filter(myriophyllum_spicatum > 0))$DOW)
-```
-
-
-Generate a list of CLP lakes
-```{r}
-dat_dlnm_clp_lakes <- as.character((dat_dlnm %>%
+#generates a list of CLP lakes
+clp_lakes_dat_dlnm <- as.character((dat_dlnm %>%
                                       group_by(DOW) %>%
                                       summarize(potamogeton_crispus=max(potamogeton_crispus)) %>%
                                       filter(potamogeton_crispus > 0))$DOW)
 
 
-```
-
-Subset CLP treatments
-```{r}
-
-CLP_IAPM_treatments <- IAPM_treatments %>%
-  filter(species_code == "CLP")
-```
-
-
-```{r}
-##### MELINA: THIS MAY BE THE ONLY USEFUL CODE FOR YOU HERE #####
-# Treatment history: Annual total (APM + IAPM) treatment area
-# as a fraction of littoral zone (<=15') area in a lagged matrix for DLNM.
-# rows = surveys, columns = lags
-# lag0 = treatment in year of survey 
-# (includes surveys before and after treatment in the same year, for now)
-# lag1 = treatment year before survey
-# lag2 = treatment 2 years before survey ...
-# lag8 = treatment 8 years before survey ...
-# max possible lags is 8 (a 2017 treatment for a 2025 survey?), 
-# so that's 9 columns
-treatment_history_matrix <- matrix(nrow=dim(dat_dlnm)[1], ncol=9) %>%
-  as.data.frame()
-colnames(treatment_history_matrix) <- paste0("lag", 0:8)
-
-target_string <- rep(NA, dim(dat_dlnm)[1])
-
-
-treatment_history_matrix <- dat_dlnm %>%
-  bind_cols(
-    matrix(nrow = nrow(.), ncol = 9) %>% 
-    as.data.frame() %>% 
-    setNames(paste0("lag", 0:8))
+#create unique IDs for PI surveys
+dat_dlnm <- dat_dlnm %>%
+  mutate(
+    survey_id = row_number() 
   )
 
+dat_dlnm <- dat_dlnm %>%
+  relocate(survey_id, .before = 1)
+
+```
 
 
+Create the treatment history matrix
 
-# populate the matrix
-for(i in 1:dim(dat_dlnm)[1]){
+```{r}
+# Initialize matrix with 11 columns (survey_id + lag0_before + lag0_after + lag1..lag8)
+treatment_history_matrix <- matrix(0, nrow = nrow(dat_dlnm), ncol = 11) %>%
+  as.data.frame()
+
+colnames(treatment_history_matrix) <- c(
+  "survey_id", 
+  "lag0_before", 
+  "lag0_after", 
+  paste0("lag", 1:8)
+)
+
+treatment_history_matrix$survey_id <- dat_dlnm$survey_id
+treatment_history_matrix$SURVEY_START <- dat_dlnm$SURVEY_START
+treatment_history_matrix$DOW <- dat_dlnm$DOW
+treatment_history_matrix <- treatment_history_matrix %>%
+  relocate(DOW, SURVEY_START, .before = 2)
+
+# Tracking vector
+target_string <- rep(NA_character_, nrow(dat_dlnm))
+
+
+#Populate matrix row-by-row
+for (i in 1:nrow(dat_dlnm)) {
   
-  if(dat_dlnm$DOW[i]%in%CLP_IAPM_treatments$DOW){
+  current_dow  <- dat_dlnm$DOW[i]
+  survey_dt    <- dat_dlnm$SURVEY_START[i]
+  survey_yr    <- dat_dlnm$year[i]
+  
+  # Check if the lake exists in the CLP treatment database
+  if (current_dow %in% CLP_treatments$DOW) {
     
-    CLP_IAPM_treatments_i <- CLP_IAPM_treatments %>%
-      filter(DOW==dat_dlnm$DOW[i])
+    # Subset treatment data for this specific lake
+    CLP_treatments_i <- CLP_treatments %>% 
+      filter(DOW == current_dow)
     
-    target_string[i] <- paste(unique(CLP_IAPM_treatments_i$species_code), collapse=",")
+    # Track species code if present
+    if ("species_code" %in% names(CLP_treatments_i)) {
+      target_string[i] <- paste(unique(CLP_treatments_i$species_code), collapse = ",")
+    }
     
-    year_i <- dat_dlnm$year[i]
+    # --- Same-Year Logic (lag0_before vs lag0_after) ---
+    same_year_tx <- CLP_treatments_i %>% filter(treatment_year == survey_yr)
     
-    treatment_history_matrix[i, 1] <- ifelse(year_i%in%CLP_IAPM_treatments_i$treatment_year,
-                                             CLP_IAPM_treatments_i$treatment_size[CLP_IAPM_treatments_i$treatment_year==year_i]/dat_dlnm$LK_LZACR_1[i],
-                                             0)
-    for(j in 2:9){
-      treatment_history_matrix[i, j] <- ifelse((year_i+1-j)%in%CLP_IAPM_treatments_i$treatment_year,
-                                               CLP_IAPM_treatments_i$treatment_size[CLP_IAPM_treatments_i$treatment_year==year_i+1-j]/dat_dlnm$LK_LZACR_1[i],
-                                               0)
+    if (nrow(same_year_tx) > 0) {
+      if (any(same_year_tx$start_date <= survey_dt)) {
+        treatment_history_matrix[i, "lag0_before"] <- 1
+      }
+      if (any(same_year_tx$start_date > survey_dt)) {
+        treatment_history_matrix[i, "lag0_after"] <- 1
+      }
+    }
+    
+    # --- Lag Years 1 through 8 ---
+    for (j in 1:8) {
+      target_year <- survey_yr - j
+      col_name <- paste0("lag", j)
+      
+      if (target_year %in% CLP_treatments_i$treatment_year) {
+        treatment_history_matrix[i, col_name] <- 1
+      }
     }
     
   } else {
-    
-    treatment_history_matrix[i, ] <- rep(0, 9)
+    # No treatment history for this lake DOW
     target_string[i] <- "none"
-    
   }
-  
-  # print(i)
-  
 }
 
+```
+```{r}
+#check the number of rows of the matrix with at least one lag treatment
+sum(rowSums(treatment_history_matrix[, 4:13] == 1) > 0)
 
-#Code below (commented out) is changing anything that is treatment above 100% of littoral zone to 1 (100)
+#filter dat_dlnm to surveys that have previous treatments
+survey_ids_treated <- treatment_history_matrix %>% #create list of surveys with any previous treatments
+  filter(if_any(starts_with("lag"), ~ .x == 1)) %>%
+  pull(survey_id)
 
-#but we should prob change that because maybe we want so see what is going on in those rows
+dat_dlnm_surveys_w_treatments <- dat_dlnm %>% #filter
+  filter(survey_id %in% survey_ids_treated)
 
-#treatment_history_matrix[treatment_history_matrix>1] <- 1
+# Verify the new row count
+nrow(dat_dlnm_surveys_w_treatments)
 
-#
-write.csv(treatment_history_matrix, file = "exploration/Treatment x PI Surveys/treatment_history_matrix.csv")
+
+
+```
+
+
+For treatments in all_IAPM_treatments where we only know the month, start_date is first of the month and end_date is last of the month. This code is to filter out surveys that occur in the same month as one of these treatments where we only know the month. Only matters for lag0. I am aware this may also filter out the few lag0 treatments that happen to be on the first of the month. Will fix later.
+```{r}
+dat_dlnm_surveys_w_treatments <- dat_dlnm_surveys_w_treatments %>%
+  # 1. Join with CLP_treatments matching on DOW and year
+  left_join(
+    CLP_treatments %>%
+      select(DOW, treatment_year, same_year_treatment = start_date) %>%
+      distinct(), # Prevents duplicates if a DOW was treated multiple times in one year
+    by = c("DOW", "year" = "treatment_year")
+  )
+
+ dat_dlnm_surveys_w_treatments <- dat_dlnm_surveys_w_treatments %>% 
+   relocate(same_year_treatment, .before = 5) #rearrange columns
+ 
+ same_month_check <- dat_dlnm_surveys_w_treatments %>%
+  filter(
+    year(SURVEY_START) == year(same_year_treatment),
+    month(SURVEY_START) == month(same_year_treatment)
+  ) %>%
+  filter(format(same_year_treatment, "%d") == "01")
+ 
+ 
+ #filter out surveys in same_month_check from treatment matrix
+ treatment_history_matrix <- treatment_history_matrix %>%
+  filter(!survey_id %in% same_month_check$survey_id)
+ 
+ survey_ids_treated <- treatment_history_matrix %>% #create list of surveys with any previous treatments
+  filter(if_any(starts_with("lag"), ~ .x == 1)) %>%
+  pull(survey_id)
+
+dat_dlnm_surveys_w_treatments <- dat_dlnm %>% #filter
+  filter(survey_id %in% survey_ids_treated)
+ 
+ #check to make sure number of rows are the same
+ sum(rowSums(treatment_history_matrix[, 4:13] == 1) > 0)
+ nrow(dat_dlnm_surveys_w_treatments)
+ 
+ #generate list of DOWs for lakes we have survey data and CLP treatment history
+lakes_CLP_trt_survey <- dat_dlnm_surveys_w_treatments %>%
+  distinct(DOW) %>%
+  pull(DOW)
+```
+
+
+```{r}
+write.csv(treatment_history_matrix, file = "~/IAPM Project/MAISRC-IAPM/exploration/Treatments x PI Surveys/treatment_history_matrix.csv")
+
+write.csv(dat_dlnm_surveys_w_treatments, file = "~/IAPM Project/MAISRC-IAPM/exploration/Treatments x PI Surveys/Surveys_With_CLP_Treatments.csv")
+```
+
+Jake's original code (commented out)
+```{r}
+#library(gratia) 
+#library(cmdstanr)
+
+
+#load in PI data
+# db_sub_pa <- read_csv("~/IAPM Project/data/db_sub_pa.csv")
+# 
+# #load in lake LZ data, joing LZ acres
+# MN_lake_basin_littoral_zone <- read_csv(here("data", "MN_lake_basin_littoral_zone_15_ft_std.csv"))
+# CLP_treatments <- CLP_treatments %>%
+#   left_join(
+#     MN_lake_basin_littoral_zone %>% select(DOWLKNUM, LK_LZACRES), 
+#     by = c("DOW" = "DOWLKNUM")
+#   )
+# 
+# ## Exploring DLNM possibilities ----
+# 
+# dat_dlnm <- db_sub_pa %>%
+#   filter(!is.na(depth_ft) & depth_ft <= 15) %>%
+#   mutate(SURVEY_START=as.Date(SURVEY_START),
+#          year=year(SURVEY_START),
+#          month=month(SURVEY_START),
+#          doy=yday(SURVEY_START),
+#          taxa_rich=rowSums(across(ceratophyllum_demersum:vallisneria_sp)),
+#          vegetated=ifelse(taxa_rich==0, 0, 1),
+#          EWM=apply(across(c(myriophyllum_spicatum, myriophyllum_spicatum_x_sibiricum)), MARGIN=1, FUN=max),
+#          native_rich=rowSums(across(c(ceratophyllum_demersum, 
+#                                       elodea_canadensis:eleocharis_acicularis,
+#                                       myriophyllum_sibiricum:potamogeton_robbinsii, 
+#                                       nitella_sp:potamogeton_strictifolius,
+#                                       fontinalis_sp:drepanocladus_sp,
+#                                       nitella_furcata:vallisneria_sp))),
+#          native_vegetated=ifelse(taxa_rich==0, 0, 1)) %>%
+#   group_by(DOW, lake_name, SURVEY_START, year, month, doy) %>%
+#   summarize_at(vars(ceratophyllum_demersum:vallisneria_sp, taxa_rich:native_vegetated), mean) %>%
+#   ungroup() %>%
+#   mutate(survey_taxa_rich=rowSums(across(ceratophyllum_demersum:vallisneria_sp)>0),
+#          survey_native_rich=rowSums(across(c(ceratophyllum_demersum, 
+#                                              elodea_canadensis:eleocharis_acicularis,
+#                                              myriophyllum_sibiricum:potamogeton_robbinsii, 
+#                                              nitella_sp:potamogeton_strictifolius,
+#                                              fontinalis_sp:drepanocladus_sp,
+#                                              nitella_furcata:vallisneria_sp))>0))
+# 
+# 
+# #join LZ acres to dat_dlnm
+# dat_dlnm <- dat_dlnm %>%
+#   left_join(
+#     MN_lake_basin_littoral_zone %>% select(DOWLKNUM, LK_LZACRES), 
+#     by = c("DOW" = "DOWLKNUM")
+#   )
+#   
+# 
+# ##I think we don't need this but maybe we do
+# #dat_dlnm <- left_join(dat_dlnm,
+#  #                     apm_permits_long %>%
+#   #                      group_by(water_resource_numbers, year) %>%
+#    #                     summarize(APM_approved_acres=mean(approved_acres)), # WRONG, NEED TO KEEP PERMIT ID AT EARLIER STEP
+#     #                  by=join_by(DOW==water_resource_numbers, year==year))
+# 
+# #dat_dlnm$APM_approved_acres[is.na(dat_dlnm$APM_approved_acres)] <- 0
+# 
+# #dont need factor stuff. That is for GAM
+# #dat_dlnm <- dat_dlnm %>%
+#  #mutate(DOW=factor(DOW),
+#   #       fyear=factor(year))
+# 
+# 
+# #dat_dlnm_ewm_lakes <- as.character((dat_dlnm %>%
+#                                  #     group_by(DOW) %>%
+#                                   #    summarize(myriophyllum_spicatum=max(myriophyllum_spicatum)) %>%
+#                                    #   filter(myriophyllum_spicatum > 0))$DOW)
+# 
+# #keep this. generates a list of CLP lakes
+# dat_dlnm_clp_lakes <- as.character((dat_dlnm %>%
+#                                       group_by(DOW) %>%
+#                                       summarize(potamogeton_crispus=max(potamogeton_crispus)) %>%
+#                                       filter(potamogeton_crispus > 0))$DOW)
+# 
+# ##### MELINA: THIS MAY BE THE ONLY USEFUL CODE FOR YOU HERE #####
+# # Treatment history: Annual total (APM + IAPM) treatment area
+# # as a fraction of littoral zone (<=15') area in a lagged matrix for DLNM.
+# # rows = surveys, columns = lags
+# # lag0 = treatment in year of survey 
+# # (includes surveys before and after treatment in the same year, for now)
+# # lag1 = treatment year before survey
+# # lag2 = treatment 2 years before survey ...
+# # lag8 = treatment 8 years before survey ...
+# # max possible lags is 8 (a 2017 treatment for a 2025 survey?), 
+# # so that's 9 columns
+# treatment_history_matrix <- matrix(nrow=dim(dat_dlnm)[1], ncol=9) %>%
+#   as.data.frame()
+# colnames(treatment_history_matrix) <- paste0("lag", 0:8)
+# 
+# target_string <- rep(NA, dim(dat_dlnm)[1])
+# 
+# # populate the matrix
+# for(i in 1:dim(dat_dlnm)[1]){
+#   
+#   if(dat_dlnm$DOW[i]%in%CLP_treatments$DOW){
+#     
+#     CLP_treatments_i <- CLP_treatments %>%
+#       filter(DOW==dat_dlnm$DOW[i])
+#     
+#     target_string[i] <- paste(unique(CLP_treatments_i$species_code), collapse=",")
+#     
+#     year_i <- dat_dlnm$year[i]
+#     
+#     treatment_history_matrix[i, 1] <- ifelse(year_i%in%CLP_treatments_i$treatment_year,
+#                                                CLP_treatments_i$treatment_size[CLP_treatments_i$treatment_year==year_i]/dat_dlnm$LK_LZACRES[i],
+#                                              0)
+#     for(j in 2:9){
+#       treatment_history_matrix[i, j] <- ifelse((year_i+1-j)%in%CLP_treatments_i$treatment_year,
+#                                                CLP_treatments_i$treatment_size[CLP_treatments_i$treatment_year==year_i+1-j]/dat_dlnm$LK_LZACRES[i],
+#                                                0)
+#     }
+#     
+#   } else {
+#     
+#     treatment_history_matrix[i, ] <- rep(0, 9)
+#     target_string[i] <- "none"
+#     
+#   }
+#   
+#   #print(i)
+#   
+# }
+# 
+# head(treatment_history_matrix)
+# #Code below (commented out) is changing anything that is treatment above 100% of littoral zone to 1 (100)
+# 
+# #but we should prob change that because maybe we want so see what is going on in those rows
+# 
+# #treatment_history_matrix[treatment_history_matrix>1] <- 1
+# 
+# write.csv(treatment_history_matrix, file = "~/IAPM Project/MAISRC-IAPM/exploration/Treatments x PI Surveys/treatment_history_matrix.csv")
+
 ```
 

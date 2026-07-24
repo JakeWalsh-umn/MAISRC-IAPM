@@ -259,15 +259,9 @@ lakes_CLP_trt_survey <- dat_dlnm_surveys_w_treatments %>%
 ```
 
 
-```{r write csv}
-write.csv(treatment_history_matrix, file = "~/IAPM Project/MAISRC-IAPM/exploration/Treatments x PI Surveys/treatment_history_matrix.csv")
-
-write.csv(dat_dlnm_surveys_w_treatments, file = "~/IAPM Project/MAISRC-IAPM/exploration/Treatments x PI Surveys/Surveys_With_CLP_Treatments.csv")
-```
-
 
 Creating the same matrix but with permit data to cross check and change 0s in original treatment history matrix that have permitted treatments. 
-```{r false 0s check - permit data}
+```{r false 0s check - permit matrix}
 permits <- permits <- read.csv("~/IAPM Project/Data/apm_iapm_permit_detail.csv",
                                na.strings=c("NA", "NULL"))
 lake_basin_morphology_df <- read_csv("~/IAPM Project/MAISRC-IAPM/data/MN_lake_basin_littoral_zone_15_ft_std.csv")
@@ -391,5 +385,69 @@ filtered_treatment_matrix <- treatment_history_matrix %>%
 sum(filtered_permit_matrix[, paste0("lag", 0:8)] == 1, na.rm = TRUE)
 sum(filtered_treatment_matrix[, 4:13] == 1, na.rm = TRUE)
 
+
+#check for any 0s in permit matrix that are 1s in treatment matrix (should be o)
+# Add temp_col as column 4 temporarily
+filtered_permit_matrix <- filtered_permit_matrix %>% 
+  mutate(temp_col = 0, .before = 4)
+
+#Count the mismatches
+mismatch_count <- sum(
+  filtered_permit_matrix[, 6:13] == 0 & filtered_treatment_matrix[, 6:13] == 1,
+  na.rm = TRUE
+)
+mismatch_count
+
+#Create a logical matrix of where mismatches occur (cols 5-13)
+mismatch_matrix <- filtered_permit_matrix[, 6:13] == 0 & filtered_treatment_matrix[, 6:13] == 1
+#Total count of mismatched cells
+mismatch_count <- sum(mismatch_matrix, na.rm = TRUE)
+cat("Total mismatched cells:", mismatch_count, "\n\n")
+# 4. Extract rows where at least one mismatch occurred in cols 5-13
+mismatch_row_indices <- which(rowSums(mismatch_matrix, na.rm = TRUE) > 0)
+# 5. Get unique survey_ids for those rows
+mismatched_survey_ids <- filtered_permit_matrix$survey_id[mismatch_row_indices]
+# Display the survey_ids
+mismatched_survey_ids
+
+
+#and the other way around. This should be more than 0
+mismatch_count2 <- sum(
+  filtered_permit_matrix[, 6:13] == 1 & filtered_treatment_matrix[, 6:13] == 0,
+  na.rm = TRUE
+)
+
+mismatch_count2
+
 ```
 
+
+
+```{r combine treatment and permit matrices}
+# 1. Identify logical condition (Permit == 1 & Treatment == 0) for cols 6 to 13
+mismatch_mask <- filtered_permit_matrix[, 6:13] == 1 & filtered_treatment_matrix[, 6:13] == 0
+
+# 2. Update filtered_treatment_matrix cells to 2 where condition is TRUE
+filtered_treatment_matrix[, 6:13][mismatch_mask] <- 2
+
+#check to make sure there are now 0 mismatched columns
+mismatch_count2 <- sum(
+  filtered_permit_matrix[, 6:13] == 1 & filtered_treatment_matrix[, 6:13] == 0,
+  na.rm = TRUE
+)
+mismatch_count2
+
+
+#remove temporary column
+filtered_permit_matrix <- filtered_permit_matrix %>% 
+  select(-temp_col)
+
+```
+
+
+
+
+```{r write csv}
+write.csv(filtered_treatment_matrix, file = "~/IAPM Project/MAISRC-IAPM/analysis/PI Surveys CLP Treatment History - DLNM/filtered_treatment_history_matrix.csv")
+
+```

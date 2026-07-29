@@ -214,7 +214,6 @@ nrow(dat_dlnm_surveys_w_treatments)
 
 ```
 
-
 For treatments in all_IAPM_treatments where we only know the month, start_date is first of the month and end_date is last of the month. This code is to filter out surveys that occur in the same month as one of these treatments where we only know the month. Only matters for lag0. I am aware this may also filter out the few lag0 treatments that happen to be on the first of the month. Will fix later.
 ```{r deal w lag0 treatments where we only know the month}
 dat_dlnm_surveys_w_treatments <- dat_dlnm_surveys_w_treatments %>%
@@ -398,12 +397,12 @@ mismatch_count <- sum(
 )
 mismatch_count
 
-#Create a logical matrix of where mismatches occur (cols 5-13)
+#Create a logical matrix of where mismatches occur (cols 6-13) (lag1-8)
 mismatch_matrix <- filtered_permit_matrix[, 6:13] == 0 & filtered_treatment_matrix[, 6:13] == 1
 #Total count of mismatched cells
 mismatch_count <- sum(mismatch_matrix, na.rm = TRUE)
 cat("Total mismatched cells:", mismatch_count, "\n\n")
-# 4. Extract rows where at least one mismatch occurred in cols 5-13
+# 4. Extract rows where at least one mismatch occurred in cols 6-13
 mismatch_row_indices <- which(rowSums(mismatch_matrix, na.rm = TRUE) > 0)
 # 5. Get unique survey_ids for those rows
 mismatched_survey_ids <- filtered_permit_matrix$survey_id[mismatch_row_indices]
@@ -420,7 +419,6 @@ mismatch_count2 <- sum(
 mismatch_count2
 
 ```
-
 
 
 ```{r combine treatment and permit matrices}
@@ -446,8 +444,46 @@ filtered_permit_matrix <- filtered_permit_matrix %>%
 
 
 
+```{r checking for lag0 mismatches}
+
+# 1. Identify rows where treatment matrix has 0 in BOTH lag0before and lag0after
+treatment_zeros <- filtered_treatment_matrix$lag0_before == 0 & filtered_treatment_matrix$lag0_after == 0
+
+# 2. Identify corresponding rows where permit matrix has 1 in lag0
+permit_ones <- filtered_permit_matrix$lag0 == 1
+
+# 3. Combine conditions
+matching_rows <- treatment_zeros & permit_ones
+
+# 4. Extract survey_ids (and total count)
+mismatched_lag0_ids <- filtered_treatment_matrix$survey_id[matching_rows]
+
+cat("Total matching surveys:", length(mismatched_lag0_ids), "\n\n")
+
+
+#delete rows where we have lag0 mismatches because we don't know if the permitted treatment occured before or after the surveys
+# Remove from filtered_treatment_matrix
+filtered_treatment_matrix <- filtered_treatment_matrix %>% 
+  filter(!survey_id %in% mismatched_lag0_ids)
+
+# Remove from filtered_permit_matrix
+filtered_permit_matrix <- filtered_permit_matrix %>% 
+  filter(!survey_id %in% mismatched_lag0_ids)
+
+```
+
+Create list of lakes that have CLP but no treatments between 2010 and 2025
+```{r CLP lakes with no treatments}
+# 1. Get unique DOWs present in CLP_permits_long
+CLP_permit_DOWs <- unique(CLP_permits_long$DOW)
+
+untreated_CLP_lakes <- clp_lakes_dat_dlnm[!clp_lakes_dat_dlnm %in% CLP_permit_DOWs]
+
+```
+
 
 ```{r write csv}
 write.csv(filtered_treatment_matrix, file = "~/IAPM Project/MAISRC-IAPM/analysis/PI Surveys CLP Treatment History - DLNM/filtered_treatment_history_matrix.csv")
 
 ```
+

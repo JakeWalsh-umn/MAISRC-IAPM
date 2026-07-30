@@ -1,0 +1,21 @@
+__________
+File guide:
+filtered_treatment_history_matrix: a lag matrix for curly-leaf pond weed
+lakes/treatments. Rows are PI Surveys. They are filtered to only surveys for
+lakes we have date-specific (PAR or end-of-year survey) treatment information,
+and then any missing treatment years for those surveys are filled in with permit
+data.
+
+_________
+UPDATES:
+
+7/29/26: I deleted rows from our filtered_treatment_history_matrix where 
+the permit data has a 1 in lag0 but the treatment matrix has a 0 in both
+lag0_before and lag0_after, since we do not know the exact treatment date.
+
+7/24/26: I made a permit matrix using the same methodology
+as the treatment matrix to check for places in the treatment matrix where 
+we are probably missing treatments. There were 40 cells that were 1s in the
+permit matrix but 0s in the treatment matrix. Those were added to the treatment
+history matrix as 2s (so I can look into them later).
+

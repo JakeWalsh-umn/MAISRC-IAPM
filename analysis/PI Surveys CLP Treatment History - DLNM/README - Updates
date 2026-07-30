@@ -1,5 +1,0 @@
-7/24/26 update: I (Melina) made a permit matrix using the same methodology
-as the treatment matrix to check for places in the treatment matrix where 
-we are probably missing treatments. There were 40 cells that were 1s in the
-permit matrix but 0s in the treatment matrix. Those were added to the treatment
-history matrix as 2s (so I can look into them later).

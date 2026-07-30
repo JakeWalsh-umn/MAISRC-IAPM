@@ -1,0 +1,126 @@
+---
+title: "1. Preparing pcripsus_wTrtDat"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(arrow)
+library(readxl)
+library(lubridate)
+library(sf)
+library(here)
+
+
+library(ggplot2)
+library(ggplotplus)
+library(viridis)
+library(gridExtra)
+library(cowplot)
+
+```
+
+```{r set up dataframes}
+#loading in data
+treatment_history_matrix <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/filtered_treatment_history_matrix.csv")
+
+#adding columns. CLP_trt will be main working dataframe
+new_cols <- c(
+  "Year", "County", "Trt", "Trt_Date", "acres_trt", "perc_lz_trt",
+   "p.crispus_dens", "p.crispus_FO", 
+   "Chl_A", "Ice off", "max_depth", "prop_lz"
+)
+
+# Add missing columns initialized as NA
+missing_cols <- setdiff(new_cols, colnames(treatment_history_matrix))
+
+treatment_history_matrix[missing_cols] <- NA
+CLP_trt <- treatment_history_matrix
+
+#load in lake area data
+MN_lake_morphology <- read_csv("~/IAPM Project/MAISRC-IAPM/data/MN_Lakes_Areas.csv")
+CLP_trt <- CLP_trt %>%
+  left_join(
+    MN_lake_morphology %>% select(DOW, LakeAreaAcres, LAKE_NAME, `15ft_LittoralZone_Acres`,
+    Percentage_15ft_LittoralZone), 
+    by = c("DOW" = "DOW")
+  )
+
+#populated Trt column based on if there is a lag0 treatment. 1 = lake was treated that year, 0 = untreated
+CLP_trt <- CLP_trt %>% 
+  mutate(Trt = if_else(lag0_before == 1 | lag0_after == 1, 1, 0, missing = 0)) %>%
+  mutate(Year = year(SURVEY_START)) %>%
+  mutate(prop_lz = `15ft_LittoralZone_Acres`/LakeAreaAcres)
+
+```
+
+```{r}
+#load in PI data
+db_sub_pa <- read_csv("~/IAPM Project/data/db_sub_pa.csv")
+
+#load in lake LZ data, joing LZ acres
+MN_lake_basin_littoral_zone <- read_csv(here("data", "MN_lake_basin_littoral_zone_15_ft_std.csv"))
+CLP_treatments <- CLP_treatments %>%
+  left_join(
+    MN_lake_basin_littoral_zone %>% select(DOWLKNUM, LK_LZACRES), 
+    by = c("DOW" = "DOWLKNUM")
+  )
+
+# Exploring DLNM possibilities ----
+
+dat_dlnm <- db_sub_pa %>%
+  filter(!is.na(depth_ft) & depth_ft <= 15) %>%
+  mutate(SURVEY_START=as.Date(SURVEY_START),
+         year=year(SURVEY_START),
+         month=month(SURVEY_START),
+         doy=yday(SURVEY_START),
+         taxa_rich=rowSums(across(ceratophyllum_demersum:vallisneria_sp)),
+         vegetated=ifelse(taxa_rich==0, 0, 1),
+         EWM=apply(across(c(myriophyllum_spicatum, myriophyllum_spicatum_x_sibiricum)), MARGIN=1, FUN=max),
+         native_rich=rowSums(across(c(ceratophyllum_demersum, 
+                                      elodea_canadensis:eleocharis_acicularis,
+                                      myriophyllum_sibiricum:potamogeton_robbinsii, 
+                                      nitella_sp:potamogeton_strictifolius,
+                                      fontinalis_sp:drepanocladus_sp,
+                                      nitella_furcata:vallisneria_sp))),
+         native_vegetated=ifelse(taxa_rich==0, 0, 1)) %>%
+  group_by(DOW, lake_name, SURVEY_START, year, month, doy) %>%
+  summarize_at(vars(ceratophyllum_demersum:vallisneria_sp, taxa_rich:native_vegetated), mean) %>%
+  ungroup() %>%
+  mutate(survey_taxa_rich=rowSums(across(ceratophyllum_demersum:vallisneria_sp)>0),
+         survey_native_rich=rowSums(across(c(ceratophyllum_demersum, 
+                                             elodea_canadensis:eleocharis_acicularis,
+                                             myriophyllum_sibiricum:potamogeton_robbinsii, 
+                                             nitella_sp:potamogeton_strictifolius,
+                                             fontinalis_sp:drepanocladus_sp,
+                                             nitella_furcata:vallisneria_sp))>0))
+
+#decided not to remove NAs. Need to investigate this more
+
+#join LZ acres to dat_dlnm
+dat_dlnm <- dat_dlnm %>%
+  left_join(
+    MN_lake_basin_littoral_zone %>% select(DOWLKNUM, LK_LZACRES), 
+    by = c("DOW" = "DOWLKNUM")
+  )
+  
+
+
+#generates a list of CLP lakes
+clp_lakes_dat_dlnm <- as.character((dat_dlnm %>%
+                                      group_by(DOW) %>%
+                                      summarize(potamogeton_crispus=max(potamogeton_crispus)) %>%
+                                      filter(potamogeton_crispus > 0))$DOW)
+
+
+#create unique IDs for PI surveys
+dat_dlnm <- dat_dlnm %>%
+  mutate(
+    survey_id = row_number() 
+  )
+
+dat_dlnm <- dat_dlnm %>%
+  relocate(survey_id, .before = 1)
+
+```
+

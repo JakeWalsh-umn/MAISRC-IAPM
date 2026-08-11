@@ -9,6 +9,8 @@ data.
 _________
 UPDATES:
 
+8/11/26: I added code to bring in the treatment acres and date for all lag0 treatments.
+
 7/29/26: I deleted rows from our filtered_treatment_history_matrix where 
 the permit data has a 1 in lag0 but the treatment matrix has a 0 in both
 lag0_before and lag0_after, since we do not know the exact treatment date.

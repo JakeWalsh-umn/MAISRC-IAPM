@@ -124,16 +124,27 @@ dat_dlnm <- dat_dlnm %>%
 
 Create the treatment history matrix
 ```{r treatment history matrix}
-# Initialize matrix with 11 columns (survey_id + lag0_before + lag0_after + lag1..lag8)
-treatment_history_matrix <- matrix(0, nrow = nrow(dat_dlnm), ncol = 11) %>%
+# Initialize matrix with 15 columns
+treatment_history_matrix <- matrix(0, nrow = nrow(dat_dlnm), ncol = 15) %>%
   as.data.frame()
 
 colnames(treatment_history_matrix) <- c(
   "survey_id", 
   "lag0_before", 
   "lag0_after", 
+  "acres_lag0_before",
+  "acres_lag0_after",
+  "date_lag0_before",
+  "date_lag0_after",
   paste0("lag", 1:8)
 )
+
+treatment_history_matrix$date_lag0_before <- as.Date(rep(NA, nrow(dat_dlnm)))
+treatment_history_matrix$date_lag0_after  <- as.Date(rep(NA, nrow(dat_dlnm)))
+
+treatment_history_matrix$acres_lag0_before <- rep(NA, nrow(dat_dlnm))
+treatment_history_matrix$acres_lag0_after  <- rep(NA, nrow(dat_dlnm))
+
 
 treatment_history_matrix$survey_id <- dat_dlnm$survey_id
 treatment_history_matrix$SURVEY_START <- dat_dlnm$SURVEY_START
@@ -165,16 +176,27 @@ for (i in 1:nrow(dat_dlnm)) {
     }
     
     # --- Same-Year Logic (lag0_before vs lag0_after) ---
-    same_year_tx <- CLP_treatments_i %>% filter(treatment_year == survey_yr)
-    
+  same_year_tx <- CLP_treatments_i %>% 
+      filter(treatment_year == survey_yr) %>% 
+      arrange(start_date) # Sort by date to guarantee [1] is the first treatment
+     
     if (nrow(same_year_tx) > 0) {
-      if (any(same_year_tx$start_date <= survey_dt)) {
-        treatment_history_matrix[i, "lag0_before"] <- 1
+      before_tx <- same_year_tx %>% filter(start_date <= survey_dt)
+      after_tx  <- same_year_tx %>% filter(start_date > survey_dt)
+      
+      if (nrow(before_tx) > 0) {
+        treatment_history_matrix[i, "lag0_before"]       <- 1
+        treatment_history_matrix[i, "acres_lag0_before"] <- before_tx$treatment_size[1]
+        treatment_history_matrix[i, "date_lag0_before"]  <- before_tx$start_date[1]
       }
-      if (any(same_year_tx$start_date > survey_dt)) {
-        treatment_history_matrix[i, "lag0_after"] <- 1
+      
+      if (nrow(after_tx) > 0) {
+        treatment_history_matrix[i, "lag0_after"]        <- 1
+        treatment_history_matrix[i, "acres_lag0_after"]  <- after_tx$treatment_size[1]
+        treatment_history_matrix[i, "date_lag0_after"]   <- after_tx$start_date[1]
       }
     }
+    
     
     # --- Lag Years 1 through 8 ---
     for (j in 1:8) {
@@ -198,7 +220,7 @@ for (i in 1:nrow(dat_dlnm)) {
 
 ```{r}
 #check the number of rows of the matrix with at least one lag treatment
-sum(rowSums(treatment_history_matrix[, 4:13] == 1) > 0)
+sum(rowSums(treatment_history_matrix[, 4:17] == 1) > 0)
 
 #filter dat_dlnm to surveys that have previous treatments
 survey_ids_treated <- treatment_history_matrix %>% #create list of surveys with any previous treatments
@@ -248,8 +270,8 @@ dat_dlnm_surveys_w_treatments <- dat_dlnm %>% #filter
   filter(survey_id %in% survey_ids_treated)
  
  #check to make sure number of rows are the same
- sum(rowSums(treatment_history_matrix[, 4:13] == 1) > 0)
- nrow(dat_dlnm_surveys_w_treatments)
+sum(rowSums(treatment_history_matrix[, 4:17] == 1, na.rm = TRUE) > 0)
+nrow(dat_dlnm_surveys_w_treatments)
  
  #generate list of DOWs for lakes we have survey data and CLP treatment history
 lakes_CLP_trt_survey <- dat_dlnm_surveys_w_treatments %>%
@@ -290,7 +312,7 @@ CLP_permits_long <- iapm_permits_long %>%
 #rename columns
 CLP_permits_long <- CLP_permits_long %>% 
   rename(DOW = water_resource_numbers) %>%
-  filter(approved_acres > 0) %>%
+  filter(approved_acres > 0)
   
 
 
@@ -422,23 +444,28 @@ mismatch_count2
 
 
 ```{r combine treatment and permit matrices}
+
+filtered_permit_matrix <- filtered_permit_matrix %>%
+  add_column(temp1 = NA, temp2 = NA, temp3 = NA, temp4 = NA, .before = 4)
+
+
 # 1. Identify logical condition (Permit == 1 & Treatment == 0) for cols 6 to 13
-mismatch_mask <- filtered_permit_matrix[, 6:13] == 1 & filtered_treatment_matrix[, 6:13] == 0
+mismatch_mask <- filtered_permit_matrix[, 10:17] == 1 & filtered_treatment_matrix[, 10:17] == 0
 
 # 2. Update filtered_treatment_matrix cells to 2 where condition is TRUE
-filtered_treatment_matrix[, 6:13][mismatch_mask] <- 2
+filtered_treatment_matrix[, 10:17][mismatch_mask] <- 2
 
 #check to make sure there are now 0 mismatched columns
 mismatch_count2 <- sum(
-  filtered_permit_matrix[, 6:13] == 1 & filtered_treatment_matrix[, 6:13] == 0,
+  filtered_permit_matrix[, 10:17] == 1 & filtered_treatment_matrix[, 10:17] == 0,
   na.rm = TRUE
 )
 mismatch_count2
 
 
-#remove temporary column
+#remove temporary columns
 filtered_permit_matrix <- filtered_permit_matrix %>% 
-  select(-temp_col)
+  select(-temp_col, -temp1, -temp2, -temp3, -temp4)
 
 ```
 
@@ -483,7 +510,7 @@ untreated_CLP_lakes <- clp_lakes_dat_dlnm[!clp_lakes_dat_dlnm %in% CLP_permit_DO
 
 
 ```{r write csv}
-write.csv(filtered_treatment_matrix, file = "~/IAPM Project/MAISRC-IAPM/analysis/PI Surveys CLP Treatment History - DLNM/filtered_treatment_history_matrix.csv")
+write.csv(filtered_treatment_matrix, file = "~/IAPM Project/MAISRC-IAPM/analysis/CLP DLNM/filtered_treatment_history_matrix.csv")
 
 ```
 

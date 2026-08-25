@@ -28,7 +28,8 @@ Treatment history matrix is the main output of the RMD file 'PISurveys_CLP_Treat
 #loading in data
 treatment_history_matrix <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/CLP DLNM/filtered_treatment_history_matrix.csv")
 IceOut_Predictions <- read_csv("~/IAPM Project/MAISRC-IAPM/exploration/PARsInventory/2. Ice out/pred_iceout26.csv")
-Chl_A <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/MPCA/Chlorophyll A/MPCA_ChlorophyllA_2010_2025_Clean.csv")
+#Chl_A <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/MPCA/Chlorophyll A/MPCA_ChlorophyllA_2010_2025_Clean.csv")
+Secchi <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/MPCA/Secchi/MPCA_Secchi_2010_2025_Clean.csv")
 
 
 
@@ -36,7 +37,7 @@ Chl_A <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/MPCA/Chl
 new_cols <- c(
   "Year", "County", "Trt", "Trt_Date", "acres_trt", "perc_lz_trt",
    "p.crispus_dens", "p.crispus_FO", 
-   "Chl_A", "max_depth", "prop_lz"
+    "max_depth", "prop_lz"
 )
 
 # Add missing columns initialized as NA
@@ -90,22 +91,50 @@ CLP_trt <- CLP_trt %>%
   ) %>%
   rename(Ice_off = est)
 
+#ignore chl a for now
+# Join chlorophyll A MPCA data
+# Chl_A <- Chl_A %>%
+#   mutate(ActivityDate = mdy(ActivityStartDate)) %>%
+#   mutate(year = year(as.Date(ActivityDate)))
+# 
+# previous year, which month?
+# CLP_trt <- CLP_trt %>%
+# #   left_join(
+# #     Chl_A %>% select(year, DOW, ResultMeasureValue, ActivityDate),
+# #     by = c("Year" = "year", "DOW" = "DOW")
+# #   ) %>%
+# #   rename(Chl_A = ResultMeasureValue)
 
-#Join chlorophyll A MPCA data
-Chl_A <- Chl_A %>%
-  mutate(ActivityDate = mdy(ActivityStartDate)) %>%
-  mutate(year = year(as.Date(ActivityDate)))
 
-#previous year, which month?
-#CLP_trt <- CLP_trt %>%
+##join secchi data
+Secchi <- Secchi %>%
+  mutate(year = year(as.Date(ActivityStartDate)))
+
+# CLP_trt <- CLP_trt %>%
 #   left_join(
-#     Chl_A %>% select(year, DOW, ResultMeasureValue, ActivityDate),
+#     Secchi %>% select(year, DOW, ResultMeasureValue, ActivityStartDate),
 #     by = c("Year" = "year", "DOW" = "DOW")
 #   ) %>%
-#   rename(Chl_A = ResultMeasureValue)
+#   rename(prev_aug_secchi = ResultMeasureValue)
 
 
+# Step 1: Filter Secchi data for August and extract the year
+secchi_aug_prev <- Secchi %>%
+  filter(month(ActivityStartDate) == 8) %>%
+  group_by(DOW, year) %>%
+  summarize(
+    prev_aug_secchi = mean(ResultMeasureValue, na.rm = TRUE),
+    .groups = "drop"
+  )
 
+# Step 2: Create a matching key in CLP_trt for (Year - 1) and join
+CLP_trt <- CLP_trt %>%
+  mutate(prev_year = Year - 1) %>%
+  left_join(
+    secchi_aug_prev,
+    by = c("DOW" = "DOW", "prev_year" = "year")
+  ) %>%
+  select(-prev_year) # Clean up temporary joining column
 ```
 
 

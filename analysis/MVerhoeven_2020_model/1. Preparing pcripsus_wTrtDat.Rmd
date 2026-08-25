@@ -10,6 +10,7 @@ library(readxl)
 library(lubridate)
 library(sf)
 library(here)
+library(stringr)
 
 
 library(ggplot2)
@@ -26,12 +27,16 @@ Treatment history matrix is the main output of the RMD file 'PISurveys_CLP_Treat
 ```{r set up dataframes}
 #loading in data
 treatment_history_matrix <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/CLP DLNM/filtered_treatment_history_matrix.csv")
+IceOut_Predictions <- read_csv("~/IAPM Project/MAISRC-IAPM/exploration/PARsInventory/2. Ice out/pred_iceout26.csv")
+Chl_A <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/MPCA/Chlorophyll A/MPCA_ChlorophyllA_2010_2025_Clean.csv")
+
+
 
 #adding columns. CLP_trt will be main working dataframe
 new_cols <- c(
   "Year", "County", "Trt", "Trt_Date", "acres_trt", "perc_lz_trt",
    "p.crispus_dens", "p.crispus_FO", 
-   "Chl_A", "Ice off", "max_depth", "prop_lz"
+   "Chl_A", "max_depth", "prop_lz"
 )
 
 # Add missing columns initialized as NA
@@ -63,6 +68,44 @@ CLP_trt <- CLP_trt %>%
   mutate(Year = year(SURVEY_START)) %>%
   mutate(prop_lz = `15ft_LittoralZone_Acres`/LakeAreaAcres)
 
+
+
+CLP_trt$acres_trt <- as.numeric(CLP_trt$perc_lz_trt)
+#populate Trt_Date with the treatment date from lag0before and lag0after columns
+CLP_trt <- CLP_trt %>%
+  mutate(Trt_Date = coalesce(date_lag0_before, date_lag0_after)) %>%
+  #same with acres treated
+  mutate(acres_trt = coalesce(acres_lag0_before, acres_lag0_after)) %>%
+  #calcualte percent littoral zone treated
+  mutate(perc_lz_trt = (acres_trt / `15ft_LittoralZone_Acres`)*100)
+
+#ice off dates from Jake's prediction model
+IceOut_Predictions <- IceOut_Predictions %>%
+  mutate(DOW = str_sub(ID, 5))
+
+CLP_trt <- CLP_trt %>%
+  left_join(
+    IceOut_Predictions %>% select(winter.year, DOW, est),
+    by = c("Year" = "winter.year", "DOW" = "DOW")
+  ) %>%
+  rename(Ice_off = est)
+
+
+#Join chlorophyll A MPCA data
+Chl_A <- Chl_A %>%
+  mutate(ActivityDate = mdy(ActivityStartDate)) %>%
+  mutate(year = year(as.Date(ActivityDate)))
+
+#previous year, which month?
+#CLP_trt <- CLP_trt %>%
+#   left_join(
+#     Chl_A %>% select(year, DOW, ResultMeasureValue, ActivityDate),
+#     by = c("Year" = "year", "DOW" = "DOW")
+#   ) %>%
+#   rename(Chl_A = ResultMeasureValue)
+
+
+
 ```
 
 
@@ -70,5 +113,5 @@ CLP_trt <- CLP_trt %>%
 write.csv(CLP_trt, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/CLP_trt.csv")
 ```
 
-To work on next: p.crispus density / FO and Chl_A
+To work on next: finish Chl_A, do p.crispus density / FO
 

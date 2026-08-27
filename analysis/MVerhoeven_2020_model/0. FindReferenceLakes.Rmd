@@ -1,0 +1,81 @@
+---
+title: "FindReferenceLakes"
+output: html_document
+---
+
+
+```{r load packages}
+library(tidyverse)
+library(arrow)
+library(readxl)
+library(readr)
+library(lubridate)
+library(sf)
+library(here)
+library(stringr)
+library(purrr)
+```
+
+```{r load data}
+composite_5050_lookup <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Analysis/Background Reference Lake Matching/df_composite_5050.csv")
+
+Melina_Study_DOWs <- read_excel("~/IAPM Project/Treatment history matrix - private files/DOW list - CLP lakes with treatment history and surveys - generated 7-20-26.xlsx")
+```
+
+
+maybe scratch this whole thing and jsut do it manually
+```{r lookup function}
+composite_5050_lookup <- composite_5050_lookup %>%
+  rename(DOW = '...1')
+
+tibble::column_to_rownames(composite_5050_lookup, var = "DOW")
+
+get_most_similar_lake <- function(Melina_Study_DOWs, composite_5050_lookup, DOW = "DOW6") {
+  
+  # Ensure lookup row names match the DOW column/row names
+  # If DOWs are in a specific column in composite_5050_lookup, set them as rownames:
+  # rownames(composite_5050_lookup) <- composite_5050_lookup[[dow_col]]
+  
+  Melina_Study_DOWs %>%
+    mutate(
+      # Find the most similar lake DOW
+      Most_Similar_DOW = map_chr(.data[[dow_col]], function(dow) {
+        dow_str <- as.character(dow)
+        
+        # Check if the DOW exists in the lookup table
+        if (!dow_str %in% rownames(composite_5050_lookup)) return(NA_character_)
+        
+        # Extract row values for this DOW
+        scores <- composite_5050_lookup[dow_str, ]
+        
+        # Filter for values > 0 (excluding self-match if 0)
+        valid_scores <- scores[scores > 0]
+        
+        if (length(valid_scores) == 0) return(NA_character_)
+        
+        # Return column name with the minimum score
+        names(which.min(valid_scores))
+      }),
+      
+      # Retrieve the minimum score value
+      Similarity_Score = map_dbl(.data[[dow_col]], function(dow) {
+        dow_str <- as.character(dow)
+        if (!dow_str %in% rownames(composite_5050_lookup)) return(NA_real_)
+        
+        valid_scores <- composite_5050_lookup[dow_str, ][composite_5050_lookup[dow_str, ] > 0]
+        if (length(valid_scores) == 0) return(NA_real_)
+        
+        min(valid_scores, na.rm = TRUE)
+      })
+    )
+}
+
+# Example Usage:
+# result_df <- get_most_similar_lake(TreatedCLPLakes, composite_5050_lookup, dow_col = "DOW")
+```
+
+
+```{r}
+write.csv(composite_5050_lookup, file = "~/IAPM Project/composite_5050_lookup.csv")
+```
+

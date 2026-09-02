@@ -24,20 +24,28 @@ library(cowplot)
 
 Treatment history matrix is the main output of the RMD file 'PISurveys_CLP_TreatmentHistoryMatrix' in analysis>CLP DLNM.
 
-```{r set up dataframes}
-#loading in data
+```{r load data}
 treatment_history_matrix <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/CLP DLNM/filtered_treatment_history_matrix.csv")
+
 IceOut_Predictions <- read_csv("~/IAPM Project/MAISRC-IAPM/exploration/PARsInventory/2. Ice out/pred_iceout26.csv")
+
 #Chl_A <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/MPCA/Chlorophyll A/MPCA_ChlorophyllA_2010_2025_Clean.csv")
-Secchi <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/MPCA/Secchi/MPCA_Secchi_2010_2025_Clean.csv")
+
+Secchi <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/MPCA Water Quality/Secchi/MPCA_Secchi_2010_2025_Clean.csv")
+
+#This is the dat_dlnm output from db_sub_pa in 0. Loading and Preparing Data
+PI_surveys <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/PI_surveys.csv")
+
+LakeMorphologyWide <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/Lake Morphology/LakeMorphology.csv")
+
+```
 
 
-
+```{r set up dataframes}
 #adding columns. CLP_trt will be main working dataframe
 new_cols <- c(
   "Year", "County", "Trt", "Trt_Date", "acres_trt", "perc_lz_trt",
-   "p.crispus_dens", "p.crispus_FO", 
-    "max_depth", "prop_lz"
+    "prop_lz"
 )
 
 # Add missing columns initialized as NA
@@ -135,6 +143,64 @@ CLP_trt <- CLP_trt %>%
     by = c("DOW" = "DOW", "prev_year" = "year")
   ) %>%
   select(-prev_year) # Clean up temporary joining column
+```
+
+
+```{r p.crispus FO and density}
+
+CLP_trt <- CLP_trt %>%
+  # 1. Bring in the date and potamogeton_crispus columns from PI_surveys
+  left_join(
+    PI_surveys %>% select(survey_id, potamogeton_crispus),
+    by = "survey_id"
+  ) %>%
+  # 2. Assign the values based on month, ensuring numeric type and NA defaults
+  mutate(
+    # Extract numeric month (4 = April, 5 = May, 6 = June)
+    .month_num = month(as.Date(SURVEY_START)),
+    
+    APRMAY_pcrispus_FO = ifelse(
+      .month_num %in% c(4, 5), 
+      as.numeric(potamogeton_crispus), 
+      NA_real_
+    ),
+    
+    JUNE_pcrispus_FO = ifelse(
+      .month_num == 6, 
+      as.numeric(potamogeton_crispus), 
+      NA_real_
+    )
+  ) %>%
+  # 3. Clean up temporary joined helper columns
+  select(-SURVEY_START, -potamogeton_crispus, -.month_num)
+
+
+#round to two decimal places
+CLP_trt <- CLP_trt %>%
+  mutate(
+    mutate(across(c(APRMAY_pcrispus_FO, JUNE_pcrispus_FO, prev_aug_secchi), ~ round(.x, 2)))
+  )
+
+#calculate years previously treated for CLP
+CLP_trt <- CLP_trt  %>%
+  mutate(
+    YrsTrt = rowSums(
+      across(c(lag0_before, lag0_after, lag1:lag8)) == 1, 
+      na.rm = TRUE
+    )
+  )
+
+#lake max depth
+LakeMorphologyWide <- LakeMorphologyWide %>%
+  mutate(DOW = sprintf("%08d", DOW))
+
+CLP_trt <- CLP_trt %>%
+  left_join(
+    LakeMorphologyWide %>% select(DOW, LK_MAXDEPT),
+    by = "DOW"
+  )
+    
+
 ```
 
 

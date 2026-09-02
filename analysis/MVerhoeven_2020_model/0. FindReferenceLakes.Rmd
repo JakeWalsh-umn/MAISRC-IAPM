@@ -23,7 +23,7 @@ Melina_Study_DOWs <- read_excel("~/IAPM Project/Treatment history matrix - priva
 ```
 
 
-maybe scratch this whole thing and jsut do it manually
+maybe scratch this whole thing and just do it manually
 ```{r lookup function}
 composite_5050_lookup <- composite_5050_lookup %>%
   rename(DOW = '...1')

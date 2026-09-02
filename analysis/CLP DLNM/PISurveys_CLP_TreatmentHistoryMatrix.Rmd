@@ -53,7 +53,7 @@ Starting with db_sub_pa from 1_Loading and preparing PI data.R
 
 ```{r setting up PI survey data}
 #load in PI data
-db_sub_pa <- read_csv("~/IAPM Project/data/db_sub_pa.csv")
+db_sub_pa <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/db_sub_pa.csv")
 
 #load in lake LZ data, joing LZ acres
 MN_lake_basin_littoral_zone <- read_csv(here("data", "MN_lake_basin_littoral_zone_15_ft_std.csv"))

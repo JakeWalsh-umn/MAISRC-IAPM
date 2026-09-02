@@ -1,2 +1,6 @@
 Use 15ft littoral zone.
 Trt_Date = CLP treatment start date for that lake-year.
+
+Update 8/25/26: Mike frequency of occurance (FO) calculations were just for points
+<15ft depth. Need to see if Jake's dat_dlnm used same cuttoff for FO calcualtions
+or just used all points surveyed.

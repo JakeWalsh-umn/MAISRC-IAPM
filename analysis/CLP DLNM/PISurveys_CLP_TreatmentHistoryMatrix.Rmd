@@ -236,6 +236,29 @@ nrow(dat_dlnm_surveys_w_treatments)
 
 ```
 
+
+Surveys for reference lakes
+```{r Surveys for reference lakes}
+Reference_Lakes_DOWs <- read_excel("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Analysis/CLP Analysis (Melina)/DOW list - CLP lakes with treatment history and surveys - generated 7-20-26.xlsx")
+View(Reference_Lakes_DOWs)
+
+Reference_DOWs <- c(
+  "10000700", "10005900", "18027100", "18040300", "27004200",
+  "27006700", "27011100", "27014100", "47009500", "62001600",
+  "71008200", "71014500", "73008900", "86015200", "86019900"
+)
+
+dat_dlnm_reference_lakes <- dat_dlnm %>% #filter
+  filter(DOW %in% Reference_DOWs) %>%
+  filter(year > 2016)
+
+```
+
+
+
+
+
+
 For treatments in all_IAPM_treatments where we only know the month, start_date is first of the month and end_date is last of the month. This code is to filter out surveys that occur in the same month as one of these treatments where we only know the month. Only matters for lag0. I am aware this may also filter out the few lag0 treatments that happen to be on the first of the month. Will fix later.
 ```{r deal w lag0 treatments where we only know the month}
 dat_dlnm_surveys_w_treatments <- dat_dlnm_surveys_w_treatments %>%

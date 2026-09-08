@@ -36,8 +36,11 @@ Secchi <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/MPCA Wa
 #This is the dat_dlnm output from db_sub_pa in 0. Loading and Preparing Data
 PI_surveys <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/PI_surveys.csv")
 
-LakeMorphologyWide <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/Lake Morphology/LakeMorphology.csv")
+LakeMorphology <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/Lake Morphology/LakeMorphologyDetails.csv")
 
+
+#average snow depth
+Snow_Depth <- read_excel("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/Climate Data/CLP Analysis Lakes Average Snow Depth.xlsx")
 ```
 
 
@@ -191,16 +194,30 @@ CLP_trt <- CLP_trt  %>%
   )
 
 #lake max depth
-LakeMorphologyWide <- LakeMorphologyWide %>%
+LakeMorphology <- LakeMorphology %>%
+  rename(DOW = DOWLKNUM) %>%
+  mutate(DOW = as.numeric(DOW)) %>%
   mutate(DOW = sprintf("%08d", DOW))
 
 CLP_trt <- CLP_trt %>%
   left_join(
-    LakeMorphologyWide %>% select(DOW, LK_MAXDEPT),
+    LakeMorphology %>% select(DOW, LK_MAXDEPT),
     by = "DOW"
   )
-    
 
+```
+ 
+```{r meteorlogical data join}
+#snow depth
+CLP_trt <- CLP_trt %>%
+  left_join(
+    Snow_Depth %>%
+      # Calculate the mean across December, January, February, and March for each row
+      mutate(Snow = rowMeans(across(c(December, January, February, March)), na.rm = TRUE)) %>%
+      select(Trt_Year, Snow),
+    by = c("Year" = "Trt_Year")
+  ) %>%
+  mutate(Snow = round(Snow, 1))
 ```
 
 
@@ -208,5 +225,4 @@ CLP_trt <- CLP_trt %>%
 write.csv(CLP_trt, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/CLP_trt.csv")
 ```
 
-To work on next: finish Chl_A, do p.crispus density / FO
 

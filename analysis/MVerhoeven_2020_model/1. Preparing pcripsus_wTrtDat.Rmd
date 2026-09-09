@@ -3,7 +3,7 @@ title: "1. Preparing pcripsus_wTrtDat"
 output: html_document
 ---
 
-```{r}
+```{r loading packages}
 library(tidyverse)
 library(arrow)
 library(readxl)
@@ -68,7 +68,10 @@ CLP_trt <- CLP_trt %>%
     MN_lake_morphology %>% select(DOW, LakeAreaAcres, LAKE_NAME, `15ft_LittoralZone_Acres`,
     Percentage_15ft_LittoralZone), 
     by = c("DOW" = "DOW")
-  )
+  ) %>%
+  #turning percent into proportion
+  rename(Proportion.littoral = Percentage_15ft_LittoralZone) %>%
+  mutate(Proportion.littoral = Proportion.littoral/100)
 
 #change the 2s to 1s in the lag matrix. 2s were used to differentiate lag treatments where we knew the year but not the specific treatment date. For this analysis that doesn't matter, so changing it all to 1 or 0.
 CLP_trt <- CLP_trt %>%
@@ -149,33 +152,38 @@ CLP_trt <- CLP_trt %>%
 ```
 
 
-```{r p.crispus FO and density}
+```{r p.crispus FO}
+PI_surveys <- PI_surveys %>%
+  mutate(DOW = as.numeric(DOW))
+
 
 CLP_trt <- CLP_trt %>%
-  # 1. Bring in the date and potamogeton_crispus columns from PI_surveys
+  mutate(DOW = as.numeric(DOW)) %>%
+  # 1. Build a lookup with the earliest AprMay survey and earliest June survey per DOW/year
   left_join(
-    PI_surveys %>% select(survey_id, potamogeton_crispus),
-    by = "survey_id"
-  ) %>%
-  # 2. Assign the values based on month, ensuring numeric type and NA defaults
-  mutate(
-    # Extract numeric month (4 = April, 5 = May, 6 = June)
-    .month_num = month(as.Date(SURVEY_START)),
-    
-    APRMAY_pcrispus_FO = ifelse(
-      .month_num %in% c(4, 5), 
-      as.numeric(potamogeton_crispus), 
-      NA_real_
-    ),
-    
-    JUNE_pcrispus_FO = ifelse(
-      .month_num == 6, 
-      as.numeric(potamogeton_crispus), 
-      NA_real_
-    )
-  ) %>%
-  # 3. Clean up temporary joined helper columns
-  select(-SURVEY_START, -potamogeton_crispus, -.month_num)
+    PI_surveys %>%
+      select(DOW, year, potamogeton_crispus, SURVEY_START) %>%
+      mutate(
+        SURVEY_START = as.Date(SURVEY_START),
+        .month_num = month(SURVEY_START)
+      ) %>%
+      filter(.month_num %in% c(4, 5, 6)) %>%
+      mutate(
+        .month_group = ifelse(.month_num %in% c(4, 5), "APRMAY", "JUNE")
+      ) %>%
+      group_by(DOW, year, .month_group) %>%
+      slice_min(SURVEY_START, n = 1, with_ties = FALSE) %>%
+      ungroup() %>%
+      select(DOW, year, .month_group, potamogeton_crispus) %>%
+      # 2. Reshape so APRMAY and JUNE each get their own column
+      pivot_wider(
+        names_from = .month_group,
+        values_from = potamogeton_crispus,
+        names_glue = "{.month_group}_pcrispus_FO"
+      ) %>%
+      mutate(across(c(APRMAY_pcrispus_FO, JUNE_pcrispus_FO), as.numeric)),
+    by = c("DOW" = "DOW", "Year" = "year")
+  )
 
 
 #round to two decimal places
@@ -193,17 +201,23 @@ CLP_trt <- CLP_trt  %>%
     )
   )
 
+CLP_trt <- CLP_trt  %>%
+  mutate(DIFF.4.6 = JUNE_pcrispus_FO - APRMAY_pcrispus_FO)
+
 #lake max depth
 LakeMorphology <- LakeMorphology %>%
   rename(DOW = DOWLKNUM) %>%
   mutate(DOW = as.numeric(DOW)) %>%
   mutate(DOW = sprintf("%08d", DOW))
 
+
 CLP_trt <- CLP_trt %>%
+  mutate(DOW = sprintf("%08d", DOW)) %>%
   left_join(
     LakeMorphology %>% select(DOW, LK_MAXDEPT),
-    by = "DOW"
+    by = c("DOW" = "DOW")
   )
+
 
 ```
  
@@ -220,8 +234,35 @@ CLP_trt <- CLP_trt %>%
   mutate(Snow = round(Snow, 1))
 ```
 
+```{r changing column names}
+#to be compatible with MVerhoeven 2020 analysis
+CLP_trt <- CLP_trt %>%
+  rename(
+    Lake.ID = DOW,
+    Lake.x = LAKE_NAME,
+    PrevAUGSecchi = prev_aug_secchi,
+    JUNPcri = JUNE_pcrispus_FO,
+    APRMAYPcri = APRMAY_pcrispus_FO,
+    Lake.area.acre = LakeAreaAcres,
+    litt.ac = '15ft_LittoralZone_Acres',
+    Max.depth = LK_MAXDEPT,
+    Acres_Chem = acres_trt,
+    perc.lit.chem = perc_lz_trt
+  )
+
+CLP_trt_lag_matrix <- CLP_trt %>%
+  select(Lake.ID, Year, Lake.x, Trt, YrsTrt, PrevAUGSecchi, Snow, APRMAYPcri, JUNPcri, DIFF.4.6, County, Lake.area.acre, Proportion.littoral, Max.depth, Acres_Chem, litt.ac, perc.lit.chem, Ice_off, lag0_before, lag0_after, acres_lag0_before, acres_lag0_after, date_lag0_before, date_lag0_after, lag1, lag2, lag3, lag4, lag5, lag6, lag7, lag8)
+
+
+CLP_trt <- CLP_trt %>%
+  select(Lake.ID, Year, Lake.x, Trt, YrsTrt, PrevAUGSecchi, Snow, APRMAYPcri, JUNPcri, DIFF.4.6, County, Lake.area.acre, Proportion.littoral, Max.depth, Acres_Chem, litt.ac, perc.lit.chem, Ice_off)
+```
+
+
 
 ```{r}
+write.csv(CLP_trt_lag_matrix, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/CLP_trt_lag_matrix.csv")
+
 write.csv(CLP_trt, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/CLP_trt.csv")
 ```
 

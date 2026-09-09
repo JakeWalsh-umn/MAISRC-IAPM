@@ -252,6 +252,8 @@ dat_dlnm_reference_lakes <- dat_dlnm %>% #filter
   filter(DOW %in% Reference_DOWs) %>%
   filter(year > 2016)
 
+write.csv(dat_dlnm_reference_lakes, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/Reference_Lk_PI_surveys.csv")
+
 ```
 
 

@@ -1,6 +1,88 @@
+---UPDATES---
 Use 15ft littoral zone.
 Trt_Date = CLP treatment start date for that lake-year.
 
 Update 8/25/26: Mike frequency of occurance (FO) calculations were just for points
 <15ft depth. Need to see if Jake's dat_dlnm used same cuttoff for FO calcualtions
 or just used all points surveyed.
+
+
+
+---METADATA---
+
+
+-----------------------------------------
+DATA-SPECIFIC INFORMATION FOR: CLP_trt.csv
+-----------------------------------------
+CLP_trt is the 2026 version of pcrispus_wDNRtrtdat
+
+ Variable List
+               
+    . Name: Lake.ID
+       Description: Minnesota Department of Waters waterbody identifier number (DOW ID)
+                    	
+    . Name: Year
+       Description: Year of record
+
+    . Name: Lake.x
+       Description: lake name used in analysis
+
+    . Name: Trt
+       Description: Indicates if the lake in that year was treated with herbicides targeting curlyleaf pondweed.
+			1 = treated
+			0 = untreated
+
+    . Name: YrsTrt
+       Description: Number of years (in the 10 year window before the record) the lake has previously been treated with herbicides targeting curlyleaf pondweed.
+                    	
+    . Name: PrevAUGSecchi
+       Description: Previous year's August Secchi depth measurement (meters)
+       Source: MPCA
+                    
+    . Name: Ice_off
+       Description: Last date of full ice cover in spring (day of year)
+       Source: Jake Walsh ice off prediction model
+                    
+    . Name: Snow
+       Description: mean depth of snow cover (inches)
+       Source: National Weather Service
+       Note: Right now the snow data is the average snowfall between Dec 1 and March 31 averaged over greater south central Minnesota. Will get site specific info soon.
+    
+    . Name: APRMAYPcri
+       Description: P. crispus frequency of occurrence at sites w/ depth < 4.6m as reported in PI Charter for April or May survey
+    
+    . Name: JUNPcri
+       Description: P. crispus frequency of occurrence at sites w/ depth < 4.6m as reported in PI Charter for June survey
+
+    . Name: DIFF.4.6
+       Description: difference between APRMAYPcri and JUNPcri
+
+    . Name: County
+       Description: County where lake is located
+
+    . Name: Lake.area.acre
+       Description: lake surface area (acres)
+    
+    . Name: Proportion.littoral
+       Description: Proportion of lake total area that is littoral
+
+    . Name: Max.depth
+       Description: Maximum depth of waterbody
+
+    . Name: Acres_Chem
+       Description: Acres of lake treated with herbicides targeting P. crispus. Data from MN Department of Natural Resources permitting/ treatment records.
+
+    . Name: litt.ac
+       Description: Area of lake surface with depth < 4.6m (acres)
+
+    . Name: perc.lit.chem
+       Description: Proportion of lake littoral area (<4.6m) treated with herbicides targeting P. crispus.
+
+
+-----------------------------------------
+DATA-SPECIFIC INFORMATION FOR: CLP_trt_lag_matrix.csv
+-----------------------------------------
+CLP_trt is the 2026 version of pcrispus_wDNRtrtdat with additional columns for treatment lag matrix
+
+
+

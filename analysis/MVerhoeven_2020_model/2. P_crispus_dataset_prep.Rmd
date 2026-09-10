@@ -1,0 +1,466 @@
+---
+title: "2. P_cripsus)dataset_prep"
+output: html_document
+---
+
+```{r}
+# header ------------------------------------------------------------------
+
+
+#' # P crispus dataset prep
+#' ### Author: Mike Verhoeven
+#' ### Date: 27 Sep 2018
+#' 
+#' 
+#' This code has is the final cleanup script in the clp dataset prep. It 
+#' combines the A.Kautza, dnr, and point level collation data into a final
+#' dataset. it has script to create summary plots of the data such as the
+#' treatment timelines.
+#' 
+#' On 12 August 2019 I revised this script to run with the "multiple 
+#' littoral zone cutoff" dataset (surveylaketaxastat) that we ran to 
+#' meet the requests of reviewers. 
+
+#' # Preamble
+#' Load libraries
+  #+warning=FALSE, message=FALSE 
+  library(knitr)
+  library(nlme)
+  library(ggplot2)  
+  library(lme4)
+  library(ezknitr)
+  library(stringr)
+  library(lubridate)
+  library(GGally)
+  library(purrr)
+  library(ResourceSelection)
+  library(LaplacesDemon)
+  library(effects)
+  library(ggrepel)
+  library(dplyr)
+  library(data.table)
+  library(readr)
+
+```
+
+```{r}
+#' Remove anything in memory
+  # rm(list = ls())
+
+#' Load custom functions
+  # diagnostics
+  mv_diag <- function(model_to_diag, plots = c(1:4)) {
+    par(mfrow = c(2,2))
+    plot(model_to_diag, which = plots) 
+    par(mfrow = c(1,1))
+  }
+#' Ensure working directory is set to project location
+
+```
+
+```{r}
+# load in data ------------------------------------------------------------
+
+#' Load in clp dataset :
+  pcri <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/CLP_trt.csv")
+
+##' Load in the pcri_foc dataset (from my statewide PI compilation)
+ # foc <- fread("data/output_data/surveylktaxastat.csv")
+
+```
+
+```{r}
+
+# create centered scaled vars --------------------------------------------
+
+#' Create centered variables (used in glms):
+  #all except Yrs Trt
+  pcri$Snow.sc <- c(scale(pcri$Snow))
+  pcri$PrevAUGSecchi.sc <- c(scale(pcri$PrevAUGSecchi))
+  pcri$Ice_off.sc <- c(scale(pcri$Ice_off))
+  
+  
+#' split the early (.e) and peak (.p) data from p.cri and create datasets
+
+  #drop the peak data from early set:
+  pcri.e <- pcri
+  names(pcri.e)
+  pcri.e <- pcri.e %>%
+    select(-JUNPcri, -DIFF.4.6)
+  # # grab out a subset of the pcri foc data that include only the APR/MAY surveys
+  # foc.e <- subset(foc, foc$month == "04" |
+  #                   foc$month == "05")
+  # foc.e[,1]
+  
+  # #test a match based on lake and year  
+  # unique(pcri.e[,c("Lake", "Year")])
+  # unique(foc.e[,c("lknamemv", "year")])
+  # sort(unique(pcri.e$Lake))
+  # sort(unique(foc.e$lknamemv))
+  
+  #combine lake and year to give a lk-yr field
+  pcri.e$lake_year <- paste(pcri.e$Lake, pcri.e$Year, sep = "")
+  
+  
+  # create peak season dataset ----------------------------------------------
+  #drop earlyseason stuff from peak dataset
+  pcri.p <- pcri
+  pcri.p <- pcri.p %>%
+    select(-APRMAYPcri, -DIFF.4.6)
+
+#' combine lake and year to give a lk-yr field
+  pcri.p$lake_year <- paste(pcri.p$Lake, pcri.p$Year, sep = "")
+
+```
+
+
+```{r consecutive years of trt}
+# calculating consecutive years of treatment ------------------------------
+
+  lag_matrix <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/CLP DLNM/filtered_treatment_history_matrix.csv")
+
+  
+  pcri.e <- pcri.e %>%
+    mutate(Lake.ID = as.numeric(Lake.ID))
+  
+  pcri.p <- pcri.p %>%
+    mutate(Lake.ID = as.numeric(Lake.ID))
+
+  lag_matrix <- lag_matrix %>%
+    mutate(SURVEY_START = mdy(SURVEY_START))
+    mutate(Year = year(as.Date(SURVEY_START)))
+  
+    
+  # 1. Calculate cytrt inside lag_matrix
+  lag_matrix <- lag_matrix %>%
+    rowwise() %>%
+    mutate(
+      cytrt = {
+        # Extract lag2 through lag8 as a vector for the current row
+        lags <- c_across(lag2:lag8)
+        
+        # Find the index position of the first 0
+        first_zero <- match(0, lags)
+        
+        # If no 0 is found, count all 1s; otherwise, count 1s before the first 0
+        if (is.na(first_zero)) {
+          sum(lags == 1)
+        } else {
+          sum(lags[1:(first_zero - 1)] == 1)
+        }
+      }
+    ) %>%
+    ungroup()
+  
+  # 2. Join the calculated cytrt into pcri.e matching on DOW and Year
+  pcri.e <- pcri.e %>%
+    left_join(
+      lag_matrix %>% 
+        select(DOW, Year, cytrt) %>%
+        distinct(DOW, Year, .keep_all = TRUE),
+      by = c("Lake.ID"= "DOW", "Year" = "Year") # Adjust column names if pcri.e uses lake_year/lkyr
+    )
+      
+  
+    
+
+  
+ ###same with pcri.e 
+  lag_matrix <- lag_matrix %>%
+    rowwise() %>%
+    mutate(
+      cytrt = {
+        # Extract lag1 through lag8 as a vector for the current row
+        lags <- c_across(lag1:lag8)
+        
+        # Find the index position of the first 0
+        first_zero <- match(0, lags)
+        
+        # If no 0 is found, count all 1s; otherwise, count 1s before the first 0
+        if (is.na(first_zero)) {
+          sum(lags == 1)
+        } else {
+          sum(lags[1:(first_zero - 1)] == 1)
+        }
+      }
+    ) %>%
+    ungroup()
+  
+  # 2. Join the calculated cytrt into pcri.e matching on DOW and Year
+  pcri.p <- pcri.p %>%
+    left_join(
+      lag_matrix %>% 
+        select(DOW, Year, cytrt) %>%
+        distinct(DOW, Year, .keep_all = TRUE),
+      by = c("Lake.ID"= "DOW", "Year" = "Year") # Adjust column names if pcri.e uses lake_year/lkyr
+    )
+      
+  
+  
+#' The YrsTrt measures in June surveys is correct 1; = Treated this year, However
+#' the spring surveys should be asking about wheter they were treated last spring. Then
+#' we need to calculate cumulative years of trt as years in addition to year one. 
+#' This separates immediate and cumulative effects.
+#' Option 2: Reaassign a value for consecutive years treated or untreated --
+#' 
+  
+```
+
+```{r years untreated}
+
+  # 1. Calculate yutrt inside lag_matrix
+  lag_matrix <- lag_matrix %>%
+    rowwise() %>%
+    mutate(
+      yutrt = {
+        # Extract lag1 through lag8 as a vector for the current row
+        lags <- c_across(lag1:lag8)
+        
+        # Find the index position of the FIRST treatment (1)
+        first_trt <- match(1, lags)
+        
+        # If no 1 is found, set to NA; otherwise subtract 1 to get years elapsed
+        if (is.na(first_trt)) {
+          NA_integer_
+        } else {
+          first_trt - 1L
+        }
+      }
+    ) %>%
+    ungroup()
+  
+  # 2. Join yutrt into pcri.e (deduplicating lag_matrix first to prevent extra rows)
+  pcri.e <- pcri.e %>%
+    left_join(
+      lag_matrix %>%
+        select(DOW, Year, yutrt) %>%
+        distinct(DOW, Year, .keep_all = TRUE),
+      by = c("Lake.ID" = "DOW", "Year" = "Year")
+    )
+  
+  
+    # 1. Calculate yutrt inside lag_matrix
+  lag_matrix <- lag_matrix %>%
+    rowwise() %>%
+    mutate(
+      yutrt = {
+        # Extract lag1 through lag8 as a vector for the current row
+        lags <- c_across(lag1:lag8)
+        
+        # Find the index position of the FIRST treatment (1)
+        first_trt <- match(1, lags)
+        
+        # If no 1 is found, set to NA; otherwise subtract 1 to get years elapsed
+        if (is.na(first_trt)) {
+          NA_integer_
+        } else {
+          first_trt - 1L
+        }
+      }
+    ) %>%
+    ungroup()
+  
+  # 2. Join yutrt into pcri.p (deduplicating lag_matrix first to prevent extra rows)
+  pcri.p <- pcri.p %>%
+    left_join(
+      lag_matrix %>%
+        select(DOW, Year, yutrt) %>%
+        distinct(DOW, Year, .keep_all = TRUE),
+      by = c("Lake.ID" = "DOW", "Year" = "Year")
+    )
+  
+  # 
+#   plot(lslfoc ~ yutrt, data = pcri.p) 
+#   ggplot(pcri.p, aes(yutrt, lslfoc))+
+#     geom_path(aes(yutrt, lslfoc, group = Lake))
+#   
+#   plot(lslfoc ~ cytrt, data = pcri.p)
+#   ggplot(pcri.p, aes(cytrt, lslfoc))+
+#     geom_path(aes(cytrt, lslfoc, group = Lake))
+#   
+
+  # plot(lslfoc~yutrt, data = pcri.e) 
+  # # pcri.e$trtcolplot <- ifelse(pcri.e$Trte)
+  # ggplot(pcri.e, aes(yutrt, APRMAYPcri))+
+  #   geom_path(aes(jitter(yutrt), APRMAYPcri, group = Lake, colour = Trte), arrow = arrow(ends = "last", length = unit(.1, "inches"), type = "closed"))
+  # 
+  # plot(lslfoc~cytrt, data = pcri.e)
+  # ggplot(pcri.e, aes(cytrt, lslfoc))+
+  #   geom_path(aes(cytrt, lslfoc, group = Lake))
+  # ggplot(pcri.e, aes(cytrt, perc.cheme))+
+  #   geom_path(aes(cytrt, perc.cheme, group = Lake))
+```
+
+
+```{r}
+  pcri.e <- pcri.e %>%
+    mutate(foc_clp = APRMAYPcri)  
+
+  pcri.p <- pcri.p %>%
+    mutate(foc_clp = JUNPcri)
+  
+#Trte is  treated with herbicides targeting P. crispus in the previous year
+  pcri.e <- pcri.e %>%
+  left_join(
+    lag_matrix %>%
+      select(DOW, Year, Trte = lag1) %>%
+      distinct(DOW, Year, .keep_all = TRUE),
+    by = c("Lake.ID" = "DOW", "Year" = "Year")
+  )
+```
+
+
+
+```{r I didnt really look at this}
+#Melina didn't look at this closely yet
+# check for missing data --------------------------------------------------
+  
+  #' what else is missing?
+  summary(pcri.e[,c("Snow", "IceCover", "PrevAUGSecchi", "YrsTrt", "tnsamp", "lnsamp", "lslsamp", "totfoc", "litfoc","lslfoc")])
+  summary(pcri.p[,c("Snow", "IceCover", "PrevAUGSecchi", "YrsTrt", "tnsamp", "lnsamp", "lslsamp", "totfoc", "litfoc","lslfoc")])
+  #' remove rows without secchi or occurrance (submitted at point level) data
+  #early
+  pcri.e <- subset(pcri.e, is.na(pcri.e$tnsamp) == FALSE )
+  summary(pcri.e[,"tnsamp"])
+  pcri.e <- subset(pcri.e, is.na(pcri.e$PrevAUGSecchi) == FALSE )
+  summary(pcri.e[,"PrevAUGSecchi"])
+  #peak
+  pcri.p<- subset(pcri.p, is.na(pcri.p$tnsamp) == FALSE )
+  summary(pcri.p[,"tnsamp"])  
+  pcri.p<- subset(pcri.p, is.na(pcri.p$PrevAUGSecchi) == FALSE )  
+  summary(pcri.p[,"PrevAUGSecchi"])
+  
+# 
+# # delete old calculated values  -------------------------------------------
+#   pcri.e <- data.table(pcri.e)
+#   pcri.p <- data.table(pcri.p)
+#   # drop unneeded columns (calculated without method tracking by prev collab)
+#   names(pcri.e)
+#   pcri.e[ , c("APRMAYPcri", "APRMAY3.7", "APRMAYDIFF", "APRMAYRelDens", "APRMAYRelDensall",
+#               "Latitude.y", "Lake.y", "lake_year", "County") := NULL ]
+#   names(pcri.p)
+#   pcri.p[ , c("APRMAYPcri", "APRMAY3.7", "APRMAYDIFF", "APRMAYRelDens", "APRMAYRelDensall",
+#               "Latitude.y", "Lake.y", "lake_year", "JUNPcri", "JUN3.7", "JUNDIFF",
+#               "JUNRelDens", "JUNRelDensall", "DIFF.4.6", "DIFF.3.7", "DIFFRelDens", "County" ) := NULL ]
+#   names(pcri.e)
+#   names(pcri.p)
+  
+# export data -------------------------------------------------------------
+  
+  
+  # write.csv(pcri.e, file = "data/output_data/pcri.e_laklvllit.csv")
+  # write.csv(pcri.p, file = "data/output_data/pcri.p_laklvllit.csv")
+  
+  
+
+# trajectories through time, gridded by lake ----------------------------------------------------------
+  
+  
+  # management trajectories through time, gridded by lake.
+  pcri.p <- pcri.p[order(pcri.p$Year, pcri.p$Lake),]
+  pcri.p$Year <- as.integer(pcri.p$Year)
+  
+  #reorder by first year of sampling per lake
+  pcri.e$Lake <- factor(pcri.e$Lake, levels = unique(pcri.e$Lake[order(pcri.e$Year)]))
+  summary(pcri.e[,"tnsamp"])
+  #peak
+  summary(pcri.p[,"tnsamp"])
+  pcri.p$Lake <- factor(pcri.p$Lake, levels = unique(pcri.p$Lake[order(pcri.p$Year)]))
+  #x$name <- factor(x$name, levels = x$name[order(x$val)])
+  
+  # ggplot(pcri.p, aes( x = Year, y = foc_clp))+
+  #   geom_line()+
+  #   geom_point(aes(shape = Trt))+
+  #   geom_line(data = pcri.e, aes(x = Year, y = foc_clp), linetype = 2)+
+  #   geom_point(data = pcri.e, aes(x = Year, y = foc_clp, shape = Trte))+
+  #   facet_wrap( ~ Lake, ncol = 5, dir = "v")+
+  #   scale_shape_manual(values = c(21,16))+
+  #   scale_fill_manual(values = c("white", "black"))+
+  #   scale_y_continuous(breaks = c(0,1), minor_breaks = c(), labels = c(0,1))+
+  #   scale_x_continuous(breaks = c(2005,2010,2015), minor_breaks = seq(2005,2015,1))
+  # 
+  
+  # ggplot(pcri.e, aes( x = Year, y = foc_clp))+
+  #   geom_line()+
+  #   geom_point(aes(shape = Trte))+
+  #   facet_wrap( ~ Lake, nrow = 10, dir = "v")+
+  #   scale_shape_manual(values = c(21,16))+
+  #   scale_fill_manual(values = c("white", "black"))
+  # 
+  # pcri$Lake <- factor(pcri$Lake, levels = unique(pcri$Lake[order(pcri$Year)]))
+  # 
+  # ggplot(pcri, aes( x = as.numeric(Year), y = Latitude, group = Lake))+
+  #   geom_line(aes( x = as.numeric(Year), y = APRMAYPcri, group = Lake), linetype = 2)+
+  #   geom_point(aes(y = 1, shape = Trt))+
+  #   geom_point(aes(y = 1, shape = Trt))+
+  #   geom_line(aes( x = as.numeric(Year), y = JUNPcri, group = Lake))+
+  #   facet_wrap( ~ Lake, ncol = 6, dir = "v")+
+  #   scale_y_continuous(breaks = c(0,1), minor_breaks = c(), labels = c(0,1))+
+  #   scale_shape_manual(values = c(16,21))+
+  #   #scale_color_manual(values = c("black", "white"))+
+  #   scale_x_continuous(breaks = c(2006,2010,2015), minor_breaks = seq(2006,2015,1), labels = c("'06","'10","'15"))+
+  #   theme(legend.position = "none")+
+  #   ylab("Frequency of Occurrence")
+  # 
+  # hill <- subset(pcri, pcri$Lake == "hill")
+  # 
+  # ggplot(hill, aes(x = as.numeric(Year), y = Latitude))+
+  #   scale_y_continuous(breaks = c(0,1), minor_breaks = c(), labels = c(0,1))+
+  #   geom_point(aes(y = APRMAYPcri))+
+  #   geom_point(aes(y = JUNPcri), shape = 21)+
+  #   geom_line(aes(x = as.numeric(Year), y = as.numeric(APRMAYPcri)), na.rm = T)
+  # 
+  
+  plotdat.e <- data.frame(lake = pcri.e$Lake, trt = pcri.e$Trte ,
+                          year = pcri.e$Year , period = rep("early", length(pcri.e$Lake)) ,
+                          foc = pcri.e$litfoc )  
+  plotdat.p <- data.frame(lake = pcri.p$Lake, trt = pcri.p$Trt ,
+                          year = pcri.p$Year , period = rep("peak", length(pcri.p$Lake)) ,
+                          foc = pcri.p$litfoc )  
+  plotdat <- rbind(plotdat.e,plotdat.p)
+  plotdat$lake <- factor(plotdat$lake, levels = unique(plotdat$lake[order(plotdat$year)]))
+  plotdat$period <- factor(plotdat$period, levels = c("peak", "early"))
+  
+  ggplot(plotdat, aes( x = year, y = foc))+
+    geom_line(aes( x = year, y = foc, linetype = period))+
+    geom_point(aes( y = foc, shape = trt, colour = period))+
+    facet_wrap( ~ lake, ncol = 5, dir = "v")+
+    scale_y_continuous(breaks = c(0,1), minor_breaks = c(), labels = c(0,1))+
+    scale_shape_manual(values = c(21,16))+
+    scale_color_manual(values = c("black", "red"))+
+    scale_x_continuous(breaks = c(2006,2010,2015), minor_breaks = seq(2006,2015,1), labels = c("'06","'10","'15"))+
+    theme(legend.position = "none")+
+    ylab("Frequency of Occurrence")+
+    xlab("Year")
+  
+  
+# Note that 10 lakes have no data derived from the point-based dataset 
+  length(unique(plotdat$lake))
+  length(unique(pcri$Lake))
+  sort(unique(plotdat$lake))
+  sort(unique(pcri$Lake))
+  
+# footer ------------------------------------------------------------------
+
+
+#' ## Document footer 
+#' 
+#' Document spun with: ezspin("f_p_crispus_dataset_prep.R", out_dir = "coding_html_outputs/p_crispus_dataset_prep", fig_dir = "figures", keep_md=FALSE)
+#' 
+#' Session Information:
+#+ sessionInfo
+sessionInfo()
+
+
+
+```
+```{r write csv}
+  write.csv(pcri.e, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.e_combine.csv")
+  
+  write.csv(pcri.p, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.p_combine.csv")
+```
+
+
+
+
+

@@ -58,11 +58,17 @@ treatment_history_matrix[missing_cols] <- NA
 CLP_trt <- treatment_history_matrix
 
 CLP_trt <- CLP_trt %>%
-  mutate(date_lag0_before = as.Date(date_lag0_before)) %>%
-  mutate(date_lag0_after = as.Date(date_lag0_after))
+  mutate(SURVEY_START = mdy(SURVEY_START)) %>%
+  mutate(date_lag0_before = mdy(date_lag0_before)) %>%
+  mutate(date_lag0_after = mdy(date_lag0_after)) %>%
+  mutate(DOW = str_pad(DOW, width = 8, side = "left", pad = "0"))
 
 #load in lake area data
 MN_lake_morphology <- read_csv("~/IAPM Project/MAISRC-IAPM/data/MN_Lakes_Areas.csv")
+
+MN_lake_morphology <- MN_lake_morphology %>%
+  mutate(DOW = as.numeric(DOW))
+
 CLP_trt <- CLP_trt %>%
   left_join(
     MN_lake_morphology %>% select(DOW, LakeAreaAcres, LAKE_NAME, `15ft_LittoralZone_Acres`,
@@ -259,8 +265,17 @@ CLP_trt <- CLP_trt %>%
 ```
 
 
+```{r remove duplicates}
+CLP_trt <- CLP_trt %>%
+  distinct(Lake.ID, Year, Acres_Chem, YrsTrt, PrevAUGSecchi, APRMAYPcri, JUNPcri, .keep_all = TRUE)
 
-```{r}
+CLP_trt_lag_matrix <- CLP_trt %>%
+  distinct(Lake.ID, Year, Acres_Chem, YrsTrt, PrevAUGSecchi, APRMAYPcri, JUNPcri, .keep_all = TRUE)
+```
+
+
+
+```{r write csv}
 write.csv(CLP_trt_lag_matrix, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/CLP_trt_lag_matrix.csv")
 
 write.csv(CLP_trt, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/CLP_trt.csv")

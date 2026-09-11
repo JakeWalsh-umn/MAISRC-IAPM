@@ -65,6 +65,7 @@ CLP_treatments <- CLP_treatments %>%
 
 # Exploring DLNM possibilities ----
 
+
 dat_dlnm <- db_sub_pa %>%
   filter(!is.na(depth_ft) & depth_ft <= 15) %>%
   mutate(SURVEY_START=as.Date(SURVEY_START),
@@ -82,15 +83,19 @@ dat_dlnm <- db_sub_pa %>%
                                       nitella_furcata:vallisneria_sp))),
          native_vegetated=ifelse(taxa_rich==0, 0, 1)) %>%
   group_by(DOW, lake_name, SURVEY_START, year, month, doy) %>%
-  summarize_at(vars(ceratophyllum_demersum:vallisneria_sp, taxa_rich:native_vegetated), mean) %>%
-  ungroup() %>%
+  summarize(
+    nsamp = n(),
+    across(c(ceratophyllum_demersum:vallisneria_sp, taxa_rich:native_vegetated), mean),
+    .groups = "drop"
+  ) %>%
   mutate(survey_taxa_rich=rowSums(across(ceratophyllum_demersum:vallisneria_sp)>0),
          survey_native_rich=rowSums(across(c(ceratophyllum_demersum, 
-                                             elodea_canadensis:eleocharis_acicularis,
-                                             myriophyllum_sibiricum:potamogeton_robbinsii, 
-                                             nitella_sp:potamogeton_strictifolius,
-                                             fontinalis_sp:drepanocladus_sp,
-                                             nitella_furcata:vallisneria_sp))>0))
+                                              elodea_canadensis:eleocharis_acicularis,
+                                              myriophyllum_sibiricum:potamogeton_robbinsii, 
+                                              nitella_sp:potamogeton_strictifolius,
+                                              fontinalis_sp:drepanocladus_sp,
+                                              nitella_furcata:vallisneria_sp))>0))
+
 
 #decided not to remove NAs. Need to investigate this more
 
@@ -554,6 +559,7 @@ untreated_CLP_lakes <- clp_lakes_dat_dlnm[!clp_lakes_dat_dlnm %in% CLP_permit_DO
 
 ```{r write csv}
 write.csv(filtered_treatment_matrix, file = "~/IAPM Project/MAISRC-IAPM/analysis/CLP DLNM/filtered_treatment_history_matrix.csv")
+
 
 ```
 

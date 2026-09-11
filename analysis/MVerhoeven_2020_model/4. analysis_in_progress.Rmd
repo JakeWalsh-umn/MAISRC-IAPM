@@ -18,6 +18,7 @@ output: html_document
   library(ggplot2)  
   library(lme4)
   library(dplyr)
+  library(readr)
   library(data.table)
   library(numDeriv)
   library(sf)
@@ -36,9 +37,7 @@ output: html_document
   library(ggmap)
 ```
 
-
-
-```{r}
+```{r load in custom functions}
   #' Load custom functions:
   
   # diagnostics
@@ -67,12 +66,17 @@ output: html_document
                  upr=pred0+crit*pred.se))
   }
 
+```
+
+
+```{r}
 # load in data ------------------------------------------------------------
 #' # Load Data
 
 #' Load in clp dataset from the p_crispus dataset_prep script:
-  pcri.e <- fread("data/output_data/pcri.e_akDNRmv_combined.csv", drop = 1:2)
-  pcri.p <- fread("data/output_data/pcri.p_akDNRmv_combined.csv", drop = 1:2)
+  pcri.e <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.e_combine.csv")
+  pcri.p <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.p_combine.csv")
+  
 
 #' Visualize the distributions of the responses we are interested in:
   #foc: shown with my calcs(gray) and Adam's calcs (red)
@@ -81,64 +85,63 @@ output: html_document
   ggplot(pcri.p, aes(foc_clp))+
       geom_histogram(alpha = .5)
 
-  #rake density
-  ggplot(pcri.e, aes(rd_pcri))+
-      geom_histogram(alpha = .5 )
-  ggplot(pcri.p, aes(rd_pcri))+
-      geom_histogram(alpha = .5)
+```
 
-
+```{r}
 # cleaning data -----------------------------------------------------------
 #' # Data Cleaning   
-#' Are our datasets complete for the parameters we want to estimate on? Note 
-#' that the rake densities will be pres for a smaller proportion of the data 
-#' (see descriptive stats for these values).
+#' Are our datasets complete for the parameters we want to estimate on?
   #check 6 num summaries
-  summary(pcri.e[,c("foc_clp","rd_pcri","nsamp","perc.cheme","cytrt","Snow","IceCover","PrevAUGSecchi")])
-  summary(pcri.p[,c("foc_clp","rd_pcri","nsamp","perc.lit.chem","cytrt","Snow","IceCover","PrevAUGSecchi")])
+  summary(pcri.e[,c("foc_clp","perc.lit.chem","cytrt","Snow","Ice_off","PrevAUGSecchi")])
+  summary(pcri.p[,c("foc_clp","perc.lit.chem","cytrt","Snow","Ice_off","PrevAUGSecchi")])
 
-  #how many cases?
-  pcri.p[,unique(.(Lake, Year))] # 145
-  pcri.e[,unique(.(Lake, Year))] # 101
- 
-  #which lakes?
-  pcri.p[,unique(Lake)] # 45
-  pcri.e[,unique(Lake)] # 35
+  #how many lakes?
+  n_distinct(pcri.e$Lake.ID) #50
+  n_distinct(pcri.p$Lake.ID) #50
   
   #Trt as factor:
-  str(pcri.e)
-  pcri.e[ , Trt := as.factor(Trt)]
-  pcri.e[ , Trte := as.factor(Trte)]
-  pcri.p[ , Trt := as.factor(Trt)]
+  pcri.e <- pcri.e %>%
+  mutate(
+    Trt  = as.factor(Trt),
+    Trte = as.factor(Trte),
+    Lake.ID = as.factor(Lake.ID)
+  )
+
+  pcri.p <- pcri.p %>%
+   mutate(
+     Trt = as.factor(Trt),
+     Lake.ID = as.factor(Lake.ID)
+     )
     
-  #Lake as a factor:
-  pcri.e[ , Lake := as.factor(Lake)]
-  pcri.p[ , Lake := as.factor(Lake)]
   
-  #convert inches to centimeters in the Snow column:
-  pcri.e[,Snow:= Snow*2.54]
-  pcri.p[,Snow:= Snow*2.54]
+  # Convert snow depth from inches to centimeters (2.54 cm per inch)
+  pcri.e <- pcri.e %>%
+    mutate(Snow = Snow * 2.54)
   
-  #whats in each dataset?
-  names(pcri.e)
-  names(pcri.p)
-  
+  pcri.p <- pcri.p %>%
+    mutate(Snow = Snow * 2.54)
+    
 
-# distances to nearest NWS Station ----------------------------------------
+# 
+# # distances to nearest NWS Station ----------------------------------------
+# 
+# nws_dist <- fread(file = "data/raw/SnowDepth/Lakes_NWS.txt")
+#   lk_dist <- nws_dist[ , .(dowlknum, NEAR_DIST)]
+#   
+#   
+#   e_dist <-   merge(pcri.e, lk_dist, all.x = TRUE, by.x = "Lake.ID", by.y = "dowlknum")
+#   p_dist <-   merge(pcri.p, lk_dist, all.x = TRUE, by.x = "Lake.ID", by.y = "dowlknum")
+#   
+#   all_dist <- rbind(e_dist, p_dist, fill = TRUE)
+#   
+#   distances <- all_dist[, max(NEAR_DIST), .(Lake.ID) ]
+#   
+#   summary(distances$V1)
+#   
+  
+```
 
-nws_dist <- fread(file = "data/raw/SnowDepth/Lakes_NWS.txt")
-  lk_dist <- nws_dist[ , .(dowlknum, NEAR_DIST)]
-  
-  
-  e_dist <-   merge(pcri.e, lk_dist, all.x = TRUE, by.x = "Lake.ID", by.y = "dowlknum")
-  p_dist <-   merge(pcri.p, lk_dist, all.x = TRUE, by.x = "Lake.ID", by.y = "dowlknum")
-  
-  all_dist <- rbind(e_dist, p_dist, fill = TRUE)
-  
-  distances <- all_dist[, max(NEAR_DIST), .(Lake.ID) ]
-  
-  summary(distances$V1)
-  
+```{r not super important}
   # descriptive stats -----------------------------------------------------------
   #' # Summary statistics
     
@@ -324,60 +327,89 @@ nws_dist <- fread(file = "data/raw/SnowDepth/Lakes_NWS.txt")
           
       )
     data.summary
-  
+    
+    
   #' ## Export Tables 1 & 2
     # export data for Tables in manuscript
     # write.csv(data.summary$variables_summary, file = "data/output_data/summary_stats_Tbl2.csv")
     # write.csv(data.summary$Table_1_dat, file = "data/output_data/data_summary_Tbl1.csv")
   
+```
+
+
+
+```{r mixed effects models}
   # mixed eff models --------------------------------------------------------
   #' # Mixed effects models
   
   #' ## No interactions
-  #' Here we will start our modeling without considering any interactionsusing a 
+  #' Here we will start our modeling without considering any interactions using a 
   #' glmme eval. First, we'll need to add an observation level random effect to
   #' account for overdispersion (Harrsion, 2015). The following section uses 
   #' centered & scaled  predictor variables (done using function scale()) in order
   #' to converge during fitting.
   #' glmme for frequency of occurrence data:
     # add obs level key to dataset
-    pcri.e[,obs := seq(nrow(pcri.e))]
-    pcri.p[,obs := seq(nrow(pcri.p))]
+ 
+    pcri.e <- pcri.e %>% mutate(obs = row_number())
+    pcri.p <- pcri.p %>% mutate(obs = row_number())
     
   #' ### Early Survey Freq
-    glme.foc.e <- glmer(foc_clp ~ Trte + cytrt + PrevAUGSecchi.sc + Snow.sc + IceCover.sc + (1 | Lake) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+    glme.foc.e <- glmer(foc_clp ~ Trte + cytrt + PrevAUGSecchi.sc + Snow.sc + Ice_off.sc + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
     summary(glme.foc.e)
+
   
     plot(glme.foc.e)  # not too bad
-    plot(glme.foc.e, resid(.)~ fitted(.) |Lake) # by group
+    plot(glme.foc.e, resid(.)~ fitted(.) |Lake.ID) # by group
     plot(glme.foc.e, resid(.)~ Snow)  # residuals versus Snow
     plot(glme.foc.e, resid(.)~ PrevAUGSecchi) #secchi
-    plot(glme.foc.e, resid(.)~ IceCover) # icecover
+    plot(glme.foc.e, resid(.)~ Ice_off) # ice off
     plot(glme.foc.e, resid(.)~ cytrt) # cytrt - def more var at low cytrt. That is also where most of our data lie
   
+    
   #' ### Late Survey Freq
-    glme.foc.p <- glmer(foc_clp~ Trt + cytrt + PrevAUGSecchi.sc + Snow.sc + IceCover.sc +
-                        (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
+    glme.foc.p <- glmer(foc_clp~ Trt + cytrt + PrevAUGSecchi.sc + Snow.sc + Ice_off.sc +
+    (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.p, , weights = nsamp)
     summary(glme.foc.p)
+    
     plot(glme.foc.p) # this also loks o.k. but note the tails again are a bit wonky 
-    plot(glme.foc.p, resid(.)~ fitted(.) |Lake) # by group
+    plot(glme.foc.p, resid(.)~ fitted(.) |Lake.ID) # by group
     plot(glme.foc.p, resid(.)~ Snow)  # residuals versus Snow
     plot(glme.foc.p, resid(.)~ PrevAUGSecchi) #secchi- here we can see that the secchi data have relatively poor coverage past ~3.5m
-    plot(glme.foc.p, resid(.)~ IceCover) # icecover
+    plot(glme.foc.p, resid(.)~ Ice_off) # icecover
     plot(glme.foc.p, resid(.)~ cytrt) # cytrt
   
-  #' ### Early Survey Rake Density:
-    glme.rd.e <- glmer(rd_pcri~ Trte + cytrt + PrevAUGSecchi.sc + Snow.sc + IceCover.sc +
-                        (1 | Lake), family = Gamma(inverse), data = pcri.e)
-    summary(glme.rd.e)
-    plot(glme.rd.e) # this looks o.k. but note the lack of data at large fitted vals 
-  
-  #' ### Late Survey Rake Densities
-    glme.rd.p <- glmer(rd_pcri~ Trt + cytrt + PrevAUGSecchi.sc + Snow.sc + IceCover.sc +
-                       (1 | Lake), family = Gamma(inverse), data = pcri.p)
-    summary(glme.rd.p)
-    plot(glme.rd.p) # probably the best so far, but there is a weird lower bound on this one
-  
+ 
+    
+    
+    #try 2-----------------------
+    
+      #' ### Early Survey Freq
+    glme.foc.e.2 <- glmer(foc_clp ~ Trte + cytrt + PrevAUGSecchi + Snow + Ice_off + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+    summary(glme.foc.e.2)
+    
+    
+      #' ### Late Survey Freq
+    glme.foc.p.2 <- glmer(foc_clp ~ Trt + cytrt + PrevAUGSecchi + Snow + Ice_off +
+    (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.p, , weights = nsamp)
+    summary(glme.foc.p.2)
+    
+    
+    
+  #try 3, no Ice off--------------
+        #' ### Early Survey Freq
+    glme.foc.e.3 <- glmer(foc_clp ~ Trte + cytrt + PrevAUGSecchi + Snow + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+    summary(glme.foc.e.3)
+    
+    
+      #' ### Late Survey Freq
+    glme.foc.p.3 <- glmer(foc_clp ~ Trt + cytrt + PrevAUGSecchi + Snow +
+    (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.p, , weights = nsamp)
+    summary(glme.foc.p.3)
+    
+    
+    
+    
   # mixed models with interactions by trt ------------------------------------------------
   #' ## Interactions (trt X env. var.)
   
@@ -425,7 +457,7 @@ nws_dist <- fread(file = "data/raw/SnowDepth/Lakes_NWS.txt")
     summary(glme.foc.p2)
     
     #then retain significant interactions (PAUGSecchi & Snow):
-    glme.foc.p <- glmer(foc_clp~ Trt + cytrt + PrevAUGSecchi.sc+ Snow.sc + IceCover.sc  + Trt:PrevAUGSecchi.sc + Trt:Snow.sc+
+    glme.foc.p <- glmer(foc_clp~ Trt + cytrt + PrevAUGSecchi.sc+ Snow.sc + Ice_off.sc  + Trt:PrevAUGSecchi.sc + Trt:Snow.sc+
                           (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
     #model.matrix(glme.foc.p)
     summary(glme.foc.p)
@@ -467,49 +499,8 @@ nws_dist <- fread(file = "data/raw/SnowDepth/Lakes_NWS.txt")
   
   #' Early freq affected by cumulative yrs of treatment (-), productivity (+), and
   #' snow cover (-), whereas ice had no effect.
-  #' 
-  #' ### Early Rake Density
   
-    glme.rd.e <- glmer(rd_pcri~ Trte + cytrt + PrevAUGSecchi.sc*Trte + Snow.sc*Trte + IceCover.sc*Trte +
-                         (1 | Lake), family = Gamma(link = "log"), data = pcri.e)
-    #restart at last fit:
-    ss <- getME(glme.rd.e,c("theta","fixef"))
-    glme.rd.e2 <- update(glme.rd.e,start=ss,control=glmerControl(optCtrl=list(maxfun=2e4)))
-    # worked again
-    summary(glme.rd.e2)
     
-    # retain no interactions
-    glme.rd.e <- glmer(rd_pcri~ Trte + cytrt + PrevAUGSecchi.sc + Snow.sc + IceCover.sc + (1 | Lake), family = Gamma(link = "log"), data = pcri.e)
-    summary(glme.rd.e)
-  
-  #'Only Trt last year (-) and productivity (+) are affecting rake densities
-  #'
-  
-  #' ### Late Rake Density
-  
-    # peak rake density
-    glme.rd.p <- glmer(rd_pcri~ Trt + cytrt + PrevAUGSecchi.sc*Trt + Snow.sc*Trt + IceCover.sc*Trt +
-                         (1 | Lake), family = Gamma(link = "log"), data = pcri.p)
-    # #restart at last fit:
-    # ss <- getME(glme.rd.p,c("theta","fixef"))
-    # glme.rd.p2 <- update(glme.rd.p,start=ss,control=glmerControl(optCtrl=list(maxfun=2e4)))
-    # # worked again
-    summary(glme.rd.p)
-    
-    #retain no interactions:
-    glme.rd.p <- glmer(rd_pcri~ Trt + cytrt + PrevAUGSecchi.sc + Snow.sc + IceCover.sc +
-                         (1 | Lake), family = Gamma(link = "log"), data = pcri.p)
-    summary(glme.rd.p)
-  
-  #' Only Trt reduced rd, but snow was marginally significant (-)
-  #' 
-  
-  #' ### Final models:
-    summary(glme.foc.p)
-    summary(glme.foc.e)
-    summary(glme.rd.e)
-    summary(glme.rd.p)
-  
   # unscaled models for use in visualization ---------------------------------------
   #' Here we will try to re-construct the same models with unscaled data. This
   #' will make sure that our visualizations are on the actual scales of the data.
@@ -529,25 +520,12 @@ nws_dist <- fread(file = "data/raw/SnowDepth/Lakes_NWS.txt")
     glme.foc.eu <- glmer(foc_clp~ Trte + cytrt +  PrevAUGSecchi + Snow + IceCover +
                           (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
     summary(glme.foc.eu)
+  
     
-  #' ### Late & Early Rake Densities
-  
-    # early rd
-    glme.rd.eu <- glmer(rd_pcri~ Trte + cytrt + PrevAUGSecchi + Snow + IceCover + (1 | Lake), family = Gamma(inverse), data = pcri.e)
-    # the scaling issue was induced when we unscaled the predictor vars. Because they lie on radically dif scales, it doesn't like them. Try restart at last fit:
-    ss <- getME(glme.rd.eu,c("theta","fixef"))
-    glme.rd.eu2 <- update(glme.rd.eu,start=ss,control=glmerControl(optCtrl=list(maxfun=2e4)))# no worky
-    #peak rd?
-    glme.rd.pu <- glmer(rd_pcri~ Trt + cytrt + PrevAUGSecchi + Snow + IceCover +
-                         (1 | Lake), family = Gamma(inverse), data = pcri.p)
-    # Again, scaling issue induced when we unscaled the predictors. Try restart at last fit:
-    ss <- getME(glme.rd.pu,c("theta","fixef"))
-    glme.rd.pu2 <- update(glme.rd.pu,start=ss,control=glmerControl(optCtrl=list(maxfun=2e4)))# no worky
-  
-  #' We have actual scale models for frequency, but not rake density. This is
-  #' likley because the gamma models do not do well with the variation among the
-  #' predictor variables. 
-  
+    
+```
+
+```{r secchi}
   # visualizations  ------------------------------------
   
   #' # Visualizing results
@@ -686,6 +664,11 @@ nws_dist <- fread(file = "data/raw/SnowDepth/Lakes_NWS.txt")
   #' Again, a 9.4% decline in frequency for each additonal meter of Secchi 
   
   #' clarity.
+```
+
+
+```{r visualizations}
+
   
   # snow ------------------------------------------------------
   
@@ -915,7 +898,10 @@ nws_dist <- fread(file = "data/raw/SnowDepth/Lakes_NWS.txt")
   
   #' these are much nicer, but they do not explain how the effect that is observed is after accounting for other drivers (background data are "raw")
   
-  
+
+```
+
+```{r}
   # cytrt -------------------------------------------------------------------
   #' ## Consecutive Years of Treatment
   
@@ -1408,6 +1394,64 @@ nws_dist <- fread(file = "data/raw/SnowDepth/Lakes_NWS.txt")
   citation("mapdata")
   citation("ggmap")
 
+```
 
+```{rmain}
+ 
+
+cytrt_early <-   ggplot(foc_clp, aes(cytrt,fitted))+
+      geom_line(size = 1.5)+ 
+      geom_ribbon(aes(ymin=low, ymax=up), alpha=0.4)+
+      theme(text = element_text(size=20), legend.position = "none")+
+      ylab("Frequency of Occurrence")+
+      xlab("Consecutive Years Treated")  +
+      scale_x_continuous( breaks = seq(0,5, by = 1),
+                          labels = seq(1,6, by = 1),
+                          limits = c(0,5))
+    cytrt_early  
+  
+    # plot data in backgroud
+  cytrt_early + 
+      geom_point(x = pcri.e$cytrt, y = pcri.e$foc_clp)+
+      geom_smooth(method = "lm")
+  
+  
+#main visualizations-----------------
+  
+  #early
+  lm_pcri.e_cytrt <- lm(foc_clp ~ cytrt, data = pcri.e)
+
+  # View model coefficients, R-squared, and p-values
+  summary(lm_pcri.e_cytrt)
+  
+  ggplot(pcri.e, aes(x = cytrt, y = foc_clp)) +
+    geom_point(alpha = 0.6, size = 2) +
+    geom_smooth(method = "lm", se = TRUE, color = "blue") +
+    labs(
+      x = "Consecutive Years Treated",
+      y = "Frequency of Occurrence",
+      title = "CLP Frequency vs. Consecutive Treatment History"
+    ) +
+    theme_minimal()
+  
+  
+  #late
+  lm_pcri.p_cytrt <- lm(foc_clp ~ cytrt, data = pcri.p)
+
+  # View model coefficients, R-squared, and p-values
+  summary(lm_pcri.p_cytrt)
+  
+  ggplot(pcri.p, aes(x = cytrt, y = foc_clp)) +
+    geom_point(alpha = 0.6, size = 2) +
+    geom_smooth(method = "lm", se = TRUE, color = "blue") +
+    labs(
+      x = "Consecutive Years Treated",
+      y = "Frequency of Occurrence",
+      title = "CLP Frequency vs. Consecutive Treatment History"
+    ) +
+    theme_minimal()
+  
+  
+    
 ```
 

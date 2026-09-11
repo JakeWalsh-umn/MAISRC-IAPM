@@ -307,6 +307,25 @@ output: html_document
       distinct(DOW, Year, .keep_all = TRUE),
     by = c("Lake.ID" = "DOW", "Year" = "Year")
   )
+  
+#nsamp is number of points surveyed for that PI survey
+pcri.e <- pcri.e %>%
+  left_join(
+    PI_surveys %>%
+      dplyr::select(DOW, year, nsamp) %>%
+      distinct(DOW, year, .keep_all = TRUE),
+    by = c("Lake.ID" = "DOW", "Year" = "year")
+  )
+
+
+pcri.p <- pcri.p %>%
+  left_join(
+    PI_surveys %>%
+      dplyr::select(DOW, year, nsamp) %>%
+      distinct(DOW, year, .keep_all = TRUE),
+    by = c("Lake.ID" = "DOW", "Year" = "year")
+  )
+  
 ```
 
 

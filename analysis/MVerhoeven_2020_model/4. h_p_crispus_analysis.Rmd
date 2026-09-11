@@ -1,0 +1,425 @@
+---
+title: "h_p_crispus_analysis_manuscript"
+output: html_document
+---
+
+
+```{r}
+
+#Adapted from Mike Verhoeven 2020
+
+#' This code will load in the MN CLP dataset and analyze and visualize the material 
+# header ------------------------------------------------------------------
+
+#' # Tools
+#' Load libraries:
+
+  #+warning=FALSE, message=FALSE 
+  library(ggplot2)  
+  library(lme4)
+  library(dplyr)
+  library(readr)
+  library(data.table)
+  library(numDeriv)
+  library(sf)
+  library(mapdata)
+  library(gridExtra)
+  library(rlang)
+  library(devtools)
+  library(ggspatial)
+  library(raster)
+  library(ggthemes)
+  library(mapproj)
+  library(maps)
+  library(GISTools) 
+  library(ggmap)
+```
+
+```{r load in custom functions}
+  #' Load custom functions:
+  
+  # diagnostics
+  mv_diag <- function(model_to_diag, plots = c(1:4)) {
+    par(mfrow = c(2,2))
+    plot(model_to_diag, which = plots) 
+    par(mfrow = c(1,1))
+  }
+  
+    # ben bolkers CI calc fn (https://github.com/bbolker/asaglmm/blob/master/papers/bolker_chap.rmd)
+  easyPredCI <- function(model,newdata,alpha=0.05) {
+    ## baseline prediction, on the linear predictor (log-odds) scale:
+    pred0 <- predict(model,re.form=NA,newdata=newdata)
+    ## fixed-effects model matrix for new data
+    X <- model.matrix(formula(model,fixed.only=TRUE)[-2],
+                      newdata)
+    beta <- fixef(model) ## fixed-effects coefficients
+    V <- vcov(model)     ## variance-covariance matrix of beta
+    pred.se <- sqrt(diag(X %*% V %*% t(X))) ## std errors of predictions
+    ## inverse-link (logistic) function: could also use plogis()
+    plogis <- model@resp$family$plogis
+    ## construct 95% Normal CIs on the link scale and
+    ##  transform back to the response (probability) scale:
+    crit <- -qnorm(alpha/2)
+    plogis(cbind(lwr=pred0-crit*pred.se,
+                 upr=pred0+crit*pred.se))
+  }
+
+```
+
+
+```{r}
+# load in data ------------------------------------------------------------
+#' # Load Data
+
+#' Load in clp dataset from the p_crispus dataset_prep script:
+  pcri.e <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.e_combine.csv")
+  pcri.p <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.p_combine.csv")
+  
+
+#' Visualize the distributions of the responses we are interested in:
+  #foc: shown with my calcs(gray) and Adam's calcs (red)
+  ggplot(pcri.e, aes(foc_clp))+
+      geom_histogram(alpha = .5)
+  ggplot(pcri.p, aes(foc_clp))+
+      geom_histogram(alpha = .5)
+
+```
+
+```{r}
+# cleaning data -----------------------------------------------------------
+#' # Data Cleaning   
+#' Are our datasets complete for the parameters we want to estimate on?
+  #check 6 num summaries
+  summary(pcri.e[,c("foc_clp","perc.lit.chem","cytrt","Snow","Ice_off","PrevAUGSecchi")])
+  summary(pcri.p[,c("foc_clp","perc.lit.chem","cytrt","Snow","Ice_off","PrevAUGSecchi")])
+
+  #how many lakes?
+  n_distinct(pcri.e$Lake.ID) #50
+  n_distinct(pcri.p$Lake.ID) #50
+  
+  #Trt as factor:
+  pcri.e <- pcri.e %>%
+  mutate(
+    Trt  = as.factor(Trt),
+    Trte = as.factor(Trte),
+    Lake.ID = as.factor(Lake.ID)
+  )
+
+  pcri.p <- pcri.p %>%
+   mutate(
+     Trt = as.factor(Trt),
+     Lake.ID = as.factor(Lake.ID)
+     )
+    
+  
+  # Convert snow depth from inches to centimeters (2.54 cm per inch)
+  # pcri.e <- pcri.e %>%
+  #   mutate(Snow = Snow * 2.54)
+  # 
+  # pcri.p <- pcri.p %>%
+  #   mutate(Snow = Snow * 2.54)
+    
+```
+
+```{r summary stats}
+ pcri.e %>% 
+  dplyr::select(APRMAYPcri, perc.lit.chem) %>% 
+  summary()
+
+
+ pcri.p %>% 
+  dplyr::select(JUNPcri, perc.lit.chem) %>% 
+  summary()
+ 
+ 
+ #foc treated vs untreated
+ by(pcri.p$foc_clp, pcri.p$Trt, summary)
+
+```
+
+
+
+```{r mixed effects models}
+  # mixed eff models --------------------------------------------------------
+  #' # Mixed effects models
+  
+  #' ## No interactions
+  #' Here we will start our modeling without considering any interactions using a 
+  #' glmme eval. First, we'll need to add an observation level random effect to
+  #' account for overdispersion (Harrsion, 2015). The following section uses 
+  #' centered & scaled  predictor variables (done using function scale()) in order
+  #' to converge during fitting.
+  #' glmme for frequency of occurrence data:
+    # add obs level key to dataset
+ 
+    pcri.e <- pcri.e %>% mutate(obs = row_number())
+    pcri.p <- pcri.p %>% mutate(obs = row_number())
+    
+  #' ### Early Survey Freq
+    glme.foc.e <- glmer(foc_clp ~ Trte + cytrt + PrevAUGSecchi.sc + Snow.sc + Ice_off.sc + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+    summary(glme.foc.e)
+
+  
+    plot(glme.foc.e)  # not too bad
+    plot(glme.foc.e, resid(.)~ fitted(.) |Lake.ID) # by group
+    plot(glme.foc.e, resid(.)~ Snow)  # residuals versus Snow
+    plot(glme.foc.e, resid(.)~ PrevAUGSecchi) #secchi
+    plot(glme.foc.e, resid(.)~ Ice_off) # ice off
+    plot(glme.foc.e, resid(.)~ cytrt) # cytrt - def more var at low cytrt. That is also where most of our data lie
+  
+    
+  #' ### Late Survey Freq
+    glme.foc.p <- glmer(foc_clp~ Trt + cytrt + PrevAUGSecchi.sc + Snow.sc + Ice_off.sc +
+    (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.p, , weights = nsamp)
+    summary(glme.foc.p)
+    
+    plot(glme.foc.p) # this also loks o.k. but note the tails again are a bit wonky 
+    plot(glme.foc.p, resid(.)~ fitted(.) |Lake.ID) # by group
+    plot(glme.foc.p, resid(.)~ Snow)  # residuals versus Snow
+    plot(glme.foc.p, resid(.)~ PrevAUGSecchi) #secchi- here we can see that the secchi data have relatively poor coverage past ~3.5m
+    plot(glme.foc.p, resid(.)~ Ice_off) # icecover
+    plot(glme.foc.p, resid(.)~ cytrt) # cytrt
+  
+ 
+    
+    
+    #try 2-----------------------
+    
+      #' ### Early Survey Freq
+    glme.foc.e.2 <- glmer(foc_clp ~ Trte + cytrt + PrevAUGSecchi + Snow + Ice_off + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+    summary(glme.foc.e.2)
+    
+    
+      #' ### Late Survey Freq
+    glme.foc.p.2 <- glmer(foc_clp ~ Trt + cytrt + PrevAUGSecchi + Snow + Ice_off +
+    (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.p, , weights = nsamp)
+    summary(glme.foc.p.2)
+    
+    
+    
+  #try 3, no Ice off--------------
+        #' ### Early Survey Freq
+    glme.foc.e.3 <- glmer(foc_clp ~ Trte + cytrt + PrevAUGSecchi + Snow + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+    summary(glme.foc.e.3)
+    
+    
+      #' ### Late Survey Freq
+    glme.foc.p.3 <- glmer(foc_clp ~ Trt + cytrt + PrevAUGSecchi + Snow +
+    (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.p, , weights = nsamp)
+    summary(glme.foc.p.3)
+    
+    
+    
+    
+```
+
+
+```{r visuals}
+ 
+#consecutive years of trt - early
+  lm_pcri.e_cytrt <- lm(foc_clp ~ cytrt, data = pcri.e)
+
+  # View model coefficients, R-squared, and p-values
+  summary(lm_pcri.e_cytrt)
+  
+  ggplot(pcri.e, aes(x = cytrt, y = foc_clp)) +
+    geom_point(alpha = 0.6, size = 2) +
+    geom_smooth(method = "lm", se = TRUE, color = "blue") +
+    labs(
+      x = "Consecutive Years Treated",
+      y = "Frequency of Occurrence",
+      title = "CLP Frequency vs. Consecutive Treatment History"
+    ) +
+    theme_minimal()
+  
+#consecutive years of trt - early
+  lm_pcri.p_cytrt <- lm(foc_clp ~ cytrt, data = pcri.p)
+
+  # View model coefficients, R-squared, and p-values
+  summary(lm_pcri.p_cytrt)
+  
+  ggplot(pcri.p, aes(x = cytrt, y = foc_clp)) +
+    geom_point(alpha = 0.6, size = 2) +
+    geom_smooth(method = "lm", se = TRUE, color = "blue") +
+    labs(
+      x = "Consecutive Years Treated",
+      y = "Frequency of Occurrence",
+      title = "CLP Frequency vs. Consecutive Treatment History"
+    ) +
+    theme_minimal()
+  
+  
+ #years untreated - early
+   lm_pcri.e_yutrt <- lm(foc_clp ~ yutrt, data = pcri.p)
+
+  # View model coefficients, R-squared, and p-values
+  summary(lm_pcri.e_yutrt)
+  
+  ggplot(pcri.p, aes(x = cytrt, y = foc_clp)) +
+    geom_point(alpha = 0.6, size = 2) +
+    geom_smooth(method = "lm", se = TRUE, color = "blue") +
+    labs(
+      x = "Years since last treatment",
+      y = "Frequency of Occurrence",
+      title = "CLP Frequency vs. Years Untreated"
+    ) +
+    theme_minimal()
+  
+  #years untreated - late
+   lm_pcri.p_yutrt <- lm(foc_clp ~ yutrt, data = pcri.p)
+
+  # View model coefficients, R-squared, and p-values
+  summary(lm_pcri.p_yutrt)
+  
+  ggplot(pcri.p, aes(x = yutrt, y = foc_clp)) +
+    geom_point(alpha = 0.6, size = 2) +
+    geom_smooth(method = "lm", se = TRUE, color = "blue") +
+    labs(
+      x = "Years since last treatment",
+      y = "Frequency of Occurrence",
+      title = "CLP Frequency vs. Years Untreated"
+    ) +
+    theme_minimal()
+  
+  
+  
+#percent littoral zone treated - late
+   lm_pcri.p_chem.perc <- lm(foc_clp ~ perc.lit.chem, data = pcri.p)
+
+  # View model coefficients, R-squared, and p-values
+  summary(lm_pcri.p_chem.perc)
+  
+  ggplot(pcri.p, aes(x = perc.lit.chem, y = foc_clp)) +
+    geom_point(alpha = 0.6, size = 2) +
+    geom_smooth(method = "lm", se = TRUE, color = "blue") +
+    labs(
+      x = "Percent of littoral zone treated",
+      y = "Frequency of Occurrence",
+      title = "CLP Frequency vs. Treatment Size"
+    ) +
+    theme_minimal()
+     
+```
+
+
+
+
+
+```{r Mike additional modeling}
+    
+  # # mixed models with interactions by trt ------------------------------------------------
+  # #' ## Interactions (trt X env. var.)
+  # 
+  # #' In order to evaluate whether or not chemical treatements can "harness" the 
+  # #' natural fluctuations of CLP, we need to test for interactions between 
+  # #' treatment and our environmental variables. Our approach is thus to test for
+  # #' interactions, but retain only significant (p = .05) interactions for 
+  # #' estimation of fixed effects.
+  # #' 
+  # 
+  # #' ### Late Surveys Freq
+  # 
+  #   #peak foc
+  #   glme.foc.p <- glmer(foc_clp~ Trt + cytrt + Trt*PrevAUGSecchi.sc + Trt*Snow.sc + Trt*IceCover.sc +
+  #                         (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
+  #   summary(glme.foc.p)
+  # 
+  # #' Why the warnings? There are a few weird values in there, thus "fit with non-integer data". These are likely the lakes where I used Adam's calculated values. 
+  # 
+  #   pcri.p[ , nsamp*foc_clp] # note non-integer values
+  # 
+  # #' Why non-convergence? Explore a few reasons (adapted from https://rstudio-pubs-static.s3.amazonaws.com/33653_57fc7b8e5d484c909b615d8633c01d51.html):
+  # 
+  #   # a singularity?
+  #   tt <- getME(glme.foc.p,"theta")
+  #   ll <- getME(glme.foc.p,"lower")
+  #   min(tt[ll==0]) # likely not because of a singularity
+  # 
+  #   # a gradient calculation error?
+  #   derivs1 <- glme.foc.p@optinfo$derivs
+  #   sc_grad1 <- with(derivs1,solve(Hessian,gradient))
+  #   max(abs(sc_grad1))
+  #   max(pmin(abs(sc_grad1),abs(derivs1$gradient)))
+  #   dd <- update(glme.foc.p,devFunOnly=TRUE)
+  #   pars <- unlist(getME(glme.foc.p,c("theta","fixef")))
+  #     grad2 <- grad(dd,pars)
+  #   hess2 <- hessian(dd,pars)
+  #   sc_grad2 <- solve(hess2,grad2)
+  #   max(pmin(abs(sc_grad2),abs(grad2))) # not lack of gradient (usually set to require > 0.001)
+  #   
+  #   # Restart from previous fit:
+  #   ss <- getME(glme.foc.p,c("theta","fixef"))
+  #   glme.foc.p2 <- update(glme.foc.p,start=ss,control=glmerControl(optCtrl=list(maxfun=2e4)))
+  #   # that worked
+  #   summary(glme.foc.p2)
+  #   
+  #   #then retain significant interactions (PAUGSecchi & Snow):
+  #   glme.foc.p <- glmer(foc_clp ~ Trt + cytrt + PrevAUGSecchi.sc + Snow.sc + Ice_off.sc  + Trt:PrevAUGSecchi.sc + Trt:Snow.sc+
+  #                         (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
+  #   #model.matrix(glme.foc.p)
+  #   summary(glme.foc.p)
+  # 
+  # #' So we can see that the secchi and snow slopes are different in Trt v Untrt lakes, but but now we want to ask if the values for the Trt interactions are significantly non-zero (vs. sig diff from UNtrt). To do this we'll flip our intercept value, and estimate the slopes for treated lakes first:
+  #   str(pcri.p)
+  #   pcri.p$TrtN <- as.numeric(pcri.p$Trt == 0)
+  #   pcri.p[,.(Trt,TrtN)]
+  #   glme.foc.p.a <- glmer(foc_clp ~ 
+  #                          TrtN + cytrt +
+  #                          + IceCover.sc +
+  #                          TrtN*PrevAUGSecchi.sc + TrtN*Snow.sc+ 
+  #                       (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
+  #   # model.matrix(glme.foc.p.a)
+  # 
+  #   # Restart from previous fit:
+  #   ss <- getME(glme.foc.p.a ,c("theta","fixef"))
+  #   glme.foc.p.a2 <- update(glme.foc.p.a,start=ss,control=glmerControl(optCtrl=list(maxfun=2e4)))
+  #   summary(glme.foc.p.a2) # ests for treated slopes as intercepts
+  #   summary(glme.foc.p) # ests for untreated slopes as intercepts
+  # #' So secchi is non-significant in the treated lakes, whereas snow has a 
+  # #' significantly positive effect on clp growth in the treated subset.From these
+  # #' models we can say that the influence on peak clp freq are: trt(-), cytrt (-),
+  # #' Prev Secchi (- in untrt lakes, non-sig in trt lakes), and Snow (non-sig in 
+  # #' untrt lakes, but + in Trt lakes), ice cover (non-sig).
+  # #' 
+  # #' ### Early Surveys Freq
+  # 
+  #   #early foc
+  #   glme.foc.e <- glmer(foc_clp~ Trte + cytrt + PrevAUGSecchi.sc*Trte + Snow.sc*Trte + IceCover.sc*Trte +
+  #                         (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+  #   summary(glme.foc.e)
+  #   
+  #   #no interactions are significant so include none:
+  #   glme.foc.e <- glmer(foc_clp~ Trte + cytrt +  PrevAUGSecchi.sc + Snow.sc + IceCover.sc +
+  #                         (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+  #   # model.matrix(glme.foc.e)
+  #   summary(glme.foc.e)
+  # 
+  # #' Early freq affected by cumulative yrs of treatment (-), productivity (+), and
+  # #' snow cover (-), whereas ice had no effect.
+  # 
+  #   
+  # # unscaled models for use in visualization ---------------------------------------
+  # #' Here we will try to re-construct the same models with unscaled data. This
+  # #' will make sure that our visualizations are on the actual scales of the data.
+  # #' 
+  # #' ## Models on unscaled predictors
+  # #' ### Late & Early Survey Freq 
+  #    
+  #   # peak foc
+  #   glme.foc.pu <- glmer(foc_clp~ Trt + cytrt + PrevAUGSecchi+ Snow + IceCover  + Trt:PrevAUGSecchi + Trt:Snow+
+  #                         (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
+  #   # restart at last fit:
+  #   ss <- getME(glme.foc.pu,c("theta","fixef"))
+  #   glme.foc.pu2 <- update(glme.foc.pu,start=ss,control=glmerControl(optCtrl=list(maxfun=2e4)))
+  #   summary(glme.foc.pu2)# worked again
+  # 
+  #   # early foc
+  #   glme.foc.eu <- glmer(foc_clp~ Trte + cytrt +  PrevAUGSecchi + Snow + IceCover +
+  #                         (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+  #   summary(glme.foc.eu)
+  # 
+```
+
+
+
+

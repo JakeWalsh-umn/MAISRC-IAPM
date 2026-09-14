@@ -203,6 +203,13 @@ output: html_document
 #' This separates immediate and cumulative effects.
 #' Option 2: Reaassign a value for consecutive years treated or untreated --
 #' 
+
+  #zeros for where we know there was no treatment
+  pcri.e <- pcri.e %>% 
+     mutate(perc.lit.chem = if_else(Trt == 0,0, perc.lit.chem))
+  
+  pcri.p <- pcri.p %>% 
+     mutate(perc.lit.chem = if_else(Trt == 0,0, perc.lit.chem))
   
 ```
 
@@ -306,7 +313,8 @@ output: html_document
       select(DOW, Year, Trte = lag1) %>%
       distinct(DOW, Year, .keep_all = TRUE),
     by = c("Lake.ID" = "DOW", "Year" = "Year")
-  )
+  ) %>%
+    mutate(Trte = fct_recode(Trte, "1" = "2"))
   
 #nsamp is number of points surveyed for that PI survey
 pcri.e <- pcri.e %>%

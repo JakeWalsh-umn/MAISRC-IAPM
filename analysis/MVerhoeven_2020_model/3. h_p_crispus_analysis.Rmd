@@ -306,118 +306,118 @@ output: html_document
 
 
 ```{r Mike additional modeling}
-    
-  # # mixed models with interactions by trt ------------------------------------------------
-  # #' ## Interactions (trt X env. var.)
-  # 
-  # #' In order to evaluate whether or not chemical treatements can "harness" the 
-  # #' natural fluctuations of CLP, we need to test for interactions between 
-  # #' treatment and our environmental variables. Our approach is thus to test for
-  # #' interactions, but retain only significant (p = .05) interactions for 
-  # #' estimation of fixed effects.
-  # #' 
-  # 
-  # #' ### Late Surveys Freq
-  # 
-  #   #peak foc
-  #   glme.foc.p <- glmer(foc_clp~ Trt + cytrt + Trt*PrevAUGSecchi.sc + Trt*Snow.sc + Trt*IceCover.sc +
-  #                         (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
-  #   summary(glme.foc.p)
-  # 
-  # #' Why the warnings? There are a few weird values in there, thus "fit with non-integer data". These are likely the lakes where I used Adam's calculated values. 
-  # 
-  #   pcri.p[ , nsamp*foc_clp] # note non-integer values
-  # 
-  # #' Why non-convergence? Explore a few reasons (adapted from https://rstudio-pubs-static.s3.amazonaws.com/33653_57fc7b8e5d484c909b615d8633c01d51.html):
-  # 
-  #   # a singularity?
-  #   tt <- getME(glme.foc.p,"theta")
-  #   ll <- getME(glme.foc.p,"lower")
-  #   min(tt[ll==0]) # likely not because of a singularity
-  # 
-  #   # a gradient calculation error?
-  #   derivs1 <- glme.foc.p@optinfo$derivs
-  #   sc_grad1 <- with(derivs1,solve(Hessian,gradient))
-  #   max(abs(sc_grad1))
-  #   max(pmin(abs(sc_grad1),abs(derivs1$gradient)))
-  #   dd <- update(glme.foc.p,devFunOnly=TRUE)
-  #   pars <- unlist(getME(glme.foc.p,c("theta","fixef")))
-  #     grad2 <- grad(dd,pars)
-  #   hess2 <- hessian(dd,pars)
-  #   sc_grad2 <- solve(hess2,grad2)
-  #   max(pmin(abs(sc_grad2),abs(grad2))) # not lack of gradient (usually set to require > 0.001)
-  #   
-  #   # Restart from previous fit:
-  #   ss <- getME(glme.foc.p,c("theta","fixef"))
-  #   glme.foc.p2 <- update(glme.foc.p,start=ss,control=glmerControl(optCtrl=list(maxfun=2e4)))
-  #   # that worked
-  #   summary(glme.foc.p2)
-  #   
-  #   #then retain significant interactions (PAUGSecchi & Snow):
-  #   glme.foc.p <- glmer(foc_clp ~ Trt + cytrt + PrevAUGSecchi.sc + Snow.sc + Ice_off.sc  + Trt:PrevAUGSecchi.sc + Trt:Snow.sc+
-  #                         (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
-  #   #model.matrix(glme.foc.p)
-  #   summary(glme.foc.p)
-  # 
-  # #' So we can see that the secchi and snow slopes are different in Trt v Untrt lakes, but but now we want to ask if the values for the Trt interactions are significantly non-zero (vs. sig diff from UNtrt). To do this we'll flip our intercept value, and estimate the slopes for treated lakes first:
-  #   str(pcri.p)
-  #   pcri.p$TrtN <- as.numeric(pcri.p$Trt == 0)
-  #   pcri.p[,.(Trt,TrtN)]
-  #   glme.foc.p.a <- glmer(foc_clp ~ 
-  #                          TrtN + cytrt +
-  #                          + IceCover.sc +
-  #                          TrtN*PrevAUGSecchi.sc + TrtN*Snow.sc+ 
-  #                       (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
-  #   # model.matrix(glme.foc.p.a)
-  # 
-  #   # Restart from previous fit:
-  #   ss <- getME(glme.foc.p.a ,c("theta","fixef"))
-  #   glme.foc.p.a2 <- update(glme.foc.p.a,start=ss,control=glmerControl(optCtrl=list(maxfun=2e4)))
-  #   summary(glme.foc.p.a2) # ests for treated slopes as intercepts
-  #   summary(glme.foc.p) # ests for untreated slopes as intercepts
-  # #' So secchi is non-significant in the treated lakes, whereas snow has a 
-  # #' significantly positive effect on clp growth in the treated subset.From these
-  # #' models we can say that the influence on peak clp freq are: trt(-), cytrt (-),
-  # #' Prev Secchi (- in untrt lakes, non-sig in trt lakes), and Snow (non-sig in 
-  # #' untrt lakes, but + in Trt lakes), ice cover (non-sig).
-  # #' 
-  # #' ### Early Surveys Freq
-  # 
-  #   #early foc
-  #   glme.foc.e <- glmer(foc_clp~ Trte + cytrt + PrevAUGSecchi.sc*Trte + Snow.sc*Trte + IceCover.sc*Trte +
-  #                         (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
-  #   summary(glme.foc.e)
-  #   
-  #   #no interactions are significant so include none:
-  #   glme.foc.e <- glmer(foc_clp~ Trte + cytrt +  PrevAUGSecchi.sc + Snow.sc + IceCover.sc +
-  #                         (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
-  #   # model.matrix(glme.foc.e)
-  #   summary(glme.foc.e)
-  # 
-  # #' Early freq affected by cumulative yrs of treatment (-), productivity (+), and
-  # #' snow cover (-), whereas ice had no effect.
-  # 
-  #   
-  # # unscaled models for use in visualization ---------------------------------------
-  # #' Here we will try to re-construct the same models with unscaled data. This
-  # #' will make sure that our visualizations are on the actual scales of the data.
-  # #' 
-  # #' ## Models on unscaled predictors
-  # #' ### Late & Early Survey Freq 
-  #    
-  #   # peak foc
-  #   glme.foc.pu <- glmer(foc_clp~ Trt + cytrt + PrevAUGSecchi+ Snow + IceCover  + Trt:PrevAUGSecchi + Trt:Snow+
-  #                         (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
-  #   # restart at last fit:
-  #   ss <- getME(glme.foc.pu,c("theta","fixef"))
-  #   glme.foc.pu2 <- update(glme.foc.pu,start=ss,control=glmerControl(optCtrl=list(maxfun=2e4)))
-  #   summary(glme.foc.pu2)# worked again
-  # 
-  #   # early foc
-  #   glme.foc.eu <- glmer(foc_clp~ Trte + cytrt +  PrevAUGSecchi + Snow + IceCover +
-  #                         (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
-  #   summary(glme.foc.eu)
-  # 
+
+  # mixed models with interactions by trt ------------------------------------------------
+  #' ## Interactions (trt X env. var.)
+
+  #' In order to evaluate whether or not chemical treatements can "harness" the
+  #' natural fluctuations of CLP, we need to test for interactions between
+  #' treatment and our environmental variables. Our approach is thus to test for
+  #' interactions, but retain only significant (p = .05) interactions for
+  #' estimation of fixed effects.
+  #'
+
+  #' ### Late Surveys Freq
+
+    #peak foc
+    glme.foc.p <- glmer(foc_clp~ Trt + cytrt + Trt*PrevAUGSecchi.sc + Trt*Snow.sc + Trt*IceCover.sc +
+                          (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
+    summary(glme.foc.p)
+
+  #' Why the warnings? There are a few weird values in there, thus "fit with non-integer data". These are likely the lakes where I used Adam's calculated values.
+
+    pcri.p[ , nsamp*foc_clp] # note non-integer values
+
+  #' Why non-convergence? Explore a few reasons (adapted from https://rstudio-pubs-static.s3.amazonaws.com/33653_57fc7b8e5d484c909b615d8633c01d51.html):
+
+    # a singularity?
+    tt <- getME(glme.foc.p,"theta")
+    ll <- getME(glme.foc.p,"lower")
+    min(tt[ll==0]) # likely not because of a singularity
+
+    # a gradient calculation error?
+    derivs1 <- glme.foc.p@optinfo$derivs
+    sc_grad1 <- with(derivs1,solve(Hessian,gradient))
+    max(abs(sc_grad1))
+    max(pmin(abs(sc_grad1),abs(derivs1$gradient)))
+    dd <- update(glme.foc.p,devFunOnly=TRUE)
+    pars <- unlist(getME(glme.foc.p,c("theta","fixef")))
+      grad2 <- grad(dd,pars)
+    hess2 <- hessian(dd,pars)
+    sc_grad2 <- solve(hess2,grad2)
+    max(pmin(abs(sc_grad2),abs(grad2))) # not lack of gradient (usually set to require > 0.001)
+
+    # Restart from previous fit:
+    ss <- getME(glme.foc.p,c("theta","fixef"))
+    glme.foc.p2 <- update(glme.foc.p,start=ss,control=glmerControl(optCtrl=list(maxfun=2e4)))
+    # that worked
+    summary(glme.foc.p2)
+
+    #then retain significant interactions (PAUGSecchi & Snow):
+    glme.foc.p <- glmer(foc_clp ~ Trt + cytrt + PrevAUGSecchi.sc + Snow.sc + Ice_off.sc  + Trt:PrevAUGSecchi.sc + Trt:Snow.sc+
+                          (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
+    #model.matrix(glme.foc.p)
+    summary(glme.foc.p)
+
+  #' So we can see that the secchi and snow slopes are different in Trt v Untrt lakes, but but now we want to ask if the values for the Trt interactions are significantly non-zero (vs. sig diff from UNtrt). To do this we'll flip our intercept value, and estimate the slopes for treated lakes first:
+    str(pcri.p)
+    pcri.p$TrtN <- as.numeric(pcri.p$Trt == 0)
+    pcri.p[,.(Trt,TrtN)]
+    glme.foc.p.a <- glmer(foc_clp ~
+                           TrtN + cytrt +
+                           + IceCover.sc +
+                           TrtN*PrevAUGSecchi.sc + TrtN*Snow.sc+
+                        (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
+    # model.matrix(glme.foc.p.a)
+
+    # Restart from previous fit:
+    ss <- getME(glme.foc.p.a ,c("theta","fixef"))
+    glme.foc.p.a2 <- update(glme.foc.p.a,start=ss,control=glmerControl(optCtrl=list(maxfun=2e4)))
+    summary(glme.foc.p.a2) # ests for treated slopes as intercepts
+    summary(glme.foc.p) # ests for untreated slopes as intercepts
+  #' So secchi is non-significant in the treated lakes, whereas snow has a
+  #' significantly positive effect on clp growth in the treated subset.From these
+  #' models we can say that the influence on peak clp freq are: trt(-), cytrt (-),
+  #' Prev Secchi (- in untrt lakes, non-sig in trt lakes), and Snow (non-sig in
+  #' untrt lakes, but + in Trt lakes), ice cover (non-sig).
+  #'
+  #' ### Early Surveys Freq
+
+    #early foc
+    glme.foc.e <- glmer(foc_clp~ Trte + cytrt + PrevAUGSecchi.sc*Trte + Snow.sc*Trte + IceCover.sc*Trte +
+                          (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+    summary(glme.foc.e)
+
+    #no interactions are significant so include none:
+    glme.foc.e <- glmer(foc_clp~ Trte + cytrt +  PrevAUGSecchi.sc + Snow.sc + IceCover.sc +
+                          (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+    # model.matrix(glme.foc.e)
+    summary(glme.foc.e)
+
+  #' Early freq affected by cumulative yrs of treatment (-), productivity (+), and
+  #' snow cover (-), whereas ice had no effect.
+
+
+  # unscaled models for use in visualization ---------------------------------------
+  #' Here we will try to re-construct the same models with unscaled data. This
+  #' will make sure that our visualizations are on the actual scales of the data.
+  #'
+  #' ## Models on unscaled predictors
+  #' ### Late & Early Survey Freq
+
+    # peak foc
+    glme.foc.pu <- glmer(foc_clp~ Trt + cytrt + PrevAUGSecchi+ Snow + IceCover  + Trt:PrevAUGSecchi + Trt:Snow+
+                          (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
+    # restart at last fit:
+    ss <- getME(glme.foc.pu,c("theta","fixef"))
+    glme.foc.pu2 <- update(glme.foc.pu,start=ss,control=glmerControl(optCtrl=list(maxfun=2e4)))
+    summary(glme.foc.pu2)# worked again
+
+    # early foc
+    glme.foc.eu <- glmer(foc_clp~ Trte + cytrt +  PrevAUGSecchi + Snow + IceCover +
+                          (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+    summary(glme.foc.eu)
+
 ```
 
 

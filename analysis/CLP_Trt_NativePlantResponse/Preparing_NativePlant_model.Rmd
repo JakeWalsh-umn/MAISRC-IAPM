@@ -256,6 +256,18 @@ NativeResponse.p <- NativeResponse.p %>%
     })
   )
     
+    #zeros for where we know there was no treatment
+  NativeResponse.e <- NativeResponse.e %>% 
+     mutate(perc.lit.chem = if_else(Trt == 0,0, perc.lit.chem))
+  
+  NativeResponse.p <- NativeResponse.p %>% 
+     mutate(perc.lit.chem = if_else(Trt == 0,0, perc.lit.chem))
+  
+    NativeResponse.e <- NativeResponse.e %>% 
+     mutate(Acres_Chem = if_else(Trt == 0,0, Acres_Chem))
+    
+    NativeResponse.p <- NativeResponse.p %>% 
+     mutate(Acres_Chem = if_else(Trt == 0,0, Acres_Chem))
 ```
 
 ```{r write final datasets}

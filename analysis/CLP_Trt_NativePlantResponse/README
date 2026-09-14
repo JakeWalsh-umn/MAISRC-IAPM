@@ -1,0 +1,8 @@
+native_rich_mean is richness at a given point, averaged over the whole survey.
+survey_taxa_rich and survey_native_rich are number of species in the whole lake-survey (1. all taxa, 2. just native)
+
+secchi = secchi depth for that lake-year. Averaged over April-Sept secchi results
+secchi.e = April-June secchi average
+
+phosphorus = phosphorus for that lake-year. Averaged over April-Sept phosphorus results
+phosphorus.e = April-June phosphorus average

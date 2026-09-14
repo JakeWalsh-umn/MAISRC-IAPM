@@ -1,0 +1,265 @@
+---
+title: "Preparing_NativePlant_model"
+output: html_document
+---
+
+
+```{r loading packages}
+library(tidyverse)
+library(arrow)
+library(readxl)
+library(dplyr)
+library(readr)
+library(lubridate)
+library(sf)
+library(here)
+library(stringr)
+library(ggplot2)
+library(ggplotplus)
+library(viridis)
+library(gridExtra)
+library(cowplot)
+
+```
+
+
+
+```{r load data}
+
+CLP_trt_matrix <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/CLP_trt_lag_matrix_Sept9.csv")
+
+Secchi <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/MPCA Water Quality/Secchi/MPCA_Secchi_2010_2025_Clean.csv")
+
+Phosphorus <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/MPCA Water Quality/Phosphorus/MPCA_Phosphorus_2010_2025_Clean.csv")
+
+#PI survey data. Row = one sample point
+PI_surveys <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/PI Charter Data/PI_surveys_foo.csv")
+
+#join LZ acres to PI_surveys
+MN_lake_basin_littoral_zone <- read_csv(here("data", "MN_lake_basin_littoral_zone_15_ft_std.csv"))
+
+
+```
+
+```{r}
+#delete duplicates
+CLP_trt_matrix <- CLP_trt_matrix %>% 
+  distinct(Lake.ID, Year, APRMAYPcri, Acres_Chem, .keep_all = TRUE)
+
+```
+
+```{r water quality data}
+###secchi
+# 1.parse dates, extract year/month, filter, & average
+secchi_averaged <- Secchi %>%
+  mutate(
+    # Convert dmy string to standard R Date format (YYYY-MM-DD)
+    date = mdy(ActivityStartDate),
+    year     = year(date),
+    month    = month(date)
+  ) %>%
+  # Filter for April (4) through September (9) and valid Secchi values
+  filter(month >= 4 & month <= 9, !is.na(ResultMeasureValue)) %>%
+  # Group by lake (DOW) and year
+  group_by(DOW, year) %>%
+  # Calculate average Secchi depth per lake-year
+  summarize(
+    secchi   = mean(ResultMeasureValue, na.rm = TRUE),
+    secchi.e = mean(ResultMeasureValue[month <= 6], na.rm = TRUE),
+    .groups  = "drop"
+  ) %>%
+  # Replace potential NaN values (when a lake-year has no April-June samples) with NA
+  mutate(secchi.e = ifelse(is.nan(secchi.e), NA, secchi.e))
+
+# 2. Join the averaged Secchi values into your matrix
+CLP_trt_matrix <- CLP_trt_matrix %>%
+  left_join(secchi_averaged, by = c("Lake.ID" = "DOW", "Year" = "year"))
+
+
+###phosphorus
+# 1.parse dates, extract year/month, filter, & average
+phosphorus_averaged <- Phosphorus %>%
+  mutate(
+    year     = year(ActivityStartDate),
+    month    = month(ActivityStartDate)
+  ) %>%
+  # Filter for April (4) through September (9) and valid phosphorus values
+  filter(month >= 4 & month <= 9, !is.na(ResultMeasureValue)) %>%
+  # Group by lake (DOW) and year
+  group_by(DOW, year) %>%
+  # Calculate average phosphorus per lake-year
+  summarize(
+    phosphorus   = mean(ResultMeasureValue, na.rm = TRUE),
+    phosphorus.e = mean(ResultMeasureValue[month <= 6], na.rm = TRUE),
+    .groups  = "drop"
+  ) %>%
+  # Replace potential NaN values (when a lake-year has no April-June samples) with NA
+  mutate(phosphorus.e = ifelse(is.nan(phosphorus.e), NA, phosphorus.e))
+
+# 2. Join the averaged Secchi values into your matrix
+phosphorus_averaged <- phosphorus_averaged %>%
+  mutate(DOW = as.numeric(DOW))
+
+CLP_trt_matrix <- CLP_trt_matrix %>%
+  left_join(phosphorus_averaged, by = c("Lake.ID" = "DOW", "Year" = "year"))
+
+```
+
+```{r native foo}
+PI_surveys <- PI_surveys %>%
+  mutate(DOW = as.numeric(DOW))
+
+
+CLP_trt_matrix <- CLP_trt_matrix %>%
+  left_join(
+    PI_surveys %>% 
+      select(DOW, year, SURVEY_START, native_rich, survey_native_rich, nsamp),
+    by = c("Lake.ID" = "DOW", "Year" = "year")
+  ) %>%
+  rename(native_rich_mean = native_rich)
+    
+    
+```
+
+```{r redo lag0}
+CLP_trt_matrix <- CLP_trt_matrix %>%
+  mutate(
+    lag0 = case_when(
+      lag0_before == 1 | lag0_after == 1 ~ 1,
+      lag0_before == 0 & lag0_after == 0 ~ 0,
+      TRUE ~ NA_real_ 
+    )
+  ) %>%
+  select(-lag0_before, -lag0_after)
+
+
+CLP_trt_matrix <- CLP_trt_matrix %>%
+  mutate(
+    # Take whichever value is not NA (checks acres_lag0_before first)
+    trt_acres_lag0 = coalesce(acres_lag0_before, acres_lag0_after)
+  ) %>%
+  select(-acres_lag0_before, -acres_lag0_after)
+
+
+CLP_trt_matrix <- CLP_trt_matrix %>%
+  mutate(
+    trt_date_lag0 = coalesce(date_lag0_before, date_lag0_after)
+  ) %>%
+  select(-date_lag0_before, -date_lag0_after)
+
+#reorder columns
+CLP_trt_matrix <- CLP_trt_matrix %>%
+  relocate(lag1:lag8, .after = last_col())
+
+```
+
+```{r write raw dataset}
+write.csv(CLP_trt_matrix, file = "~/IAPM Project/MAISRC-IAPM/analysis/CLP_Trt_NativePlantResponse/NativePlants_CLP_Trt.csv")
+
+```
+
+
+```{r create centered scaled vars}
+# create centered scaled vars --------------------------------------------
+#' Create centered variables (used in glms):
+  CLP_trt_matrix$Snow.sc <- c(scale(CLP_trt_matrix$Snow))
+  CLP_trt_matrix$Ice_off.sc <- c(scale(CLP_trt_matrix$Ice_off))
+  CLP_trt_matrix$secchi.sc <- c(scale(CLP_trt_matrix$secchi))
+  CLP_trt_matrix$secchi.e.sc <- c(scale(CLP_trt_matrix$secchi.e))
+  CLP_trt_matrix$phosphorus.sc <- c(scale(CLP_trt_matrix$phosphorus))
+  CLP_trt_matrix$phosphorus.e.sc <- c(scale(CLP_trt_matrix$phosphorus.e))
+  
+    #combine lake and year to give a lk-yr field
+  CLP_trt_matrix$lake_year <- paste(CLP_trt_matrix$Lake.x, CLP_trt_matrix$Year, sep = "")
+ 
+```
+
+```{r split early and peak}
+    
+# Split into early season (June or earlier: months 1-6)
+NativeResponse.e <- CLP_trt_matrix %>%
+  filter(month(SURVEY_START) <= 6)
+
+# Split into late season (July or later: months 7-12)
+NativeResponse.p <- CLP_trt_matrix %>%
+  filter(month(SURVEY_START) >= 7)
+
+#standardize date format
+NativeResponse.e <- NativeResponse.e %>%
+  mutate(trt_date_lag0 = mdy(trt_date_lag0))
+NativeResponse.p <- NativeResponse.p %>%
+  mutate(trt_date_lag0 = mdy(trt_date_lag0))
+
+```
+
+```{r consecutive years trt}
+ #fix Trt for early surveys
+NativeResponse.e <- NativeResponse.e %>%
+  mutate(
+    # Assign 1 if treatment date occurred before survey date, otherwise 0
+    Trt = if_else(trt_date_lag0 < SURVEY_START, 1, 0, missing = 0)
+  )
+NativeResponse.e <- NativeResponse.e %>%
+  mutate(
+    # Assign 1 if treatment date occurred before survey date, otherwise 0
+    lag0 = if_else(trt_date_lag0 < SURVEY_START, 1, 0, missing = 0)
+  )
+
+NativeResponse.e <- NativeResponse.e %>%
+  relocate(lag0, .before = lag1)
+
+NativeResponse.p <- NativeResponse.p %>%
+  relocate(lag0, .before = lag1)
+   
+
+
+
+
+    
+  # Calculate consecutive years trt
+  NativeResponse.e <- NativeResponse.e %>%
+    mutate(
+    cytrt = apply(across(lag0:lag8), 1, function(row) {
+      # Count consecutive 1s starting from the first element (lag0)
+      r <- rle(row == 1)
+      if (r$values[1]) r$lengths[1] else 0
+    })
+  )
+  
+    NativeResponse.p <- NativeResponse.p %>%
+    mutate(
+    cytrt = apply(across(lag0:lag8), 1, function(row) {
+      # Count consecutive 1s starting from the first element (lag0)
+      r <- rle(row == 1)
+      if (r$values[1]) r$lengths[1] else 0
+    })
+  )
+    
+    
+    
+  # calculate years untreated
+  NativeResponse.e <- NativeResponse.e %>%
+  mutate(
+    yutrt = apply(across(lag0:lag8), 1, function(row) {
+      # Count consecutive 0s starting from the first element (lag0)
+      r <- rle(row == 0)
+      if (r$values[1]) r$lengths[1] else 0
+    })
+  )
+  
+  NativeResponse.p <- NativeResponse.p %>%
+  mutate(
+    yutrt = apply(across(lag0:lag8), 1, function(row) {
+      # Count consecutive 0s starting from the first element (lag0)
+      r <- rle(row == 0)
+      if (r$values[1]) r$lengths[1] else 0
+    })
+  )
+    
+```
+
+```{r write final datasets}
+write.csv(NativeResponse.e, file = "~/IAPM Project/MAISRC-IAPM/analysis/CLP_Trt_NativePlantResponse/NativeResponse.e.csv")
+write.csv(NativeResponse.p, file = "~/IAPM Project/MAISRC-IAPM/analysis/CLP_Trt_NativePlantResponse/NativeResponse.p.csv")
+```
+

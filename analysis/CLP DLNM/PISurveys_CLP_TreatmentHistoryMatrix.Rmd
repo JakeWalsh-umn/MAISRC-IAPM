@@ -64,37 +64,60 @@ CLP_treatments <- CLP_treatments %>%
   )
 
 # Exploring DLNM possibilities ----
-
-
 dat_dlnm <- db_sub_pa %>%
+  # --- 1. FILTER TO SHALLOW LITTORAL ZONES ---
+  # Remove records with missing depth values and restrict to shallow areas (<= 15 ft)
   filter(!is.na(depth_ft) & depth_ft <= 15) %>%
-  mutate(SURVEY_START=as.Date(SURVEY_START),
-         year=year(SURVEY_START),
-         month=month(SURVEY_START),
-         doy=yday(SURVEY_START),
-         taxa_rich=rowSums(across(ceratophyllum_demersum:vallisneria_sp)),
-         vegetated=ifelse(taxa_rich==0, 0, 1),
-         EWM=apply(across(c(myriophyllum_spicatum, myriophyllum_spicatum_x_sibiricum)), MARGIN=1, FUN=max),
-         native_rich=rowSums(across(c(ceratophyllum_demersum, 
-                                      elodea_canadensis:eleocharis_acicularis,
-                                      myriophyllum_sibiricum:potamogeton_robbinsii, 
-                                      nitella_sp:potamogeton_strictifolius,
-                                      fontinalis_sp:drepanocladus_sp,
-                                      nitella_furcata:vallisneria_sp))),
-         native_vegetated=ifelse(taxa_rich==0, 0, 1)) %>%
+  # --- 2. POINT-LEVEL CALCULATIONS ---
+  mutate(
+    SURVEY_START = as.Date(SURVEY_START),
+    year         = year(SURVEY_START),
+    month        = month(SURVEY_START),
+    doy          = yday(SURVEY_START),
+    # Calculate total plant species richness at each individual point
+    taxa_rich = rowSums(across(ceratophyllum_demersum:vallisneria_sp)),
+    # Flag whether any vegetation was present at the sampling point (0 = No, 1 = Yes)
+    vegetated = ifelse(taxa_rich == 0, 0, 1),
+    # EWM
+    EWM = apply(across(c(myriophyllum_spicatum, myriophyllum_spicatum_x_sibiricum)), MARGIN = 1, FUN = max),
+    # Calculate native species richness at each point across specified native taxa columns
+    native_rich = rowSums(across(c(
+      ceratophyllum_demersum, 
+      elodea_canadensis:eleocharis_acicularis,
+      myriophyllum_sibiricum:potamogeton_robbinsii, 
+      nitella_sp:potamogeton_strictifolius,
+      fontinalis_sp:drepanocladus_sp,
+      nitella_furcata:vallisneria_sp
+    ))),
+    # Flag whether any native vegetation was present at the sampling point
+    native_vegetated = ifelse(native_rich == 0, 0, 1)
+  ) %>%
+  # --- 3. AGGREGATE TO SURVEY-LEVEL METRICS ---
+  # Group rows by individual lake surveys (DOW = Division of Waters lake ID)
   group_by(DOW, lake_name, SURVEY_START, year, month, doy) %>%
   summarize(
+    # Count total sample points in the littoral zone for this survey
     nsamp = n(),
+    # Calculate occurrence frequency (proportion of points present) for all taxa 
+    # as well as average point-level richness and vegetation presence metrics
     across(c(ceratophyllum_demersum:vallisneria_sp, taxa_rich:native_vegetated), mean),
+    # Drop grouping metadata to return a clean data frame
     .groups = "drop"
   ) %>%
-  mutate(survey_taxa_rich=rowSums(across(ceratophyllum_demersum:vallisneria_sp)>0),
-         survey_native_rich=rowSums(across(c(ceratophyllum_demersum, 
-                                              elodea_canadensis:eleocharis_acicularis,
-                                              myriophyllum_sibiricum:potamogeton_robbinsii, 
-                                              nitella_sp:potamogeton_strictifolius,
-                                              fontinalis_sp:drepanocladus_sp,
-                                              nitella_furcata:vallisneria_sp))>0))
+  # --- 4. SURVEY-LEVEL RICHNESS METRICS ---
+  mutate(
+    # Count the total unique plant taxa detected anywhere during the entire survey
+    survey_taxa_rich = rowSums(across(ceratophyllum_demersum:vallisneria_sp) > 0),
+    # Count the total unique native plant taxa detected anywhere during the entire survey
+    survey_native_rich = rowSums(across(c(
+      ceratophyllum_demersum, 
+      elodea_canadensis:eleocharis_acicularis,
+      myriophyllum_sibiricum:potamogeton_robbinsii, 
+      nitella_sp:potamogeton_strictifolius,
+      fontinalis_sp:drepanocladus_sp,
+      nitella_furcata:vallisneria_sp
+    )) > 0)
+  )
 
 
 #decided not to remove NAs. Need to investigate this more

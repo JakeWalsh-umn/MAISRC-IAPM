@@ -72,8 +72,102 @@ secchi_averaged <- Secchi %>%
   mutate(secchi.e = ifelse(is.nan(secchi.e), NA, secchi.e))
 
 # 2. Join the averaged Secchi values into your matrix
-CLP_trt_matrix <- CLP_trt_matrix %>%
+NativeResponse.e <- NativeResponse.e %>%
   left_join(secchi_averaged, by = c("Lake.ID" = "DOW", "Year" = "year"))
+
+
+
+
+#LakeBrowser Secchi
+
+Secchi_LakeBrowser_long <- LakeBrowser_2017_2025_clarity %>% 
+  pivot_longer(
+    cols = SD_201705:SD_202510, 
+    names_to = "YearMonth", 
+    values_to = "Secchi_Depth"
+  )
+
+Secchi_LakeBrowser_long <- Secchi_LakeBrowser_long %>%
+  filter(nchar(YearMonth) <= 9)
+
+
+Secchi_LakeBrowser_long <- Secchi_LakeBrowser_long %>%
+  separate_wider_regex(
+    YearMonth,
+    patterns = c("SD_", Year = "\\d{4}", Month = "\\d{2}"),
+    cols_remove = FALSE # Keeps the original YearMonth column
+  ) %>%
+  mutate(
+    Year = as.numeric(Year),
+    Month = as.numeric(Month)
+  )
+
+Secchi_LakeBrowser_long <- Secchi_LakeBrowser_long %>%
+  select(-c(4:6))
+
+
+#filter, & average
+secchi_averaged <- Secchi_LakeBrowser_long %>%
+  # Filter for April (4) through September (9) and valid Secchi values
+  filter(Month >= 4 & Month <= 9, !is.na(Secchi_Depth)) %>%
+  # Group by lake (DOW) and year
+  group_by(Parent_DOW, Year) %>%
+  # Calculate average Secchi depth per lake-year
+  summarize(
+    secchi   = mean(Secchi_Depth, na.rm = TRUE),
+    secchi.e = mean(Secchi_Depth[Month <= 6], na.rm = TRUE),
+    .groups  = "drop"
+  ) %>%
+  # Replace potential NaN values (when a lake-year has no April-June samples) with NA
+  mutate(secchi.e = ifelse(is.nan(secchi.e), NA, secchi.e))
+
+# 2. Join the averaged Secchi values into your matrix
+NativeResponse.e <- NativeResponse.e %>%
+  left_join(secchi_averaged, by = c("Lake.ID" = "Parent_DOW", "Year" = "Year"))
+  rename(
+    secchi.LakeBrowser   = secchi.x,
+    secchi.e.LakeBrowser = secchi.e.x
+  )
+
+  
+  secchi_averaged <- secchi_averaged %>%
+    rename(
+      LakeBrowserSecchi = secchi,
+      LakeBrowserSecchi.e = secchi.e 
+    )
+  
+  
+  NativeResponse.p <- NativeResponse.p %>%
+  left_join(secchi_averaged, by = c("Lake.ID" = "Parent_DOW", "Year" = "Year"))
+
+
+  NativeResponse.p <- NativeResponse.p %>%
+ mutate(
+    # Replaces NA in PrevAugSecchi with the corresponding LakeBrowser.PrevAugSecchi value
+    secchi = coalesce(secchi, LakeBrowserSecchi)
+  ) %>%
+    mutate(
+    # Replaces NA in PrevAugSecchi with the corresponding LakeBrowser.PrevAugSecchi value
+    secchi.e = coalesce(secchi.e, LakeBrowserSecchi.e)
+  )
+
+
+  NativeResponse.e <- NativeResponse.e %>%
+ mutate(
+    # Replaces NA in PrevAugSecchi with the corresponding LakeBrowser.PrevAugSecchi value
+    secchi = coalesce(secchi, secchi.LakeBrowser)
+  ) %>%
+    mutate(
+    # Replaces NA in PrevAugSecchi with the corresponding LakeBrowser.PrevAugSecchi value
+    secchi.e = coalesce(secchi.e, secchi.e.LakeBrowser)
+  )
+
+
+
+
+
+
+
 
 
 ###phosphorus

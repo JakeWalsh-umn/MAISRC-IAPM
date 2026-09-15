@@ -21,6 +21,7 @@ output: html_document
   library(rlang)
   library(devtools)
   library(ggthemes)
+  library(glmmTMB)
 
 ```
 
@@ -135,8 +136,24 @@ output: html_document
     NativeResponse.p <- NativeResponse.p %>% mutate(obs = row_number())
     
   #' ### Early Survey Freq
-    glme.rich.e <- glmer(survey_native_rich ~ Trt + cytrt + secchi.e.sc + phosphorus.e.sc + Ice_off.sc + (1 | Lake.ID) + (1 | obs), family = poisson(link = "log"), data = NativeResponse.e)
+    glme.rich.e <- glmmTMB(survey_native_rich ~ Trt + cytrt + secchi.e.sc  + Ice_off.sc + (1 | Lake.ID) + (1 | obs), family = nbinom2(link = "log"), data = NativeResponse.e)
     summary(glme.rich.e)
+  
+    
+    
+    #point level mean
+     glme.rich.e.2 <- glmmTMB(native_rich_mean ~ Trt + cytrt + secchi.e.sc + Ice_off.sc + (1 | Lake.ID) + (1 | obs), family = tweedie(link = "log"), data = NativeResponse.e)
+    summary(glme.rich.e.2)
+    
+    
+    
+       glme.rich.e.3 <- glmmTMB(native_rich_mean ~ perc.lit.chem + cytrt + secchi.e.sc  + (1 | Lake.ID) + (1 | obs), family = tweedie(link = "log"), data = NativeResponse.e)
+    summary(glme.rich.e.3)
+    
+    
+    
+       glme.rich.p.3 <- glmmTMB(native_rich_mean ~ perc.lit.chem + cytrt + secchi.e.sc  + (1 | Lake.ID) + (1 | obs), family = tweedie(link = "log"), data = NativeResponse.e)
+    summary(glme.rich.p.3)
 
   
     plot(glme.rich.e)  # not too bad
@@ -148,7 +165,7 @@ output: html_document
   
     
   #' ### Late Survey Freq
-  glme.rich.p <- glmer(survey_native_rich ~ Trt + cytrt + secchi.sc + phosphorus.sc + Ice_off.sc + (1 | Lake.ID) + (1 | obs), family = poisson(link = "log"), data = NativeResponse.p)
+  glme.rich.p <- glmer(survey_native_rich ~ Trt + cytrt + secchi.sc + Ice_off.sc + (1 | Lake.ID) + (1 | obs), family = poisson(link = "log"), data = NativeResponse.p)
     summary(glme.rich.p)
     
     plot(glme.foc.p) # this also loks o.k. but note the tails again are a bit wonky 
@@ -162,20 +179,20 @@ output: html_document
     
     
     #try 2, no Ice off-----------------------
-  glme.rich.e.2 <- glmer(survey_native_rich ~ Trt + cytrt + secchi.e.sc + phosphorus.e.sc + (1 | Lake.ID) + (1 | obs), family = poisson(link = "log"), data = NativeResponse.e)
+  glme.rich.e.2 <- glmer(survey_native_rich ~ Trt + cytrt + secchi.e.sc  + (1 | Lake.ID) + (1 | obs), family = poisson(link = "log"), data = NativeResponse.e)
     summary(glme.rich.e.2)
     
     
-  glme.rich.p.2 <- glmer(survey_native_rich ~ Trt + cytrt + secchi.sc + phosphorus.sc + (1 | Lake.ID) + (1 | obs), family = poisson(link = "log"), data = NativeResponse.p)
+  glme.rich.p.2 <- glmer(survey_native_rich ~ Trt + cytrt + secchi.sc + (1 | Lake.ID) + (1 | obs), family = poisson(link = "log"), data = NativeResponse.p)
     summary(glme.rich.p.2)
     
     
        #try 3, perc.lit.chem-----------------------
-  glme.rich.e.3 <- glmer(survey_native_rich ~ Trt + cytrt + perc.lit.chem + secchi.e.sc + phosphorus.e.sc + (1 | Lake.ID) + (1 | obs), family = poisson(link = "log"), data = NativeResponse.e)
+  glme.rich.e.3 <- glmer(survey_native_rich ~ Trt + cytrt + perc.lit.chem + secchi.e.sc  + (1 | Lake.ID) + (1 | obs), family = poisson(link = "log"), data = NativeResponse.e)
     summary(glme.rich.e.3)
     
     
-  glme.rich.p.3 <- glmer(survey_native_rich ~ Trt + cytrt + perc.lit.chem + secchi.sc + phosphorus.sc + (1 | Lake.ID) + (1 | obs), family = poisson(link = "log"), data = NativeResponse.p)
+  glme.rich.p.3 <- glmer(survey_native_rich ~ Trt + cytrt + perc.lit.chem + secchi.sc + (1 | Lake.ID) + (1 | obs), family = poisson(link = "log"), data = NativeResponse.p)
     summary(glme.rich.p.3)
     
     

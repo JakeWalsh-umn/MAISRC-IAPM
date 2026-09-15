@@ -88,6 +88,112 @@ pcri.p <- pcri.p %>%
 
 ```
 
+```{r redoing secchi}
+pcri.e <- pcri.e %>%
+  rename(MPCA.PrevAugSecchi = PrevAUGSecchi) %>%
+  select(-PrevAUGSecchi.sc)
+
+pcri.p <- pcri.p %>%
+  rename(MPCA.PrevAugSecchi = PrevAUGSecchi) %>%
+  select(-PrevAUGSecchi.sc)
+
+
+LakeBrowser_2017_2025_clarity <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/LakeBrowser_MN/LakeBrowser_MN_2017_2025_2m0i_clarity_flat_combo.csv")
+
+August_Secchi_LakeBrowser <- LakeBrowser_2017_2025_clarity %>% 
+  select(DOW, Parent_DOW, ends_with("08"))
+
+
+August_Secchi_LakeBrowser_long <- August_Secchi_LakeBrowser %>% 
+  pivot_longer(
+    cols = SD_201708:SD_202508, 
+    names_to = "YearMonth", 
+    values_to = "Secchi_Depth"
+  )
+
+August_Secchi_LakeBrowser_long <- August_Secchi_LakeBrowser_long %>%
+  separate_wider_regex(
+    YearMonth,
+    patterns = c("SD_", Year = "\\d{4}", Month = "\\d{2}"),
+    cols_remove = FALSE # Keeps the original YearMonth column
+  ) %>%
+  mutate(
+    Year = as.numeric(Year),
+    Month = as.numeric(Month)
+  )
+
+
+
+pcri.e <- pcri.e %>%
+  # 1. Create a column for the previous year
+  mutate(Prev_Year = Year - 1) %>%
+  
+  # 2. Join using Parent_DOW and matching Prev_Year to Year
+  left_join(
+    August_Secchi_LakeBrowser_long %>% 
+      select(Parent_DOW, Year, Secchi_Depth),
+    by = c("Lake.ID" = "Parent_DOW", "Prev_Year" = "Year")
+  ) %>%
+  
+  # 3. Rename column to reflect that it is from the previous year
+  rename(PrevAugSecchi = Secchi_Depth) %>%
+  
+  # 4. Clean up temporary join column
+  select(-Prev_Year)
+
+
+
+pcri.e <- pcri.e %>%
+  rename(PrevAugSecchi = MPCA.PrevAugSecchi)
+ 
+pcri.e <- pcri.e %>%
+ mutate(
+    # Replaces NA in PrevAugSecchi with the corresponding LakeBrowser.PrevAugSecchi value
+    PrevAugSecchi = coalesce(PrevAugSecchi, LakeBrowser.PrevAugSecchi)
+  )
+
+
+
+
+
+
+
+pcri.p <- pcri.p %>%
+  # 1. Create a column for the previous year
+  mutate(Prev_Year = Year - 1) %>%
+  
+  # 2. Join using Parent_DOW and matching Prev_Year to Year
+  left_join(
+    August_Secchi_LakeBrowser_long %>% 
+      select(Parent_DOW, Year, Secchi_Depth),
+    by = c("Lake.ID" = "Parent_DOW", "Prev_Year" = "Year")
+  ) %>%
+  
+  # 3. Rename column to reflect that it is from the previous year
+  rename(LakeBrowser.PrevAugSecchi = Secchi_Depth) %>%
+  
+  # 4. Clean up temporary join column
+  select(-Prev_Year)
+
+pcri.p <- pcri.p %>%
+  rename(PrevAugSecchi = MPCA.PrevAugSecchi)
+ 
+pcri.p <- pcri.p %>%
+ mutate(
+    # Replaces NA in PrevAugSecchi with the corresponding LakeBrowser.PrevAugSecchi value
+    PrevAugSecchi = coalesce(PrevAugSecchi, LakeBrowser.PrevAugSecchi)
+  )
+
+pcri.p <- pcri.p %>%
+  select(-LakeBrowser.PrevAugSecchi)
+
+pcri.e <- pcri.e %>%
+  select(-LakeBrowser.PrevAugSecchi)
+
+```
+
+
+
 ```{r}
 # cleaning data -----------------------------------------------------------
 #' # Data Cleaning   
@@ -315,9 +421,14 @@ pcri.p <- pcri.p %>%
   #' ### Late Surveys Freq
 
     #peak foc
-    glme.foc.p <- glmer(foc_clp~ Trt + cytrt + Trt*PrevAUGSecchi.sc + Trt*Snow.sc + Trt*IceCover.sc +
-                          (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
-    summary(glme.foc.p)
+    glme.foc.p.4 <- glmer(foc_clp~ Trt + cytrt  +
+                          (1 | Lake.ID)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
+    summary(glme.foc.p.4)
+    
+    
+    glme.foc.e.4 <- glmer(foc_clp~ lag1 + cytrt  +
+                          (1 | Lake.ID)+ (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+    summary(glme.foc.e.4)
 
   #' Why the warnings? There are a few weird values in there, thus "fit with non-integer data". These are likely the lakes where I used Adam's calculated values.
 

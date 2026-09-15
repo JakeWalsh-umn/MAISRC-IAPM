@@ -106,6 +106,7 @@ output: html_document
     Trt  = as.factor(Trt),
     Lake.ID = as.factor(Lake.ID)
   ) 
+
     
 ```
 

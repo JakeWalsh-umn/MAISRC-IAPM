@@ -76,6 +76,9 @@ output: html_document
   pcri.p <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.p_combine.csv")
   
 
+pcri.p <- pcri.p %>%
+  mutate(foc_clp = pcri.p_foc)
+  
 #' Visualize the distributions of the responses we are interested in:
   #foc: shown with my calcs(gray) and Adam's calcs (red)
   ggplot(pcri.e, aes(foc_clp))+
@@ -94,14 +97,13 @@ output: html_document
   summary(pcri.p[,c("foc_clp","perc.lit.chem","cytrt","Snow","Ice_off","PrevAUGSecchi")])
 
   #how many lakes?
-  n_distinct(pcri.e$Lake.ID) #50
-  n_distinct(pcri.p$Lake.ID) #50
+  n_distinct(pcri.e$Lake.ID) #16
+  n_distinct(pcri.p$Lake.ID) #29
   
   #Trt as factor:
   pcri.e <- pcri.e %>%
   mutate(
     Trt  = as.factor(Trt),
-    Trte = as.factor(Trte),
     Lake.ID = as.factor(Lake.ID)
   )
 
@@ -118,6 +120,16 @@ output: html_document
   # 
   # pcri.p <- pcri.p %>%
   #   mutate(Snow = Snow * 2.54)
+  
+  
+  #de-duplicate
+   
+ #de-duplicate
+ pcri.e <- pcri.e %>% 
+  distinct(Lake.ID, Year, APRMAYPcri, .keep_all = TRUE)
+    
+  pcri.p <- pcri.p %>% 
+  distinct(Lake.ID, Year, JUNPcri, .keep_all = TRUE)
     
 ```
 
@@ -156,7 +168,7 @@ output: html_document
     pcri.p <- pcri.p %>% mutate(obs = row_number())
     
   #' ### Early Survey Freq
-    glme.foc.e <- glmer(foc_clp ~ Trte + cytrt + PrevAUGSecchi.sc + Snow.sc + Ice_off.sc + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+    glme.foc.e <- glmer(foc_clp ~ lag1 + cytrt + PrevAUGSecchi.sc + Snow.sc + Ice_off.sc + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
     summary(glme.foc.e)
 
   
@@ -183,30 +195,16 @@ output: html_document
  
     
     
-    #try 2-----------------------
-    
-      #' ### Early Survey Freq
-    glme.foc.e.2 <- glmer(foc_clp ~ Trte + cytrt + PrevAUGSecchi + Snow + Ice_off + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+  #try 2, no Ice off--------------
+        #' ### Early Survey Freq
+    glme.foc.e.2 <- glmer(foc_clp ~ lag1 + cytrt + PrevAUGSecchi.sc + Snow.sc + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
     summary(glme.foc.e.2)
     
     
       #' ### Late Survey Freq
-    glme.foc.p.2 <- glmer(foc_clp ~ Trt + cytrt + PrevAUGSecchi + Snow + Ice_off +
+    glme.foc.p.2 <- glmer(foc_clp ~ Trt + cytrt + PrevAUGSecchi.sc + Snow.sc +
     (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.p, , weights = nsamp)
     summary(glme.foc.p.2)
-    
-    
-    
-  #try 3, no Ice off--------------
-        #' ### Early Survey Freq
-    glme.foc.e.3 <- glmer(foc_clp ~ Trte + cytrt + PrevAUGSecchi + Snow + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
-    summary(glme.foc.e.3)
-    
-    
-      #' ### Late Survey Freq
-    glme.foc.p.3 <- glmer(foc_clp ~ Trt + cytrt + PrevAUGSecchi + Snow +
-    (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.p, , weights = nsamp)
-    summary(glme.foc.p.3)
     
     
     
@@ -250,7 +248,7 @@ output: html_document
   
   
  #years untreated - early
-   lm_pcri.e_yutrt <- lm(foc_clp ~ yutrt, data = pcri.p)
+   lm_pcri.e_yutrt <- lm(foc_clp ~ yutrt, data = pcri.e)
 
   # View model coefficients, R-squared, and p-values
   summary(lm_pcri.e_yutrt)
@@ -300,9 +298,6 @@ output: html_document
     theme_minimal()
      
 ```
-
-
-
 
 
 ```{r Mike additional modeling}
@@ -384,12 +379,12 @@ output: html_document
   #' ### Early Surveys Freq
 
     #early foc
-    glme.foc.e <- glmer(foc_clp~ Trte + cytrt + PrevAUGSecchi.sc*Trte + Snow.sc*Trte + IceCover.sc*Trte +
+    glme.foc.e <- glmer(foc_clp~ Trt + cytrt + PrevAUGSecchi.sc*Trt + Snow.sc*Trt + IceCover.sc*Trt +
                           (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
     summary(glme.foc.e)
 
     #no interactions are significant so include none:
-    glme.foc.e <- glmer(foc_clp~ Trte + cytrt +  PrevAUGSecchi.sc + Snow.sc + IceCover.sc +
+    glme.foc.e <- glmer(foc_clp~ Trt + cytrt +  PrevAUGSecchi.sc + Snow.sc + IceCover.sc +
                           (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
     # model.matrix(glme.foc.e)
     summary(glme.foc.e)
@@ -414,7 +409,7 @@ output: html_document
     summary(glme.foc.pu2)# worked again
 
     # early foc
-    glme.foc.eu <- glmer(foc_clp~ Trte + cytrt +  PrevAUGSecchi + Snow + IceCover +
+    glme.foc.eu <- glmer(foc_clp~ Trt + cytrt +  PrevAUGSecchi + Snow + IceCover +
                           (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
     summary(glme.foc.eu)
 

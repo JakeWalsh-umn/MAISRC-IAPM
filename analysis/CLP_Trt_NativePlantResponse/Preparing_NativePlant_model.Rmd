@@ -266,8 +266,7 @@ NativeResponse.p <- NativeResponse.p %>%
     NativeResponse.e <- NativeResponse.e %>% 
      mutate(Acres_Chem = if_else(Trt == 0,0, Acres_Chem))
     
-    NativeResponse.p <- NativeResponse.p %>% 
-     mutate(Acres_Chem = if_else(Trt == 0,0, Acres_Chem))
+  
 ```
 
 ```{r write final datasets}

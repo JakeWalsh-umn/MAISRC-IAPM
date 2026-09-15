@@ -489,5 +489,175 @@ sessionInfo()
 
 
 
+```{r redo treatment history}
+CLP_trt_matrix <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/CLP_trt_lag_matrix_Sept9.csv")
+PI_surveys <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/PI Charter Data/PI_surveys_foo.csv")
+
+
+
+PI_surveys <- PI_surveys %>%
+  mutate(DOW = as.numeric(DOW))
+
+pcri_e_combine <- pcri_e_combine %>%
+  select(-nsamp)
+
+
+pcri_e_combine <- pcri_e_combine %>%
+  left_join(
+    PI_surveys %>% 
+      select(DOW, year, SURVEY_START, potamogeton_crispus, nsamp),
+    by = c("Lake.ID" = "DOW", "Year" = "year")
+  )
+
+pcri_e_combine_clean <- pcri_e_combine %>% 
+  filter(month(SURVEY_START) %in% 4:6)
+
+CLP_trt_matrix <- CLP_trt_matrix %>% 
+  distinct(Lake.ID, Year, APRMAYPcri, Acres_Chem, .keep_all = TRUE)
+
+
+pcri_e_combine_clean <- pcri_e_combine_clean %>%
+  left_join(
+    CLP_trt_matrix %>% 
+      select(Lake.ID, Year, acres_lag0_before:lag8),
+    by = c("Lake.ID", "Year")
+  )
+
+pcri_e_combine_clean <- pcri_e_combine_clean %>%
+  mutate(
+    # Take whichever value is not NA (checks acres_lag0_before first)
+    trt_acres_lag0 = coalesce(acres_lag0_before, acres_lag0_after)
+  ) %>%
+  select(-acres_lag0_before, -acres_lag0_after)
+
+pcri_e_combine_clean <- pcri_e_combine_clean %>%
+  mutate(
+    trt_date_lag0 = coalesce(date_lag0_before, date_lag0_after)
+  ) %>%
+  select(-date_lag0_before, -date_lag0_after)
+
+#reorder columns
+pcri_e_combine_clean <- pcri_e_combine_clean %>%
+  relocate(lag1:lag8, .after = last_col())
+
+pcri_e_combine_clean <- pcri_e_combine_clean %>%
+  select(-trt_acres_lag0)
+
+
+pcri_e_combine_clean <- pcri_e_combine_clean %>%
+  mutate(trt_date_lag0 = mdy(trt_date_lag0))
+
+pcri_e_combine_clean <- pcri_e_combine_clean %>%
+  mutate(
+    pcri.e_foc = ifelse(SURVEY_START < trt_date_lag0, potamogeton_crispus, NA)
+  )
+
+pcri_e_combine_clean <- pcri_e_combine_clean %>%
+  mutate(
+    pcri.p_foc = ifelse(trt_date_lag0 < SURVEY_START, potamogeton_crispus, NA)
+  )
+
+pcri_e_combine_clean <- pcri_e_combine_clean %>%
+  mutate(
+    pcri.e_foc = if_else(
+      is.na(pcri.e_foc) & is.na(pcri.p_foc) & month(SURVEY_START) %in% 4:5,
+      potamogeton_crispus,
+      pcri.e_foc
+    )
+  )
+
+
+pcri_e_combine_clean <- pcri_e_combine_clean %>%
+  mutate(
+    pcri.p_foc = if_else(
+      is.na(pcri.e_foc) & is.na(pcri.p_foc) & month(SURVEY_START) %in% 6,
+      potamogeton_crispus,
+      pcri.p_foc
+    )
+  )
+
+
+
+pcri_e_combine_clean <- pcri_e_combine_clean %>%
+  mutate(
+    lag0 = if_else(
+      !is.na(pcri.e_foc), 
+      if_else(trt_date_lag0 < SURVEY_START, 1, 0, missing = 0), 
+      NA_real_
+    )
+  )
+
+
+pcri_e_combine_clean <- pcri_e_combine_clean %>%
+  mutate(
+    lag0 = case_when(
+      !is.na(lag0) ~ lag0,                         # Keep existing non-NA values
+      !is.na(trt_date_lag0) ~ 1,                    # Fill remaining NAs: 1 if trt_date_lag0 exists
+      TRUE ~ 0                                      # Fill remaining NAs: 0 otherwise
+    )
+  )
+
+pcri_e_combine_clean <- pcri_e_combine_clean %>%
+  relocate(lag0, .before = lag1)
+
+
+
+pcri_e_combine_clean <- pcri_e_combine_clean %>%
+  select(-cytrt, -Trte, -yutrt)
+
+
+    
+  # Calculate consecutive years trt
+  pcri_e_combine_clean <- pcri_e_combine_clean %>%
+    mutate(
+    cytrt = apply(across(lag0:lag8), 1, function(row) {
+      # Count consecutive 1s starting from the first element (lag0)
+      r <- rle(row == 1)
+      if (r$values[1]) r$lengths[1] else 0
+    })
+  )
+  
+ pcri_e_combine_clean <- pcri_e_combine_clean %>%
+    mutate(
+    yutrt = apply(across(lag0:lag8), 1, function(row) {
+      # Count consecutive 0s starting from the first element (lag0)
+      r <- rle(row == 0)
+      if (r$values[1]) r$lengths[1] else 0
+    })
+  )
+    
+  pcri_e_combine_clean <- pcri_e_combine_clean %>% 
+     mutate(Acres_Chem = if_else(is.na(trt_date_lag0),0, Acres_Chem))
+  
+  
+ pcri_e_combine_clean <- pcri_e_combine_clean %>%
+  mutate(Trt = factor(lag0))
+ 
+ 
+
+ 
+ pcri.e <- pcri_e_combine_clean %>%
+  filter(!is.na(pcri.e_foc))
+ 
+  
+ pcri.p <- pcri_e_combine_clean %>%
+  filter(!is.na(pcri.p_foc))
+ 
+ 
+  pcri.e$Snow.sc <- c(scale(pcri.e$Snow.sc))
+  pcri.e$Ice_off.sc <- c(scale(pcri.e$Ice_off))
+  pcri.e$PrevAUGSecchi.sc <- c(scale(pcri.e$PrevAUGSecchi.sc))
+ 
+   pcri.p$Snow.sc <- c(scale(pcri.p$Snow.sc))
+  pcri.p$Ice_off.sc <- c(scale(pcri.p$Ice_off))
+  pcri.p$PrevAUGSecchi.sc <- c(scale(pcri.p$PrevAUGSecchi.sc))
+  
+  
+  write.csv(pcri.e, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.e.csv")
+    write.csv(pcri.p, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.p.csv")
+
+ 
+```
+
 
 

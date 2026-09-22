@@ -75,9 +75,6 @@ output: html_document
   pcri.e <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.e_combine.csv")
   pcri.p <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.p_combine.csv")
   
-
-pcri.p <- pcri.p %>%
-  mutate(foc_clp = pcri.p_foc)
   
 #' Visualize the distributions of the responses we are interested in:
   #foc: shown with my calcs(gray) and Adam's calcs (red)
@@ -88,119 +85,14 @@ pcri.p <- pcri.p %>%
 
 ```
 
-```{r redoing secchi}
-pcri.e <- pcri.e %>%
-  rename(MPCA.PrevAugSecchi = PrevAUGSecchi) %>%
-  select(-PrevAUGSecchi.sc)
-
-pcri.p <- pcri.p %>%
-  rename(MPCA.PrevAugSecchi = PrevAUGSecchi) %>%
-  select(-PrevAUGSecchi.sc)
-
-
-LakeBrowser_2017_2025_clarity <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/LakeBrowser_MN/LakeBrowser_MN_2017_2025_2m0i_clarity_flat_combo.csv")
-
-August_Secchi_LakeBrowser <- LakeBrowser_2017_2025_clarity %>% 
-  select(DOW, Parent_DOW, ends_with("08"))
-
-
-August_Secchi_LakeBrowser_long <- August_Secchi_LakeBrowser %>% 
-  pivot_longer(
-    cols = SD_201708:SD_202508, 
-    names_to = "YearMonth", 
-    values_to = "Secchi_Depth"
-  )
-
-August_Secchi_LakeBrowser_long <- August_Secchi_LakeBrowser_long %>%
-  separate_wider_regex(
-    YearMonth,
-    patterns = c("SD_", Year = "\\d{4}", Month = "\\d{2}"),
-    cols_remove = FALSE # Keeps the original YearMonth column
-  ) %>%
-  mutate(
-    Year = as.numeric(Year),
-    Month = as.numeric(Month)
-  )
-
-
-
-pcri.e <- pcri.e %>%
-  # 1. Create a column for the previous year
-  mutate(Prev_Year = Year - 1) %>%
-  
-  # 2. Join using Parent_DOW and matching Prev_Year to Year
-  left_join(
-    August_Secchi_LakeBrowser_long %>% 
-      select(Parent_DOW, Year, Secchi_Depth),
-    by = c("Lake.ID" = "Parent_DOW", "Prev_Year" = "Year")
-  ) %>%
-  
-  # 3. Rename column to reflect that it is from the previous year
-  rename(PrevAugSecchi = Secchi_Depth) %>%
-  
-  # 4. Clean up temporary join column
-  select(-Prev_Year)
-
-
-
-pcri.e <- pcri.e %>%
-  rename(PrevAugSecchi = MPCA.PrevAugSecchi)
- 
-pcri.e <- pcri.e %>%
- mutate(
-    # Replaces NA in PrevAugSecchi with the corresponding LakeBrowser.PrevAugSecchi value
-    PrevAugSecchi = coalesce(PrevAugSecchi, LakeBrowser.PrevAugSecchi)
-  )
-
-
-
-
-
-
-
-pcri.p <- pcri.p %>%
-  # 1. Create a column for the previous year
-  mutate(Prev_Year = Year - 1) %>%
-  
-  # 2. Join using Parent_DOW and matching Prev_Year to Year
-  left_join(
-    August_Secchi_LakeBrowser_long %>% 
-      select(Parent_DOW, Year, Secchi_Depth),
-    by = c("Lake.ID" = "Parent_DOW", "Prev_Year" = "Year")
-  ) %>%
-  
-  # 3. Rename column to reflect that it is from the previous year
-  rename(LakeBrowser.PrevAugSecchi = Secchi_Depth) %>%
-  
-  # 4. Clean up temporary join column
-  select(-Prev_Year)
-
-pcri.p <- pcri.p %>%
-  rename(PrevAugSecchi = MPCA.PrevAugSecchi)
- 
-pcri.p <- pcri.p %>%
- mutate(
-    # Replaces NA in PrevAugSecchi with the corresponding LakeBrowser.PrevAugSecchi value
-    PrevAugSecchi = coalesce(PrevAugSecchi, LakeBrowser.PrevAugSecchi)
-  )
-
-pcri.p <- pcri.p %>%
-  select(-LakeBrowser.PrevAugSecchi)
-
-pcri.e <- pcri.e %>%
-  select(-LakeBrowser.PrevAugSecchi)
-
-```
-
-
 
 ```{r}
 # cleaning data -----------------------------------------------------------
 #' # Data Cleaning   
 #' Are our datasets complete for the parameters we want to estimate on?
   #check 6 num summaries
-  summary(pcri.e[,c("foc_clp","perc.lit.chem","cytrt","Snow","Ice_off","PrevAUGSecchi")])
-  summary(pcri.p[,c("foc_clp","perc.lit.chem","cytrt","Snow","Ice_off","PrevAUGSecchi")])
+  summary(pcri.e[,c("foc_clp","perc.lit.chem","cytrt","Snow","IceDuration","PrevAUGSecchi")])
+  summary(pcri.p[,c("foc_clp","perc.lit.chem","cytrt","Snow","IceDuration","PrevAUGSecchi")])
 
   #how many lakes?
   n_distinct(pcri.e$Lake.ID) #16
@@ -227,26 +119,29 @@ pcri.e <- pcri.e %>%
   # pcri.p <- pcri.p %>%
   #   mutate(Snow = Snow * 2.54)
   
-  
-  #de-duplicate
    
  #de-duplicate
  pcri.e <- pcri.e %>% 
-  distinct(Lake.ID, Year, APRMAYPcri, .keep_all = TRUE)
+  distinct(Lake.ID, Year, foc_clp, .keep_all = TRUE)
     
   pcri.p <- pcri.p %>% 
-  distinct(Lake.ID, Year, JUNPcri, .keep_all = TRUE)
+  distinct(Lake.ID, Year, foc_clp, .keep_all = TRUE)
+  
+  pcri.e <- pcri.e %>% 
+  relocate(trt_date_lag0:lag8, .after = everything())
+   pcri.p <- pcri.p %>% 
+  relocate(trt_date_lag0:lag8, .after = everything())
     
 ```
 
 ```{r summary stats}
  pcri.e %>% 
-  dplyr::select(APRMAYPcri, perc.lit.chem) %>% 
+  dplyr::select(foc_clp, perc.lit.chem) %>% 
   summary()
 
 
  pcri.p %>% 
-  dplyr::select(JUNPcri, perc.lit.chem) %>% 
+  dplyr::select(foc_clp, perc.lit.chem) %>% 
   summary()
  
  
@@ -270,14 +165,15 @@ pcri.e <- pcri.e %>%
   #' glmme for frequency of occurrence data:
     # add obs level key to dataset
  
+
     pcri.e <- pcri.e %>% mutate(obs = row_number())
     pcri.p <- pcri.p %>% mutate(obs = row_number())
     
   #' ### Early Survey Freq
-    glme.foc.e <- glmer(foc_clp ~ lag1 + cytrt + PrevAUGSecchi.sc + Snow.sc + Ice_off.sc + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+    glme.foc.e <- glmer(foc_clp ~ lag1 + cytrt + PrevAugSecchi.sc + Snow.sc + IceDuration.sc + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
     summary(glme.foc.e)
-
-  
+    
+     
     plot(glme.foc.e)  # not too bad
     plot(glme.foc.e, resid(.)~ fitted(.) |Lake.ID) # by group
     plot(glme.foc.e, resid(.)~ Snow)  # residuals versus Snow
@@ -286,8 +182,29 @@ pcri.e <- pcri.e %>%
     plot(glme.foc.e, resid(.)~ cytrt) # cytrt - def more var at low cytrt. That is also where most of our data lie
   
     
+  
+    # 1. Create a clean, rounded integer count of successes
+pcri.e$successes <- round(pcri.e$foc_clp * pcri.e$nsamp)
+# 2. Refit the model using cbind(successes, failures)
+glme.foc.e.4 <- glmer(
+  cbind(successes, nsamp - successes) ~ lag1 + cytrt + PrevAugSecchi.sc + Snow.sc + IceDuration.sc + (1 | Lake.ID) + (1 | obs), 
+  family = binomial(link = "logit"), 
+  data = pcri.e
+)
+summary(glme.foc.e.4)
+
+#post
+pcri.p$successes <- round(pcri.p$foc_clp * pcri.p$nsamp)
+glme.foc.p.4 <- glmer(
+  cbind(successes, nsamp - successes) ~ lag1 + cytrt + PrevAugSecchi.sc + Snow.sc + IceDuration.sc + (1 | Lake.ID) + (1 | obs), 
+  family = binomial(link = "logit"), 
+  data = pcri.p
+)
+summary(glme.foc.p.4)
+
+
   #' ### Late Survey Freq
-    glme.foc.p <- glmer(foc_clp~ Trt + cytrt + PrevAUGSecchi.sc + Snow.sc + Ice_off.sc +
+    glme.foc.p <- glmer(foc_clp~ Trt + cytrt + PrevAugSecchi.sc + Snow.sc + IceDuration.sc +
     (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.p, , weights = nsamp)
     summary(glme.foc.p)
     
@@ -301,16 +218,28 @@ pcri.e <- pcri.e %>%
  
     
     
-  #try 2, no Ice off--------------
+  #try 2, no Ice duration or snow--------------
         #' ### Early Survey Freq
-    glme.foc.e.2 <- glmer(foc_clp ~ lag1 + cytrt + PrevAUGSecchi.sc + Snow.sc + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+    glme.foc.e.2 <- glmer(foc_clp ~ lag1 + cytrt + PrevAugSecchi.sc + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
     summary(glme.foc.e.2)
     
     
       #' ### Late Survey Freq
-    glme.foc.p.2 <- glmer(foc_clp ~ Trt + cytrt + PrevAUGSecchi.sc + Snow.sc +
-    (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.p, , weights = nsamp)
+    glme.foc.p.2 <- glmer(foc_clp ~ Trt + cytrt + PrevAugSecchi.sc + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.p, , weights = nsamp)
     summary(glme.foc.p.2)
+    
+    
+    
+    
+    #try 3, with perc.lit.chem, no snow--------------
+        #' ### Early Survey Freq
+    glme.foc.e.3 <- glmer(foc_clp ~ lag1 + cytrt + perc.lit.chem + PrevAugSecchi.sc + IceDuration.sc + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+    summary(glme.foc.e.3)
+    
+    
+      #' ### Late Survey Freq
+    glme.foc.p.3 <- glmer(foc_clp ~ Trt + cytrt + perc.lit.chem + PrevAugSecchi.sc + IceDuration.sc +  (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.p, , weights = nsamp)
+    summary(glme.foc.p.3) 
     
     
     
@@ -418,17 +347,16 @@ pcri.e <- pcri.e %>%
   #' estimation of fixed effects.
   #'
 
-  #' ### Late Surveys Freq
-
-    #peak foc
-    glme.foc.p.4 <- glmer(foc_clp~ Trt + cytrt  +
-                          (1 | Lake.ID)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
-    summary(glme.foc.p.4)
+  #' ###
     
-    
-    glme.foc.e.4 <- glmer(foc_clp~ lag1 + cytrt  +
+    glme.foc.e.4 <- glmer(foc_clp ~ lag1 + cytrt  + perc.lit.chem +
                           (1 | Lake.ID)+ (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
     summary(glme.foc.e.4)
+    
+    
+      #peak foc
+    glme.foc.p.4 <- glmer(foc_clp ~ Trt + cytrt  + perc.lit.chem + (1 | Lake.ID)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
+    summary(glme.foc.p.4)
 
   #' Why the warnings? There are a few weird values in there, thus "fit with non-integer data". These are likely the lakes where I used Adam's calculated values.
 
@@ -460,7 +388,7 @@ pcri.e <- pcri.e %>%
     summary(glme.foc.p2)
 
     #then retain significant interactions (PAUGSecchi & Snow):
-    glme.foc.p <- glmer(foc_clp ~ Trt + cytrt + PrevAUGSecchi.sc + Snow.sc + Ice_off.sc  + Trt:PrevAUGSecchi.sc + Trt:Snow.sc+
+    glme.foc.p <- glmer(foc_clp ~ Trt + cytrt + PrevAugSecchi.sc + Snow.sc + IceDuration.sc  + Trt:PrevAugSecchi.sc + Trt:Snow.sc+
                           (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
     #model.matrix(glme.foc.p)
     summary(glme.foc.p)
@@ -472,7 +400,7 @@ pcri.e <- pcri.e %>%
     glme.foc.p.a <- glmer(foc_clp ~
                            TrtN + cytrt +
                            + IceCover.sc +
-                           TrtN*PrevAUGSecchi.sc + TrtN*Snow.sc+
+                           TrtN*PrevAugSecchi.sc + TrtN*Snow.sc+
                         (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.p, weights = nsamp)
     # model.matrix(glme.foc.p.a)
 
@@ -490,12 +418,12 @@ pcri.e <- pcri.e %>%
   #' ### Early Surveys Freq
 
     #early foc
-    glme.foc.e <- glmer(foc_clp~ Trt + cytrt + PrevAUGSecchi.sc*Trt + Snow.sc*Trt + IceCover.sc*Trt +
+    glme.foc.e <- glmer(foc_clp~ Trt + cytrt + PrevAugSecchi.sc*Trt + Snow.sc*Trt + IceCover.sc*Trt +
                           (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
     summary(glme.foc.e)
 
     #no interactions are significant so include none:
-    glme.foc.e <- glmer(foc_clp~ Trt + cytrt +  PrevAUGSecchi.sc + Snow.sc + IceCover.sc +
+    glme.foc.e <- glmer(foc_clp~ Trt + cytrt +  PrevAugSecchi.sc + Snow.sc + IceCover.sc +
                           (1 | Lake)+ (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
     # model.matrix(glme.foc.e)
     summary(glme.foc.e)
@@ -526,6 +454,111 @@ pcri.e <- pcri.e %>%
 
 ```
 
+
+
+```{r redoing secchi}
+pcri.e <- pcri.e %>%
+  rename(MPCA.PrevAugSecchi = PrevAUGSecchi) %>%
+  select(-PrevAugSecchi.sc)
+
+pcri.p <- pcri.p %>%
+  rename(MPCA.PrevAugSecchi = PrevAUGSecchi) %>%
+  select(-PrevAugSecchi.sc)
+
+
+LakeBrowser_2017_2025_clarity <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/LakeBrowser_MN/LakeBrowser_MN_2017_2025_2m0i_clarity_flat_combo.csv")
+
+August_Secchi_LakeBrowser <- LakeBrowser_2017_2025_clarity %>% 
+  select(DOW, Parent_DOW, ends_with("08"))
+
+
+August_Secchi_LakeBrowser_long <- August_Secchi_LakeBrowser %>% 
+  pivot_longer(
+    cols = SD_201708:SD_202508, 
+    names_to = "YearMonth", 
+    values_to = "Secchi_Depth"
+  )
+
+August_Secchi_LakeBrowser_long <- August_Secchi_LakeBrowser_long %>%
+  separate_wider_regex(
+    YearMonth,
+    patterns = c("SD_", Year = "\\d{4}", Month = "\\d{2}"),
+    cols_remove = FALSE # Keeps the original YearMonth column
+  ) %>%
+  mutate(
+    Year = as.numeric(Year),
+    Month = as.numeric(Month)
+  )
+
+
+
+pcri.e <- pcri.e %>%
+  # 1. Create a column for the previous year
+  mutate(Prev_Year = Year - 1) %>%
+  
+  # 2. Join using Parent_DOW and matching Prev_Year to Year
+  left_join(
+    August_Secchi_LakeBrowser_long %>% 
+      select(Parent_DOW, Year, Secchi_Depth),
+    by = c("Lake.ID" = "Parent_DOW", "Prev_Year" = "Year")
+  ) %>%
+  
+  # 3. Rename column to reflect that it is from the previous year
+  rename(PrevAugSecchi = Secchi_Depth) %>%
+  
+  # 4. Clean up temporary join column
+  select(-Prev_Year)
+
+
+
+pcri.e <- pcri.e %>%
+  rename(PrevAugSecchi = MPCA.PrevAugSecchi)
+ 
+pcri.e <- pcri.e %>%
+ mutate(
+    # Replaces NA in PrevAugSecchi with the corresponding LakeBrowser.PrevAugSecchi value
+    PrevAugSecchi = coalesce(PrevAugSecchi, LakeBrowser.PrevAugSecchi)
+  )
+
+
+
+
+
+
+
+pcri.p <- pcri.p %>%
+  # 1. Create a column for the previous year
+  mutate(Prev_Year = Year - 1) %>%
+  
+  # 2. Join using Parent_DOW and matching Prev_Year to Year
+  left_join(
+    August_Secchi_LakeBrowser_long %>% 
+      select(Parent_DOW, Year, Secchi_Depth),
+    by = c("Lake.ID" = "Parent_DOW", "Prev_Year" = "Year")
+  ) %>%
+  
+  # 3. Rename column to reflect that it is from the previous year
+  rename(LakeBrowser.PrevAugSecchi = Secchi_Depth) %>%
+  
+  # 4. Clean up temporary join column
+  select(-Prev_Year)
+
+pcri.p <- pcri.p %>%
+  rename(PrevAugSecchi = MPCA.PrevAugSecchi)
+ 
+pcri.p <- pcri.p %>%
+ mutate(
+    # Replaces NA in PrevAugSecchi with the corresponding LakeBrowser.PrevAugSecchi value
+    PrevAugSecchi = coalesce(PrevAugSecchi, LakeBrowser.PrevAugSecchi)
+  )
+
+pcri.p <- pcri.p %>%
+  select(-LakeBrowser.PrevAugSecchi)
+
+pcri.e <- pcri.e %>%
+  select(-LakeBrowser.PrevAugSecchi)
+
+```
 
 
 

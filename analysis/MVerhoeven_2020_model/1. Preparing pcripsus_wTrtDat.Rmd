@@ -281,4 +281,16 @@ write.csv(CLP_trt_lag_matrix, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerho
 write.csv(CLP_trt, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/CLP_trt.csv")
 ```
 
+```{r adding extra data}
+target_dows <- Melina_DOWs %>% 
+  filter(Added == 1) %>% 
+  pull(DOW)
+
+# 2. Filter early_season_matrix
+Added_Lakes_Matrix <- permit_treatment_history_matrix %>% 
+  filter(DOW %in% target_dows)
+
+Added_Lakes_Matrix <- Added_Lakes_Matrix %>% 
+  filter(year > 2011)
+```
 

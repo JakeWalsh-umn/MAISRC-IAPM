@@ -204,15 +204,22 @@ PI_surveys <- PI_surveys %>%
   mutate(DOW = as.numeric(DOW))
 
 
+
+
 CLP_trt_matrix <- CLP_trt_matrix %>%
   left_join(
     PI_surveys %>% 
-      select(DOW, year, SURVEY_START, native_rich, survey_native_rich, nsamp),
+      select(DOW, year, SURVEY_START, native_rich, native_vegetated, survey_native_rich, nsamp),
     by = c("Lake.ID" = "DOW", "Year" = "year")
   ) %>%
   rename(native_rich_mean = native_rich)
     
-    
+  NativeResponse.e <- NativeResponse.e %>%
+    mutate(NativeFOO_x_Richness = native_vegetated*survey_native_rich)
+   
+   NativeResponse.p <- NativeResponse.p %>%
+    mutate(NativeFOO_x_Richness = native_vegetated*survey_native_rich)
+     
 ```
 
 ```{r redo lag0}
@@ -366,5 +373,75 @@ NativeResponse.p <- NativeResponse.p %>%
 ```{r write final datasets}
 write.csv(NativeResponse.e, file = "~/IAPM Project/MAISRC-IAPM/analysis/CLP_Trt_NativePlantResponse/NativeResponse.e.csv")
 write.csv(NativeResponse.p, file = "~/IAPM Project/MAISRC-IAPM/analysis/CLP_Trt_NativePlantResponse/NativeResponse.p.csv")
+```
+
+
+
+
+```{r bug fixing}
+NativeResponse.p <- NativeResponse.p %>%
+  mutate(Lake.area.acre = if_else(Lake.ID == 27002800, 52.63, Lake.area.acre))
+
+pcri.p <- pcri.p %>%
+  mutate(Lake.area.acre = if_else(Lake.ID == 27002800, 52.63, Lake.area.acre))
+
+
+NativeResponse.e <- NativeResponse.e %>%
+  mutate(litt.ac = if_else(Lake.ID == 27002800, 52.63, litt.ac))
+pcri.e <- pcri.e %>%
+  mutate(litt.ac = if_else(Lake.ID == 27002800, 52.63, litt.ac))
+
+
+
+NativeResponse.e <- NativeResponse.e %>%
+  mutate(Lake.area.acre = if_else(Lake.ID == 27003400, 79.12, Lake.area.acre))
+pcri.e <- pcri.e %>%
+  mutate(Lake.area.acre = if_else(Lake.ID == 27003400, 79.12, Lake.area.acre))
+
+
+NativeResponse.p <- NativeResponse.p %>%
+  mutate(litt.ac = if_else(Lake.ID == 27003400, 53, litt.ac))
+pcri.p <- pcri.p %>%
+  mutate(litt.ac = if_else(Lake.ID == 27003400, 53, litt.ac))
+
+NativeResponse.e <- NativeResponse.e %>%
+  mutate(Lake.area.acre = if_else(Lake.ID == 27004500, 22.03, Lake.area.acre))
+pcri.e <- pcri.e %>%
+  mutate(Lake.area.acre = if_else(Lake.ID == 27004500, 22.03, Lake.area.acre))
+
+NativeResponse.e <- NativeResponse.e %>%
+  mutate(litt.ac = if_else(Lake.ID == 27010300, 22.98 , litt.ac))
+pcri.e <- pcri.e %>%
+  mutate(litt.ac = if_else(Lake.ID == 27010300, 22.98 , litt.ac))
+
+
+NativeResponse.e <- NativeResponse.e %>%
+  mutate(litt.ac = if_else(Lake.ID == 27004400, 16 , litt.ac))
+pcri.e <- pcri.e %>%
+  mutate(litt.ac = if_else(Lake.ID == 27004400, 16 , litt.ac))
+
+NativeResponse.e <- NativeResponse.e %>%
+  mutate(Lake.area.acre = if_else(Lake.ID == 27005700, 11 , Lake.area.acre))
+pcri.e <- pcri.e %>%
+  mutate(Lake.area.acre = if_else(Lake.ID == 27005700, 11 , Lake.area.acre))
+
+NativeResponse.e <- NativeResponse.e %>%
+  mutate(Lake.area.acre = if_else(Lake.ID == 27066900, 6 , Lake.area.acre))
+pcri.e <- pcri.e %>%
+  mutate(Lake.area.acre = if_else(Lake.ID == 27066900, 6 , Lake.area.acre))
+NativeResponse.e <- NativeResponse.e %>%
+  mutate(litt.ac = if_else(Lake.ID == 27066900, 6 , litt.ac))
+pcri.e <- pcri.e %>%
+  mutate(litt.ac = if_else(Lake.ID == 27066900, 6 , litt.ac))
+
+pcri.e <- pcri.e %>% 
+     relocate(LK_AREA, .before = litt.ac)
+pcri.p <- pcri.p %>% 
+     relocate(LK_AREA, .before = litt.ac)
+
+pcri.e <- pcri.e %>% 
+     relocate(Lake.area.acre, .before = litt.ac)
+pcri.p <- pcri.p %>% 
+     relocate(Lake.area.acre, .before = litt.ac)
 ```
 

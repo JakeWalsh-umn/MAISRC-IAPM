@@ -354,7 +354,7 @@ lakes_CLP_trt_survey <- dat_dlnm_surveys_w_treatments %>%
 
 Creating the same matrix but with permit data to cross check and change 0s in original treatment history matrix that have permitted treatments. 
 ```{r false 0s check - permit matrix}
-permits <- permits <- read.csv("~/IAPM Project/Data/apm_iapm_permit_detail.csv",
+permits <- read.csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/Treatment Data/apm_iapm_permit_detail.csv",
                                na.strings=c("NA", "NULL"))
 lake_basin_morphology_df <- read_csv("~/IAPM Project/MAISRC-IAPM/data/MN_lake_basin_littoral_zone_15_ft_std.csv")
 
@@ -459,6 +459,17 @@ for (i in 1:nrow(dat_dlnm)) {
     permit_treatment_history_matrix[i, paste0("lag", 0:8)] <- 0
   }
 }
+
+permit_treatment_history_matrix <- permit_treatment_history_matrix %>% 
+  mutate(year = year(SURVEY_START))
+
+early_season_matrix <- permit_treatment_history_matrix %>%
+  filter(
+    month(SURVEY_START) %in% 4:6,
+    if_any(lag0:lag8, ~ .x == 1)
+  )
+
+
 
 #check the number of surveys that had treatment histories in original matrix
 sum(permit_treatment_history_matrix$survey_id %in% survey_ids_treated, na.rm = TRUE)
@@ -584,5 +595,21 @@ untreated_CLP_lakes <- clp_lakes_dat_dlnm[!clp_lakes_dat_dlnm %in% CLP_permit_DO
 write.csv(filtered_treatment_matrix, file = "~/IAPM Project/MAISRC-IAPM/analysis/CLP DLNM/filtered_treatment_history_matrix.csv")
 
 
+```
+
+```{r edits and random stuff}
+same_year_DOWs <- dat_dlnm %>% 
++     filter(month(SURVEY_START) %in% 4:6) %>% 
++     select(DOW, year) %>% 
++     distinct() # 2. Prepare CLP_permits_long (Extract Year if needed, e.g., 'permit_year')
+
+PI_distinct <- CLP_permits_long %>% 
++     select(DOW, year) %>% 
++     distinct()
+
+ # 3. Join on both DOW and year, then count distinct DOWs
+PI_distinct %>% 
++     inner_join(same_year_DOWs, by = c("DOW", "year")) %>% 
++     summarise(n_dows = n_distinct(DOW))
 ```
 

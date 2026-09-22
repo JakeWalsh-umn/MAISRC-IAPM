@@ -67,9 +67,9 @@ output: html_document
 
 #' Visualize the distributions of the responses we are interested in:
   #foc: shown with my calcs(gray) and Adam's calcs (red)
-  ggplot(NativeResponse.e, aes(survey_native_rich))+
+  ggplot(NativeResponse.e, aes(NativeFOO_x_Richness))+
       geom_histogram(alpha = .5)
-  ggplot(NativeResponse.p, aes(survey_native_rich))+
+  ggplot(NativeResponse.p, aes(NativeFOO_x_Richness))+
       geom_histogram(alpha = .5)
 
 ```
@@ -79,8 +79,8 @@ output: html_document
 #' # Data Cleaning   
 #' Are our datasets complete for the parameters we want to estimate on?
   #check 6 num summaries
-  summary(NativeResponse.e[,c("survey_native_rich","perc.lit.chem","cytrt","Snow","Ice_off","secchi.e")])
-  summary(NativeResponse.p[,c("survey_native_rich","perc.lit.chem","cytrt","Snow","Ice_off","secchi")])
+  summary(NativeResponse.e[,c("NativeFOO_x_Richness","perc.lit.chem","cytrt","Snow","Ice_off","secchi.e")])
+  summary(NativeResponse.p[,c("NativeFOO_x_Richness","perc.lit.chem","cytrt","Snow","Ice_off","secchi")])
 
   #how many lakes?
   n_distinct(NativeResponse.e$Lake.ID) #36
@@ -112,8 +112,9 @@ output: html_document
 ```
 
 ```{r summary stats}
- by(NativeResponse.e$survey_native_rich, NativeResponse.e$Trt, summary)
- by(NativeResponse.p$survey_native_rich, NativeResponse.p$Trt, summary)
+ by(NativeResponse.e$NativeFOO_x_Richness, NativeResponse.e$Trt, summary)
+
+ by(NativeResponse.p$NativeFOO_x_Richness, NativeResponse.p$Trt, summary)
 
 ```
 
@@ -135,66 +136,32 @@ output: html_document
     NativeResponse.e <- NativeResponse.e %>% mutate(obs = row_number())
     NativeResponse.p <- NativeResponse.p %>% mutate(obs = row_number())
     
-  #' ### Early Survey Freq
-    glme.rich.e <- glmmTMB(survey_native_rich ~ Trt + cytrt + secchi.e.sc  + Ice_off.sc + (1 | Lake.ID) + (1 | obs), family = nbinom2(link = "log"), data = NativeResponse.e)
-    summary(glme.rich.e)
+  #glma
+    glm.native.e <- glmmTMB(NativeFOO_x_Richness ~ Trt + cytrt + secchi.e.sc + (1 | Lake.ID) + (1 | obs), family = tweedie(link = "log"), data = NativeResponse.e)
+    summary(glm.native.e)
+    
+      glm.native.p <- glmmTMB(NativeFOO_x_Richness ~ Trt + cytrt + secchi.sc + (1 | Lake.ID) + (1 | obs), family = tweedie(link = "log"), data = NativeResponse.p)
+    summary(glm.native.p)
   
-    
-    
-    #point level mean
-     glme.rich.e.2 <- glmmTMB(native_rich_mean ~ Trt + cytrt + secchi.e.sc + Ice_off.sc + (1 | Lake.ID) + (1 | obs), family = tweedie(link = "log"), data = NativeResponse.e)
-    summary(glme.rich.e.2)
-    
-    
-    
-       glme.rich.e.3 <- glmmTMB(native_rich_mean ~ perc.lit.chem + cytrt + secchi.e.sc  + (1 | Lake.ID) + (1 | obs), family = tweedie(link = "log"), data = NativeResponse.e)
-    summary(glme.rich.e.3)
+#with perc.lit.chem
+#tweedie
+       glm.native.e.2 <- glmmTMB(NativeFOO_x_Richness ~ Trt + cytrt + perc.lit.chem + secchi.e.sc  + (1 | Lake.ID) + (1 | obs), family = tweedie(link = "log"), data = NativeResponse.e)
+    summary(glm.native.e.2)
     
     
     
-       glme.rich.p.3 <- glmmTMB(native_rich_mean ~ perc.lit.chem + cytrt + secchi.e.sc  + (1 | Lake.ID) + (1 | obs), family = tweedie(link = "log"), data = NativeResponse.e)
-    summary(glme.rich.p.3)
+       glme.rich.p.2 <- glmmTMB(NativeFOO_x_Richness ~ Trt + cytrt + perc.lit.chem + secchi.sc  + (1 | Lake.ID) + (1 | obs), family = tweedie(link = "log"), data = NativeResponse.p)
+    summary(glme.rich.p.2)
 
   
-    plot(glme.rich.e)  # not too bad
-    plot(glme.rich.e, resid(.)~ fitted(.) |Lake.ID) # by group
-    plot(glme.rich.e, resid(.)~ Snow)  # residuals versus Snow
-    plot(glme.rich.e, resid(.)~ PrevAUGSecchi) #secchi
-    plot(glme.rich.e, resid(.)~ Ice_off) # ice off
-    plot(glme.rich.e, resid(.)~ cytrt) # cytrt - def more var at low cytrt. That is also where most of our data lie
+    plot(glm.native.e)  # not too bad
+    plot(glm.native.e, resid(.)~ fitted(.) |Lake.ID) # by group
+    plot(glm.native.e, resid(.)~ Snow)  # residuals versus Snow
+    plot(glm.native.e, resid(.)~ PrevAUGSecchi) #secchi
+    plot(glm.native.e, resid(.)~ Ice_off) # ice off
+    plot(glm.native.e, resid(.)~ cytrt) # cytrt - def more var at low cytrt. That is also where most of our data lie
   
-    
-  #' ### Late Survey Freq
-  glme.rich.p <- glmer(survey_native_rich ~ Trt + cytrt + secchi.sc + Ice_off.sc + (1 | Lake.ID) + (1 | obs), family = poisson(link = "log"), data = NativeResponse.p)
-    summary(glme.rich.p)
-    
-    plot(glme.foc.p) # this also loks o.k. but note the tails again are a bit wonky 
-    plot(glme.foc.p, resid(.)~ fitted(.) |Lake.ID) # by group
-    plot(glme.foc.p, resid(.)~ Snow)  # residuals versus Snow
-    plot(glme.foc.p, resid(.)~ PrevAUGSecchi) #secchi- here we can see that the secchi data have relatively poor coverage past ~3.5m
-    plot(glme.foc.p, resid(.)~ Ice_off) # icecover
-    plot(glme.foc.p, resid(.)~ cytrt) # cytrt
-  
- 
-    
-    
-    #try 2, no Ice off-----------------------
-  glme.rich.e.2 <- glmer(survey_native_rich ~ Trt + cytrt + secchi.e.sc  + (1 | Lake.ID) + (1 | obs), family = poisson(link = "log"), data = NativeResponse.e)
-    summary(glme.rich.e.2)
-    
-    
-  glme.rich.p.2 <- glmer(survey_native_rich ~ Trt + cytrt + secchi.sc + (1 | Lake.ID) + (1 | obs), family = poisson(link = "log"), data = NativeResponse.p)
-    summary(glme.rich.p.2)
-    
-    
-       #try 3, perc.lit.chem-----------------------
-  glme.rich.e.3 <- glmer(survey_native_rich ~ Trt + cytrt + perc.lit.chem + secchi.e.sc  + (1 | Lake.ID) + (1 | obs), family = poisson(link = "log"), data = NativeResponse.e)
-    summary(glme.rich.e.3)
-    
-    
-  glme.rich.p.3 <- glmer(survey_native_rich ~ Trt + cytrt + perc.lit.chem + secchi.sc + (1 | Lake.ID) + (1 | obs), family = poisson(link = "log"), data = NativeResponse.p)
-    summary(glme.rich.p.3)
-    
+
     
 ```
 
@@ -202,12 +169,12 @@ output: html_document
 ```{r visuals}
  
 #consecutive years of trt - early
-  lm_NativeResponse.e_cytrt <- lm(survey_native_rich ~ cytrt, data = NativeResponse.e)
+  lm_NativeResponse.e_cytrt <- lm(NativeFOO_x_Richness ~ cytrt, data = NativeResponse.e)
 
   # View model coefficients, R-squared, and p-values
   summary(lm_NativeResponse.e_cytrt)
   
-  ggplot(NativeResponse.e, aes(x = cytrt, y = survey_native_rich)) +
+  ggplot(NativeResponse.e, aes(x = cytrt, y = NativeFOO_x_Richness)) +
     geom_point(alpha = 0.6, size = 2) +
     geom_smooth(method = "lm", se = TRUE, color = "blue") +
     labs(
@@ -218,12 +185,12 @@ output: html_document
     theme_minimal()
   
 #consecutive years of trt - early
-  lm_NativeResponse.p_cytrt <- lm(survey_native_rich ~ cytrt, data = NativeResponse.p)
+  lm_NativeResponse.p_cytrt <- lm(NativeFOO_x_Richness ~ cytrt, data = NativeResponse.p)
 
   # View model coefficients, R-squared, and p-values
   summary(lm_NativeResponse.p_cytrt)
   
-  ggplot(NativeResponse.p, aes(x = cytrt, y = survey_native_rich)) +
+  ggplot(NativeResponse.p, aes(x = cytrt, y = NativeFOO_x_Richness)) +
     geom_point(alpha = 0.6, size = 2) +
     geom_smooth(method = "lm", se = TRUE, color = "blue") +
     labs(
@@ -235,12 +202,12 @@ output: html_document
   
   
  #years untreated - early
-   lm_NativeResponse.e_yutrt <- lm(survey_native_rich ~ yutrt, data = NativeResponse.p)
+   lm_NativeResponse.e_yutrt <- lm(NativeFOO_x_Richness ~ yutrt, data = NativeResponse.p)
 
   # View model coefficients, R-squared, and p-values
   summary(lm_NativeResponse.e_yutrt)
   
-  ggplot(NativeResponse.p, aes(x = cytrt, y = survey_native_rich)) +
+  ggplot(NativeResponse.p, aes(x = cytrt, y = NativeFOO_x_Richness)) +
     geom_point(alpha = 0.6, size = 2) +
     geom_smooth(method = "lm", se = TRUE, color = "blue") +
     labs(
@@ -251,12 +218,12 @@ output: html_document
     theme_minimal()
   
   #years untreated - late
-   lm_NativeResponse.p_yutrt <- lm(survey_native_rich ~ yutrt, data = NativeResponse.p)
+   lm_NativeResponse.p_yutrt <- lm(NativeFOO_x_Richness ~ yutrt, data = NativeResponse.p)
 
   # View model coefficients, R-squared, and p-values
   summary(lm_NativeResponse.p_yutrt)
   
-  ggplot(NativeResponse.p, aes(x = yutrt, y = survey_native_rich)) +
+  ggplot(NativeResponse.p, aes(x = yutrt, y = NativeFOO_x_Richness)) +
     geom_point(alpha = 0.6, size = 2) +
     geom_smooth(method = "lm", se = TRUE, color = "blue") +
     labs(
@@ -269,12 +236,12 @@ output: html_document
   
   
 #percent littoral zone treated - late
-   lm_NativeResponse.p_chem.perc <- lm(survey_native_rich ~ perc.lit.chem, data = NativeResponse.p)
+   lm_NativeResponse.p_chem.perc <- lm(NativeFOO_x_Richness ~ perc.lit.chem, data = NativeResponse.p)
 
   # View model coefficients, R-squared, and p-values
   summary(lm_NativeResponse.p_chem.perc)
   
-  ggplot(NativeResponse.p, aes(x = perc.lit.chem, y = survey_native_rich)) +
+  ggplot(NativeResponse.p, aes(x = perc.lit.chem, y = NativeFOO_x_Richness)) +
     geom_point(alpha = 0.6, size = 2) +
     geom_smooth(method = "lm", se = TRUE, color = "blue") +
     labs(

@@ -644,20 +644,345 @@ pcri_e_combine_clean <- pcri_e_combine_clean %>%
   filter(!is.na(pcri.p_foc))
  
  
-  pcri.e$Snow.sc <- c(scale(pcri.e$Snow.sc))
+  pcri.e$Snow.sc <- c(scale(pcri.e$Snow))
   pcri.e$Ice_off.sc <- c(scale(pcri.e$Ice_off))
-  pcri.e$PrevAUGSecchi.sc <- c(scale(pcri.e$PrevAUGSecchi.sc))
+  pcri.e$PrevAugSecchi.sc <- c(scale(pcri.e$PrevAugSecchi))
  
    pcri.p$Snow.sc <- c(scale(pcri.p$Snow.sc))
   pcri.p$Ice_off.sc <- c(scale(pcri.p$Ice_off))
-  pcri.p$PrevAUGSecchi.sc <- c(scale(pcri.p$PrevAUGSecchi.sc))
+  pcri.p$PrevAugSecchi.sc <- c(scale(pcri.p$PrevAugSecchi))
   
   
   write.csv(pcri.e, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.e.csv")
     write.csv(pcri.p, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.p.csv")
 
+    
+ #ice duration predictions   
+  CLP_Ice_predictions <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/Climate Data/CLP_Ice_predictions.csv")
+View(CLP_Ice_predictions)  
+    
+CLP_Ice_predictions <- CLP_Ice_predictions %>%
+  mutate(DOW = as.character(DOW))
+
+pcri.e <- pcri.e %>%
+    left_join(
+      CLP_Ice_predictions %>% 
+        select(DOW, winter.year, PredIceDuration),
+      by = c("Lake.ID"= "DOW", "Year" = "winter.year") 
+    ) %>%
+  rename(IceDuration = PredIceDuration)
+
+pcri.p <- pcri.p %>%
+    left_join(
+      CLP_Ice_predictions %>% 
+        select(DOW, winter.year, PredIceDuration),
+      by = c("Lake.ID"= "DOW", "Year" = "winter.year") 
+    ) %>%
+  rename(IceDuration = PredIceDuration)
+
+pcri.e$IceDuration.sc <- c(scale(pcri.e$IceDuration))
+pcri.p$IceDuration.sc <- c(scale(pcri.p$IceDuration))
+
+
+
+#redo lz acres
+LakeMorphology <- LakeMorphology %>%
+  mutate(DOW = as.character(DOW))
+
+pcri.e <- pcri.e %>%
+  left_join(
+    LakeMorphology %>% 
+      select(DOW, LK_LZACRES_15),
+    by = c("Lake.ID" = "DOW")
+  )
+
+pcri.p <- pcri.p %>%
+  left_join(
+    LakeMorphology %>% 
+      select(DOW, LK_LZACRES_15),
+    by = c("Lake.ID" = "DOW")
+  )
+
+pcri.e <- pcri.e %>%
+  left_join(
+    LakeMorphology %>% 
+      select(DOW, LK_AREA),
+    by = c("Lake.ID" = "DOW")
+  )
+
+pcri.p <- pcri.p %>%
+  left_join(
+    LakeMorphology %>% 
+      select(DOW, LK_AREA),
+    by = c("Lake.ID" = "DOW")
+  )
  
+ write.csv(pcri.e, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.e_edit.csv")
+  
+  write.csv(pcri.p, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.p_edit.csv")
 ```
 
 
+```{r adding more rows}
+Added_Lakes_Matrix <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/Added_Lakes_Matrix.csv")
+
+Added_Lakes_Matrix <- Added_Lakes_Matrix %>%
+  left_join(
+    dat_dlnm %>%
+      select(DOW, year, SURVEY_START, potamogeton_crispus, native_rich, native_vegetated, survey_native_rich, nsamp),
+    by = c("DOW", "year", "SURVEY_START")
+  )
+
+lake_basin_morphology_df <- lake_basin_morphology_df %>%
+  rename(DOW = DOWLKNUM) %>%
+    mutate(DOW = as.character(DOW))
+
+Added_Lakes_Matrix <- Added_Lakes_Matrix %>%
+  left_join(
+    lake_basin_morphology_df %>% 
+      select(DOW, LK_LZACRES, AREA),
+    by = c("DOW" = "DOW")
+  )
+
+Added_Lakes_Matrix <- Added_Lakes_Matrix %>%
+  mutate(perc.lit.chem = (Acres_chem/LK_LZACRES)*100)
+
+
+#ice. just have ice off dates, not duration
+IceOut <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/Climate Data/pred_iceout_2010-2026.csv")
+IceOut <- IceOut %>%
+  mutate(DOW = as.numeric(DOW))
+
+Added_Lakes_Matrix <- Added_Lakes_Matrix %>%
+    left_join(
+      IceOut %>% 
+        select(DOW, year, IceOffEst),
+      by = c("DOW"= "DOW", "year" = "year") 
+    )
+
+#Trt columns
+Added_Lakes_Matrix <- Added_Lakes_Matrix %>%
+  rowwise() %>%
+    mutate(
+      cytrt = {
+        # Extract lag1 through lag8 as a vector for the current row
+        lags <- c_across(lag0:lag8)
+        
+        # Find the index position of the first 0
+        first_zero <- match(0, lags)
+        
+        # If no 0 is found, count all 1s; otherwise, count 1s before the first 0
+        if (is.na(first_zero)) {
+          sum(lags == 1)
+        } else {
+          sum(lags[1:(first_zero - 1)] == 1)
+        }
+      }
+    ) %>%
+    ungroup()
+
+Added_Lakes_Matrix <- Added_Lakes_Matrix %>%
+    rowwise() %>%
+    mutate(
+      yutrt = {
+        # Extract lag1 through lag8 as a vector for the current row
+        lags <- c_across(lag0:lag8)
+        
+        # Find the index position of the FIRST treatment (1)
+        first_trt <- match(1, lags)
+        
+        # If no 1 is found, set to NA; otherwise subtract 1 to get years elapsed
+        if (is.na(first_trt)) {
+          NA_integer_
+        } else {
+          first_trt - 1L
+        }
+      }
+    ) %>%
+    ungroup()
+
+
+#snow
+Snow_Depth <- read_excel("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/Climate Data/CLP Analysis Lakes Average Snow Depth.xlsx")
+
+Added_Lakes_Matrix <- Added_Lakes_Matrix %>%
+  left_join(
+    Snow_Depth %>%
+      # Calculate the mean across December, January, February, and March for each row
+      mutate(Snow = rowMeans(across(c(December, January, February, March)), na.rm = TRUE)) %>%
+      select(Trt_Year, Snow),
+    by = c("year" = "Trt_Year")
+  ) %>%
+  mutate(Snow = round(Snow, 1))
+  
+
+#secchi
+Secchi <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/MPCA Water Quality/Secchi/MPCA_Secchi_2010_2025_Clean.csv")
+
+Secchi <- Secchi %>%
+  mutate(ActivityStartDate = mdy(ActivityStartDate)) %>%
+  mutate(year = year(as.Date(ActivityStartDate)))
+
+secchi_aug_prev <- Secchi %>%
+  filter(month(ActivityStartDate) == 8) %>%
+  group_by(DOW, year) %>%
+  summarize(
+    prev_aug_secchi = mean(ResultMeasureValue, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+Added_Lakes_Matrix <- Added_Lakes_Matrix %>%
+  mutate(prev_year = year - 1) %>%
+  left_join(
+    secchi_aug_prev,
+    by = c("DOW" = "DOW", "prev_year" = "year")
+  ) %>%
+  select(-prev_year)
+
+
+#adding in LakeBrowser data for missing secchis
+LakeBrowser_2017_2025_clarity <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/LakeBrowser_MN/LakeBrowser_MN_2017_2025_2m0i_clarity_flat_combo.csv")
+
+August_Secchi_LakeBrowser <- LakeBrowser_2017_2025_clarity %>% 
+  select(DOW, Parent_DOW, ends_with("08"))
+
+
+August_Secchi_LakeBrowser_long <- August_Secchi_LakeBrowser %>% 
+  pivot_longer(
+    cols = SD_201708:SD_202508, 
+    names_to = "YearMonth", 
+    values_to = "Secchi_Depth"
+  )
+
+August_Secchi_LakeBrowser_long <- August_Secchi_LakeBrowser_long %>%
+  separate_wider_regex(
+    YearMonth,
+    patterns = c("SD_", Year = "\\d{4}", Month = "\\d{2}"),
+    cols_remove = FALSE # Keeps the original YearMonth column
+  ) %>%
+  mutate(
+    Year = as.numeric(Year),
+    Month = as.numeric(Month)
+  )
+
+August_Secchi_LakeBrowser_long <- August_Secchi_LakeBrowser_long %>%
+  mutate(Parent_DOW = as.numeric(Parent_DOW))
+
+Added_Lakes_Matrix <- Added_Lakes_Matrix %>%
+  # 1. Create a column for the previous year
+  mutate(Prev_Year = year - 1) %>%
+  
+  # 2. Join using Parent_DOW and matching Prev_Year to Year
+  left_join(
+    August_Secchi_LakeBrowser_long %>% 
+      select(Parent_DOW, Year, Secchi_Depth),
+    by = c("DOW" = "Parent_DOW", "Prev_Year" = "Year")
+  ) %>%
+  
+  # 3. Rename column to reflect that it is from the previous year
+  rename(PrevAugSecchi = Secchi_Depth) %>%
+  
+  # 4. Clean up temporary join column
+  select(-Prev_Year)
+
+
+#native plant analyis secchi
+secchi_averaged <- Secchi %>%
+  mutate(month = month(ActivityStartDate)
+  ) %>%
+  # Filter for April (4) through September (9) and valid Secchi values
+  filter(month >= 4 & month <= 9, !is.na(ResultMeasureValue)) %>%
+  # Group by lake (DOW) and year
+  group_by(DOW, year) %>%
+  # Calculate average Secchi depth per lake-year
+  summarize(
+    secchi   = mean(ResultMeasureValue, na.rm = TRUE),
+    secchi.e = mean(ResultMeasureValue[month <= 6], na.rm = TRUE),
+    .groups  = "drop"
+  ) %>%
+  # Replace potential NaN values (when a lake-year has no April-June samples) with NA
+  mutate(secchi.e = ifelse(is.nan(secchi.e), NA, secchi.e))
+
+# 2. Join the averaged Secchi values into your matrix
+Added_Lakes_Matrix <- Added_Lakes_Matrix %>%
+  left_join(secchi_averaged, by = c("DOW" = "DOW", "year" = "year"))
+
+
+
+#LakeBrowser Secchi
+
+Secchi_LakeBrowser_long <- LakeBrowser_2017_2025_clarity %>% 
+  pivot_longer(
+    cols = SD_201705:SD_202510, 
+    names_to = "YearMonth", 
+    values_to = "Secchi_Depth"
+  )
+
+Secchi_LakeBrowser_long <- Secchi_LakeBrowser_long %>%
+  filter(nchar(YearMonth) <= 9)
+
+
+Secchi_LakeBrowser_long <- Secchi_LakeBrowser_long %>%
+  separate_wider_regex(
+    YearMonth,
+    patterns = c("SD_", Year = "\\d{4}", Month = "\\d{2}"),
+    cols_remove = FALSE # Keeps the original YearMonth column
+  ) %>%
+  mutate(
+    Year = as.numeric(Year),
+    Month = as.numeric(Month)
+  )
+
+Secchi_LakeBrowser_long <- Secchi_LakeBrowser_long %>%
+  select(-c(4:6))
+
+
+#filter, & average
+secchi_averaged <- Secchi_LakeBrowser_long %>%
+  # Filter for April (4) through September (9) and valid Secchi values
+  filter(Month >= 4 & Month <= 9, !is.na(Secchi_Depth)) %>%
+  # Group by lake (DOW) and year
+  group_by(Parent_DOW, Year) %>%
+  # Calculate average Secchi depth per lake-year
+  summarize(
+    secchi   = mean(Secchi_Depth, na.rm = TRUE),
+    secchi.e = mean(Secchi_Depth[Month <= 6], na.rm = TRUE),
+    .groups  = "drop"
+  ) %>%
+  # Replace potential NaN values (when a lake-year has no April-June samples) with NA
+  mutate(secchi.e = ifelse(is.nan(secchi.e), NA, secchi.e))
+
+secchi_averaged <- secchi_averaged %>%
+  rename(
+    LakeBrowser_secchi = secchi,
+    LakeBrowser_secchi.e = secchi.e
+  )
+
+# 2. Join the averaged Secchi values into your matrix
+secchi_averaged <- secchi_averaged %>%
+  mutate(Parent_DOW = as.numeric(Parent_DOW))
+
+Added_Lakes_Matrix <- Added_Lakes_Matrix %>%
+  left_join(secchi_averaged, by = c("DOW" = "Parent_DOW", "year" = "Year"))
+ 
+ Added_Lakes_Matrix <- Added_Lakes_Matrix %>%
+ mutate(
+    # Replaces NA in secchi with the corresponding LakeBrowser.Secchi value
+    secchi = coalesce(secchi, LakeBrowser_secchi)
+  ) %>%
+    mutate(
+    secchi.e = coalesce(secchi.e, LakeBrowser_secchi.e)
+  )
+
+
+#-------------
+
+write.csv(Added_Lakes_Matrix, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/Added_Lakes_Matrix.csv")
+
+
+```
+
+```{r next time}
+
+```
 

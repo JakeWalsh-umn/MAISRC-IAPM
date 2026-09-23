@@ -72,8 +72,8 @@ output: html_document
 #' # Load Data
 
 #' Load in clp dataset from the p_crispus dataset_prep script:
-  pcri.e <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.e_combine.csv")
-  pcri.p <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.p_combine.csv")
+  pcri.e <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.e.csv")
+  pcri.p <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.p.csv")
   
   
 #' Visualize the distributions of the responses we are interested in:
@@ -95,14 +95,15 @@ output: html_document
   summary(pcri.p[,c("foc_clp","perc.lit.chem","cytrt","Snow","IceDuration","PrevAUGSecchi")])
 
   #how many lakes?
-  n_distinct(pcri.e$Lake.ID) #16
-  n_distinct(pcri.p$Lake.ID) #29
+  n_distinct(pcri.e$Lake.ID) #23
+  n_distinct(pcri.p$Lake.ID) #36
   
   #Trt as factor:
   pcri.e <- pcri.e %>%
   mutate(
     Trt  = as.factor(Trt),
-    Lake.ID = as.factor(Lake.ID)
+    Lake.ID = as.factor(Lake.ID),
+    lag1 = as.factor(lag1)
   )
 
   pcri.p <- pcri.p %>%
@@ -122,10 +123,10 @@ output: html_document
    
  #de-duplicate
  pcri.e <- pcri.e %>% 
-  distinct(Lake.ID, Year, foc_clp, .keep_all = TRUE)
+  distinct(Lake.ID, Year, foc_clp, .keep_all = TRUE) #55
     
   pcri.p <- pcri.p %>% 
-  distinct(Lake.ID, Year, foc_clp, .keep_all = TRUE)
+  distinct(Lake.ID, Year, foc_clp, .keep_all = TRUE) #81
   
   pcri.e <- pcri.e %>% 
   relocate(trt_date_lag0:lag8, .after = everything())
@@ -146,7 +147,18 @@ output: html_document
  
  
  #foc treated vs untreated
- by(pcri.p$foc_clp, pcri.p$Trt, summary)
+by(pcri.e$foc_clp, pcri.e$lag1, summary)
+ggplot(pcri.e, aes(x = lag1, y = foc_clp, fill = lag1)) +
+  geom_boxplot() +
+  labs(title = "P. crispus Frequency of Occurance, treated vs untreated", x = "Treated", y = "P. crispus Frequency of Occurance") +
+  theme_minimal()
+
+by(pcri.p$foc_clp, pcri.p$Trt, summary)
+ggplot(pcri.p, aes(x = Trt, y = foc_clp, fill = Trt)) +
+  geom_boxplot() +
+  labs(title = "P. crispus Frequency of Occurance, treated vs untreated", x = "Treated", y = "P. crispus Frequency of Occurance") +
+  theme_minimal()
+
 
 ```
 

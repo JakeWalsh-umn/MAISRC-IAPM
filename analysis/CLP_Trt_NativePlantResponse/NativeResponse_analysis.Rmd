@@ -83,8 +83,8 @@ output: html_document
   summary(NativeResponse.p[,c("NativeFOO_x_Richness","perc.lit.chem","cytrt","Snow","Ice_off","secchi")])
 
   #how many lakes?
-  n_distinct(NativeResponse.e$Lake.ID) #36
-  n_distinct(NativeResponse.p$Lake.ID) #40
+  n_distinct(NativeResponse.e$Lake.ID) #45
+  n_distinct(NativeResponse.p$Lake.ID) #51
   
   
   # Convert snow depth from inches to centimeters (2.54 cm per inch)

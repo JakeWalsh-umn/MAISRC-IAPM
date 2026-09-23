@@ -43,8 +43,11 @@ MN_lake_basin_littoral_zone <- read_csv(here("data", "MN_lake_basin_littoral_zon
 
 ```{r}
 #delete duplicates
-CLP_trt_matrix <- CLP_trt_matrix %>% 
-  distinct(Lake.ID, Year, APRMAYPcri, Acres_Chem, .keep_all = TRUE)
+NativeResponse.e <- NativeResponse.e %>% 
+  distinct(Lake.ID, Year, native_rich_mean, Acres_Chem, .keep_all = TRUE)
+
+NativeResponse.p <- NativeResponse.p %>% 
+  distinct(Lake.ID, Year, native_rich_mean, Acres_Chem, .keep_all = TRUE)
 
 ```
 

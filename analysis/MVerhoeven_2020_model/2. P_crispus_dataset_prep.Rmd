@@ -75,9 +75,13 @@ output: html_document
 
 #' Create centered variables (used in glms):
   #all except Yrs Trt
-  pcri$Snow.sc <- c(scale(pcri$Snow))
-  pcri$PrevAUGSecchi.sc <- c(scale(pcri$PrevAUGSecchi))
-  pcri$Ice_off.sc <- c(scale(pcri$Ice_off))
+  pcri.e$Snow.sc <- c(scale(pcri.e$Snow))
+  pcri.e$PrevAugSecchi.sc <- c(scale(pcri.e$PrevAugSecchi))
+  pcri.e$IceDuration.sc <- c(scale(pcri.e$IceDuration))
+  
+  pcri.p$Snow.sc <- c(scale(pcri.p$Snow))
+  pcri.p$PrevAugSecchi.sc <- c(scale(pcri.p$PrevAugSecchi))
+  pcri.p$IceDuration.sc <- c(scale(pcri.p$IceDuration))
   
   
 #' split the early (.e) and peak (.p) data from p.cri and create datasets
@@ -482,9 +486,9 @@ sessionInfo()
 
 ```
 ```{r write csv}
-  write.csv(pcri.e, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.e_combine.csv")
+  write.csv(pcri.e, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.e.csv")
   
-  write.csv(pcri.p, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.p_combine.csv")
+  write.csv(pcri.p, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.p.csv")
 ```
 
 

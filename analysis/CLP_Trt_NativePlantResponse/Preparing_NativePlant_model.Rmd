@@ -26,6 +26,9 @@ library(cowplot)
 
 ```{r load data}
 
+  NativeResponse.e.old <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/CLP_Trt_NativePlantResponse/NativeResponse.e.csv")
+  NativeResponse.p.old <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/CLP_Trt_NativePlantResponse/NativeResponse.p.csv")
+  
 CLP_trt_matrix <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/CLP_trt_lag_matrix_Sept9.csv")
 
 Secchi <- read_csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/MPCA Water Quality/Secchi/MPCA_Secchi_2010_2025_Clean.csv")
@@ -267,11 +270,23 @@ write.csv(CLP_trt_matrix, file = "~/IAPM Project/MAISRC-IAPM/analysis/CLP_Trt_Na
 # create centered scaled vars --------------------------------------------
 #' Create centered variables (used in glms):
   CLP_trt_matrix$Snow.sc <- c(scale(CLP_trt_matrix$Snow))
-  CLP_trt_matrix$Ice_off.sc <- c(scale(CLP_trt_matrix$Ice_off))
   CLP_trt_matrix$secchi.sc <- c(scale(CLP_trt_matrix$secchi))
   CLP_trt_matrix$secchi.e.sc <- c(scale(CLP_trt_matrix$secchi.e))
   CLP_trt_matrix$phosphorus.sc <- c(scale(CLP_trt_matrix$phosphorus))
   CLP_trt_matrix$phosphorus.e.sc <- c(scale(CLP_trt_matrix$phosphorus.e))
+  
+ NativeResponse.e$Snow.sc <- c(scale(NativeResponse.e$Snow))
+  NativeResponse.e$secchi.sc <- c(scale(NativeResponse.e$secchi))
+  NativeResponse.e$secchi.e.sc <- c(scale(NativeResponse.e$secchi.e))
+  NativeResponse.e$phosphorus.sc <- c(scale(NativeResponse.e$phosphorus))
+  NativeResponse.e$phosphorus.e.sc <- c(scale(NativeResponse.e$phosphorus.e))
+  
+   NativeResponse.p$Snow.sc <- c(scale(NativeResponse.p$Snow))
+  NativeResponse.p$secchi.sc <- c(scale(NativeResponse.p$secchi))
+  NativeResponse.p$secchi.e.sc <- c(scale(NativeResponse.p$secchi.e))
+  NativeResponse.p$phosphorus.sc <- c(scale(NativeResponse.p$phosphorus))
+  NativeResponse.p$phosphorus.e.sc <- c(scale(NativeResponse.p$phosphorus.e))
+  
   
     #combine lake and year to give a lk-yr field
   CLP_trt_matrix$lake_year <- paste(CLP_trt_matrix$Lake.x, CLP_trt_matrix$Year, sep = "")
@@ -294,6 +309,24 @@ NativeResponse.e <- NativeResponse.e %>%
 NativeResponse.p <- NativeResponse.p %>%
   mutate(trt_date_lag0 = mdy(trt_date_lag0))
 
+NativeResponse.e <- NativeResponse.e %>%
+  mutate(SURVEY_START = mdy(SURVEY_START))
+NativeResponse.p <- NativeResponse.p %>%
+  mutate(SURVEY_START = mdy(SURVEY_START))
+
+
+NativeResponse.e <- NativeResponse.e %>% 
+  select(-Lake.ID.x, -trt_date_lag0.x, -trt_date_lag0.y) %>%
+    left_join(
+        NativeResponse.e.old %>% select(trt_acres_lag0, Lake.ID, SURVEY_START, Year, trt_date_lag0),
+        by = c("trt_acres_lag0", "SURVEY_START", "Year")
+    )
+
+NativeResponse.p <- NativeResponse.p %>% 
+  left_join(
+        NativeResponse.p.old %>% select(trt_acres_lag0, Lake.ID, SURVEY_START, Year, trt_date_lag0),
+        by = c("trt_acres_lag0", "SURVEY_START", "Year")
+    )
 ```
 
 ```{r consecutive years trt}
@@ -446,5 +479,84 @@ pcri.e <- pcri.e %>%
      relocate(Lake.area.acre, .before = litt.ac)
 pcri.p <- pcri.p %>% 
      relocate(Lake.area.acre, .before = litt.ac)
+```
+
+```{r APM IAPM permitted acres}
+permits <- read.csv("G:/Shared drives/Walsh Lab/Projects/MAISRC IAPM/Data/Treatment Data/apm_iapm_permit_detail.csv",
+                               na.strings=c("NA", "NULL"))
+lake_basin_morphology_df <- read_csv("~/IAPM Project/MAISRC-IAPM/data/MN_lake_basin_littoral_zone_15_ft_std.csv")
+
+#setting up IAPM permit data
+permits <- apm_iapm_permit_detail %>%
+  dplyr::select(permit_number, permit_type, 
+                water_resource_names, water_resource_numbers,
+                treatment_method, species,
+                permit_approved_acres_1997:permit_approved_acres_2025)
+
+permits[, 7:35][is.na(permits[, 7:35])] <- 0
+
+permits_long <- permits
+
+colnames(permits_long)[7:35] <- 1997:2025
+
+
+permits_long <- permits_long %>%
+  filter(permit_type == "Aquatic Plant Management") %>%
+  pivot_longer(cols=`1997`:`2025`, 
+               names_to="year",
+               values_to="approved_acres") %>%
+  mutate(year=as.numeric(year))
+
+#rename columns
+permits_long <- permits_long %>% 
+  rename(DOW = water_resource_numbers) %>%
+  filter(approved_acres > 0) %>%
+  filter(approved_acres != "NULL" & !is.na(approved_acres))
+
+  
+permits_summarized <- permits_long %>% 
+  mutate(approved_acres = as.numeric(approved_acres)) %>%
+  group_by(DOW, year) %>% 
+  summarize(
+    total_approved_acres = sum(approved_acres, na.rm = TRUE),
+    .groups = "drop"
+  )  
+
+permits_summarized <- permits_summarized %>% 
+  mutate(total_approved_acres = round(total_approved_acres, 2))
+
+NativeResponse.e <- NativeResponse.e %>% 
+  mutate(Lake.ID = as.character(Lake.ID)) %>%
+  left_join(permits_summarized, by = c("Lake.ID" = "DOW", "Year" = "year"))
+
+NativeResponse.e <- NativeResponse.e %>% 
+  mutate(
+    Lake.ID = as.character(Lake.ID),
+    Year_prev = Year - 1  # Create key for previous year
+  ) %>% 
+  left_join(
+    permits_summarized %>% mutate(DOW = as.character(DOW)), 
+    by = c("Lake.ID" = "DOW", "Year_prev" = "year")
+  ) %>% 
+  select(-Year_prev) %>%
+  rename(lag1_permitted_acres = total_approved_acres)
+
+NativeResponse.p <- NativeResponse.p %>% 
+  mutate(Lake.ID = as.character(Lake.ID)) %>%
+  left_join(permits_summarized, by = c("Lake.ID" = "DOW", "Year" = "year"))
+
+
+
+#perc LZ
+NativeResponse.e <- NativeResponse.e %>% 
+  mutate(lag1_APM_perc_lit = (lag1_APM_acres/litt.ac)*100)
+
+
+NativeResponse.p <- NativeResponse.p %>% 
+  mutate(APM_perc_lit = (APM_permitted_acres/litt.ac)*100) %>%
+  mutate(APM_perc_lit = round(APM_perc_lit, 2))
+
+NativeResponse.p$APM_perc_lit[is.na(NativeResponse.p$APM_perc_lit)] <- 0
+NativeResponse.e$lag1_APM_perc_lit[is.na(NativeResponse.e$lag1_APM_perc_lit)] <- 0
 ```
 

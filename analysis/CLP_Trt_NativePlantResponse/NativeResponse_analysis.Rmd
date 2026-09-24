@@ -67,9 +67,9 @@ output: html_document
 
 #' Visualize the distributions of the responses we are interested in:
   #foc: shown with my calcs(gray) and Adam's calcs (red)
-  ggplot(NativeResponse.e, aes(NativeFOO_x_Richness))+
+  ggplot(NativeResponse.e, aes(native_vegetated))+
       geom_histogram(alpha = .5)
-  ggplot(NativeResponse.p, aes(NativeFOO_x_Richness))+
+  ggplot(NativeResponse.p, aes(native_vegetated))+
       geom_histogram(alpha = .5)
 
 ```
@@ -79,8 +79,8 @@ output: html_document
 #' # Data Cleaning   
 #' Are our datasets complete for the parameters we want to estimate on?
   #check 6 num summaries
-  summary(NativeResponse.e[,c("NativeFOO_x_Richness","perc.lit.chem","cytrt","Snow","Ice_off","secchi.e")])
-  summary(NativeResponse.p[,c("NativeFOO_x_Richness","perc.lit.chem","cytrt","Snow","Ice_off","secchi")])
+  summary(NativeResponse.e[,c("native_vegetated","perc.lit.chem","cytrt","secchi.e")])
+  summary(NativeResponse.p[,c("native_vegetated","perc.lit.chem","cytrt","secchi")])
 
   #how many lakes?
   n_distinct(NativeResponse.e$Lake.ID) #45
@@ -99,22 +99,41 @@ output: html_document
   NativeResponse.e <- NativeResponse.e %>%
   mutate(
     Trt  = as.factor(Trt),
-    Lake.ID = as.factor(Lake.ID)
+    lag1 = as.factor(lag1)
   )
   
  NativeResponse.p <- NativeResponse.p %>%
   mutate(
-    Trt  = as.factor(Trt),
-    Lake.ID = as.factor(Lake.ID)
+    Trt  = as.factor(Trt)
   ) 
 
     
 ```
 
 ```{r summary stats}
- by(NativeResponse.e$NativeFOO_x_Richness, NativeResponse.e$Trt, summary)
+ by(NativeResponse.e$native_vegetated, NativeResponse.e$lag1, summary)
+ggplot(NativeResponse.e, aes(x = lag1, y = native_vegetated, fill = lag1)) +
+  geom_boxplot() +
+  labs(title = "Early-Season Proportion Native Vegetated", x = "Treated in previous year", y = "Proportion Native Vegetated") +
+  theme_minimal()
 
- by(NativeResponse.p$NativeFOO_x_Richness, NativeResponse.p$Trt, summary)
+ by(NativeResponse.p$native_vegetated, NativeResponse.p$Trt, summary)
+ ggplot(NativeResponse.p, aes(x = Trt, y = native_vegetated, fill = Trt)) +
+  geom_boxplot() +
+  labs(title = "Peak-Season Proportion Native Vegetated", x = "Treated", y = "Proportion Native Vegetated") +
+  theme_minimal()
+ 
+by(NativeResponse.e$survey_native_rich, NativeResponse.e$Trt, summary)
+ggplot(NativeResponse.e, aes(x = lag1, y = survey_native_rich, fill = lag1)) +
+  geom_boxplot() +
+  labs(title = "Early-Season Native Richness", x = "Treated in previous year", y = "Native Richness") +
+  theme_minimal()
+
+ by(NativeResponse.p$survey_native_rich, NativeResponse.p$Trt, summary)
+ ggplot(NativeResponse.p, aes(x = Trt, y = survey_native_rich, fill = Trt)) +
+  geom_boxplot() +
+  labs(title = "Peak-Season Native Richness", x = "Treated", y = "Native Richness") +
+  theme_minimal()
 
 ```
 
@@ -137,20 +156,29 @@ output: html_document
     NativeResponse.p <- NativeResponse.p %>% mutate(obs = row_number())
     
   #glma
-    glm.native.e <- glmmTMB(NativeFOO_x_Richness ~ Trt + cytrt + secchi.e.sc + (1 | Lake.ID) + (1 | obs), family = tweedie(link = "log"), data = NativeResponse.e)
+    glm.native.e <- glmer(survey_native_rich ~ lag1 + cytrt + secchi.e.sc+ (1 | Lake.ID) + (1 | obs), family = poisson, data = NativeResponse.e)
     summary(glm.native.e)
     
-      glm.native.p <- glmmTMB(NativeFOO_x_Richness ~ Trt + cytrt + secchi.sc + (1 | Lake.ID) + (1 | obs), family = tweedie(link = "log"), data = NativeResponse.p)
+      glm.native.p <- glmer(survey_native_rich ~ Trt + cytrt + secchi.sc + (1 | Lake.ID) + (1 | obs), family = poisson, data = NativeResponse.p)
     summary(glm.native.p)
   
+    
+    #native vegetated
+        glm.native.e.1 <- glmer(native_vegetated ~ lag1 + cytrt + secchi.e.sc + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = NativeResponse.e, weights = nsamp)
+    summary(glm.native.e.1)
+    
+      glm.native.p.1 <- glmer(native_vegetated ~ Trt + cytrt + secchi.sc + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = NativeResponse.p, weights = nsamp)
+    summary(glm.native.p.1)
+    
+    
 #with perc.lit.chem
 #tweedie
-       glm.native.e.2 <- glmmTMB(NativeFOO_x_Richness ~ Trt + cytrt + perc.lit.chem + secchi.e.sc  + (1 | Lake.ID) + (1 | obs), family = tweedie(link = "log"), data = NativeResponse.e)
+       glm.native.e.2 <- glmmTMB(native_rich_mean ~ Trt + cytrt + perc.lit.chem + secchi.e.sc  + (1 | Lake.ID) + (1 | obs), family = tweedie(link = "log"), data = NativeResponse.e)
     summary(glm.native.e.2)
     
     
     
-       glme.rich.p.2 <- glmmTMB(NativeFOO_x_Richness ~ Trt + cytrt + perc.lit.chem + secchi.sc  + (1 | Lake.ID) + (1 | obs), family = tweedie(link = "log"), data = NativeResponse.p)
+       glme.rich.p.2 <- glmmTMB(native_rich_mean ~ Trt + cytrt + perc.lit.chem + secchi.sc  + (1 | Lake.ID) + (1 | obs), family = tweedie(link = "log"), data = NativeResponse.p)
     summary(glme.rich.p.2)
 
   
@@ -169,12 +197,12 @@ output: html_document
 ```{r visuals}
  
 #consecutive years of trt - early
-  lm_NativeResponse.e_cytrt <- lm(NativeFOO_x_Richness ~ cytrt, data = NativeResponse.e)
+  lm_NativeResponse.e_cytrt <- lm(native_rich_mean ~ cytrt, data = NativeResponse.e)
 
   # View model coefficients, R-squared, and p-values
   summary(lm_NativeResponse.e_cytrt)
   
-  ggplot(NativeResponse.e, aes(x = cytrt, y = NativeFOO_x_Richness)) +
+  ggplot(NativeResponse.e, aes(x = cytrt, y = native_rich_mean)) +
     geom_point(alpha = 0.6, size = 2) +
     geom_smooth(method = "lm", se = TRUE, color = "blue") +
     labs(
@@ -185,12 +213,12 @@ output: html_document
     theme_minimal()
   
 #consecutive years of trt - early
-  lm_NativeResponse.p_cytrt <- lm(NativeFOO_x_Richness ~ cytrt, data = NativeResponse.p)
+  lm_NativeResponse.p_cytrt <- lm(native_rich_mean ~ cytrt, data = NativeResponse.p)
 
   # View model coefficients, R-squared, and p-values
   summary(lm_NativeResponse.p_cytrt)
   
-  ggplot(NativeResponse.p, aes(x = cytrt, y = NativeFOO_x_Richness)) +
+  ggplot(NativeResponse.p, aes(x = cytrt, y = native_rich_mean)) +
     geom_point(alpha = 0.6, size = 2) +
     geom_smooth(method = "lm", se = TRUE, color = "blue") +
     labs(
@@ -202,12 +230,12 @@ output: html_document
   
   
  #years untreated - early
-   lm_NativeResponse.e_yutrt <- lm(NativeFOO_x_Richness ~ yutrt, data = NativeResponse.p)
+   lm_NativeResponse.e_yutrt <- lm(native_rich_mean ~ yutrt, data = NativeResponse.p)
 
   # View model coefficients, R-squared, and p-values
   summary(lm_NativeResponse.e_yutrt)
   
-  ggplot(NativeResponse.p, aes(x = cytrt, y = NativeFOO_x_Richness)) +
+  ggplot(NativeResponse.p, aes(x = cytrt, y = native_rich_mean)) +
     geom_point(alpha = 0.6, size = 2) +
     geom_smooth(method = "lm", se = TRUE, color = "blue") +
     labs(
@@ -218,12 +246,12 @@ output: html_document
     theme_minimal()
   
   #years untreated - late
-   lm_NativeResponse.p_yutrt <- lm(NativeFOO_x_Richness ~ yutrt, data = NativeResponse.p)
+   lm_NativeResponse.p_yutrt <- lm(native_rich_mean ~ yutrt, data = NativeResponse.p)
 
   # View model coefficients, R-squared, and p-values
   summary(lm_NativeResponse.p_yutrt)
   
-  ggplot(NativeResponse.p, aes(x = yutrt, y = NativeFOO_x_Richness)) +
+  ggplot(NativeResponse.p, aes(x = yutrt, y = native_rich_mean)) +
     geom_point(alpha = 0.6, size = 2) +
     geom_smooth(method = "lm", se = TRUE, color = "blue") +
     labs(
@@ -236,12 +264,12 @@ output: html_document
   
   
 #percent littoral zone treated - late
-   lm_NativeResponse.p_chem.perc <- lm(NativeFOO_x_Richness ~ perc.lit.chem, data = NativeResponse.p)
+   lm_NativeResponse.p_chem.perc <- lm(native_rich_mean ~ perc.lit.chem, data = NativeResponse.p)
 
   # View model coefficients, R-squared, and p-values
   summary(lm_NativeResponse.p_chem.perc)
   
-  ggplot(NativeResponse.p, aes(x = perc.lit.chem, y = NativeFOO_x_Richness)) +
+  ggplot(NativeResponse.p, aes(x = perc.lit.chem, y = native_rich_mean)) +
     geom_point(alpha = 0.6, size = 2) +
     geom_smooth(method = "lm", se = TRUE, color = "blue") +
     labs(

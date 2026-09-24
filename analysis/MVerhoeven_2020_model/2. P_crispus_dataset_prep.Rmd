@@ -649,11 +649,11 @@ pcri_e_combine_clean <- pcri_e_combine_clean %>%
  
  
   pcri.e$Snow.sc <- c(scale(pcri.e$Snow))
-  pcri.e$Ice_off.sc <- c(scale(pcri.e$Ice_off))
+  pcri.e$IceDuration.sc <- c(scale(pcri.e$IceDuration))
   pcri.e$PrevAugSecchi.sc <- c(scale(pcri.e$PrevAugSecchi))
  
    pcri.p$Snow.sc <- c(scale(pcri.p$Snow.sc))
-  pcri.p$Ice_off.sc <- c(scale(pcri.p$Ice_off))
+  pcri.p$IceDuration.sc <- c(scale(pcri.p$IceDuration))
   pcri.p$PrevAugSecchi.sc <- c(scale(pcri.p$PrevAugSecchi))
   
   

@@ -182,7 +182,7 @@ ggplot(pcri.p, aes(x = Trt, y = foc_clp, fill = Trt)) +
     pcri.p <- pcri.p %>% mutate(obs = row_number())
     
   #' ### Early Survey Freq
-    glme.foc.e <- glmer(foc_clp ~ lag1 + cytrt + PrevAugSecchi.sc + Snow.sc + IceDuration.sc + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
+    glme.foc.e <- glmer(foc_clp ~ lag1 + cytrt + PrevAugSecchi.sc + IceDuration.sc + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.e, weights = nsamp)
     summary(glme.foc.e)
     
      
@@ -193,30 +193,8 @@ ggplot(pcri.p, aes(x = Trt, y = foc_clp, fill = Trt)) +
     plot(glme.foc.e, resid(.)~ Ice_off) # ice off
     plot(glme.foc.e, resid(.)~ cytrt) # cytrt - def more var at low cytrt. That is also where most of our data lie
   
-    
-  
-    # 1. Create a clean, rounded integer count of successes
-pcri.e$successes <- round(pcri.e$foc_clp * pcri.e$nsamp)
-# 2. Refit the model using cbind(successes, failures)
-glme.foc.e.4 <- glmer(
-  cbind(successes, nsamp - successes) ~ lag1 + cytrt + PrevAugSecchi.sc + Snow.sc + IceDuration.sc + (1 | Lake.ID) + (1 | obs), 
-  family = binomial(link = "logit"), 
-  data = pcri.e
-)
-summary(glme.foc.e.4)
-
-#post
-pcri.p$successes <- round(pcri.p$foc_clp * pcri.p$nsamp)
-glme.foc.p.4 <- glmer(
-  cbind(successes, nsamp - successes) ~ lag1 + cytrt + PrevAugSecchi.sc + Snow.sc + IceDuration.sc + (1 | Lake.ID) + (1 | obs), 
-  family = binomial(link = "logit"), 
-  data = pcri.p
-)
-summary(glme.foc.p.4)
-
-
-  #' ### Late Survey Freq
-    glme.foc.p <- glmer(foc_clp~ Trt + cytrt + PrevAugSecchi.sc + Snow.sc + IceDuration.sc +
+   #' ### Late Survey Freq
+    glme.foc.p <- glmer(foc_clp~ Trt + cytrt + PrevAugSecchi.sc + IceDuration.sc +
     (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = pcri.p, , weights = nsamp)
     summary(glme.foc.p)
     
@@ -228,7 +206,29 @@ summary(glme.foc.p.4)
     plot(glme.foc.p, resid(.)~ cytrt) # cytrt
   
  
-    
+       
+#   
+#     # 1. Create a clean, rounded integer count of successes
+# pcri.e$successes <- round(pcri.e$foc_clp * pcri.e$nsamp)
+# # 2. Refit the model using cbind(successes, failures)
+# glme.foc.e.4 <- glmer(
+#   cbind(successes, nsamp - successes) ~ lag1 + cytrt + PrevAugSecchi.sc + Snow.sc + IceDuration.sc + (1 | Lake.ID) + (1 | obs), 
+#   family = binomial(link = "logit"), 
+#   data = pcri.e
+# )
+# summary(glme.foc.e.4)
+# 
+# #post
+# pcri.p$successes <- round(pcri.p$foc_clp * pcri.p$nsamp)
+# glme.foc.p.4 <- glmer(
+#   cbind(successes, nsamp - successes) ~ lag1 + cytrt + PrevAugSecchi.sc + Snow.sc + IceDuration.sc + (1 | Lake.ID) + (1 | obs), 
+#   family = binomial(link = "logit"), 
+#   data = pcri.p
+# )
+# summary(glme.foc.p.4)
+# 
+
+
     
   #try 2, no Ice duration or snow--------------
         #' ### Early Survey Freq

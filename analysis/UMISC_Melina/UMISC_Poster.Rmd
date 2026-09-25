@@ -16,8 +16,6 @@ output: html_document
   library(rlang)
   library(devtools)
   library(ggthemes)
-  library(performance)
-  library(see)
 ```
 
 ```{r load in data}
@@ -62,6 +60,10 @@ Treated_pcri.p <- pcri.p %>%
   )
 
 LargeTrt_pcri_combined <- bind_rows(Treated_pcri.p, Treated_pcri.e)
+
+
+write.csv(LargeTrt_pcri_combined, file = "~/IAPM Project/MAISRC-IAPM/analysis/UMISC_Melina/LargeTrt_pcri_combined.csv")
+write.csv(Treated_NativeResponse_combined, file = "~/IAPM Project/MAISRC-IAPM/analysis/UMISC_Melina/Treated_NativeResponse_combined.csv")
 
 ```
 
@@ -115,7 +117,6 @@ ggplot(Treated_NativeResponse_combined, aes(x = cytrt, y = native_vegetated, gro
 #lm native richness  
    lm_NativeRichness_cytrt <- lm(survey_native_rich ~ cytrt, data = Treated_NativeResponse_combined)
   summary(lm_NativeRichness_cytrt)
-  check_model(lm_NativeRichness_cytrt)
   
   ggplot(Treated_NativeResponse_combined, aes(x = cytrt, y = survey_native_rich)) +
     geom_point(alpha = 0.6, size = 2) +

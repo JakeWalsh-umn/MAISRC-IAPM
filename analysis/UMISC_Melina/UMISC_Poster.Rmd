@@ -1,0 +1,185 @@
+---
+title: "UMISC_Poster"
+output: html_document
+---
+
+```{r loading packages}
+  library(ggplot2)  
+  library(lme4)
+  library(dplyr)
+  library(readr)
+  library(data.table)
+  library(numDeriv)
+  library(sf)
+  library(mapdata)
+  library(gridExtra)
+  library(rlang)
+  library(devtools)
+  library(ggthemes)
+  library(performance)
+  library(see)
+```
+
+```{r load in data}
+NativeResponse.e <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/CLP_Trt_NativePlantResponse/NativeResponse.e.csv")
+NativeResponse.p <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/CLP_Trt_NativePlantResponse/NativeResponse.p.csv")
+
+pcri.e <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.e.csv")
+pcri.p <- read_csv("~/IAPM Project/MAISRC-IAPM/analysis/MVerhoeven_2020_model/2026 data/pcri.p.csv")
+```
+
+
+```{r creating datasets}
+#making native response combined early and late season survey datasets for only >15% littoral treatments
+Treated_NativeResponse.e <- NativeResponse.e %>%
+  filter(
+    (perc.lit.chem < 0.1 | perc.lit.chem > 14.9),
+    !is.na(yutrt)
+  ) %>%
+  mutate(lag1 = as.numeric(lag1))
+
+Treated_NativeResponse.p <- NativeResponse.p %>%
+  filter(
+    (perc.lit.chem < 0.1 | perc.lit.chem > 14.9),
+    !is.na(yutrt)
+  )
+
+Treated_NativeResponse_combined <- bind_rows(Treated_NativeResponse.e, Treated_NativeResponse.p)
+
+
+#making P. cripsus combined early and late season survey datasets for only >15% littoral treatments
+Treated_pcri.e <- pcri.e %>%
+  filter(
+    (perc.lit.chem < 0.1 | perc.lit.chem > 14.9),
+    !is.na(yutrt)
+  ) %>%
+  mutate(lag1 = as.numeric(lag1))
+
+Treated_pcri.p <- pcri.p %>%
+  filter(
+    (perc.lit.chem < 0.1 | perc.lit.chem > 14.9),
+    !is.na(yutrt)
+  )
+
+LargeTrt_pcri_combined <- bind_rows(Treated_pcri.p, Treated_pcri.e)
+
+```
+
+
+```{r Native response test visuals and summary stats}
+#' Visualize the distributions of the responses we are interested in:
+  #foc: shown with my calcs(gray) and Adam's calcs (red)
+  ggplot(NativeResponse.e, aes(native_vegetated))+
+      geom_histogram(alpha = .5)
+  ggplot(NativeResponse.p, aes(native_vegetated))+
+      geom_histogram(alpha = .5)
+  
+  
+  n_distinct(Treated_NativeResponse_combined$Lake.ID) #36
+
+```
+```{r Native response visuals}
+
+#violin plot proportion native-vegetated
+ggplot(Treated_NativeResponse_combined, aes(x = cytrt, y = native_vegetated, group = cytrt, fill = cytrt)) +
+  geom_violin(trim = FALSE, alpha = 0.7, color = "black") +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
+  theme_minimal()
+
+#boxplot native richness
+ggplot(Treated_NativeResponse_combined, aes(x = cytrt, y = survey_native_rich, group = cytrt, fill = cytrt)) +
+  geom_boxplot(trim = FALSE, alpha = 0.7, color = "black") +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
+  theme_minimal()
+
+#boxplot proportion native-vegetated
+ggplot(Treated_NativeResponse_combined, aes(x = cytrt, y = native_vegetated, group = cytrt, fill = cytrt)) +
+  geom_boxplot(trim = FALSE, alpha = 0.7, color = "black") +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
+  theme_minimal()
+
+#linear model native vegetated
+ lm_NativeVegetated_cytrt <- lm(native_vegetated ~ cytrt, data = Treated_NativeResponse_combined)
+  summary(lm_NativeVegetated_cytrt)
+  
+  ggplot(Treated_NativeResponse_combined, aes(x = cytrt, y = native_vegetated)) +
+    geom_point(alpha = 0.6, size = 2) +
+    geom_smooth(method = "lm", se = TRUE, color = "blue") +
+    labs(
+      x = "Consecutive Years Treated",
+      y = "Proportion Native Vegetated",
+      title = "Proportion Native Vegetated vs. Consecutive Treatment History"
+    ) +
+    theme_minimal()
+  
+#lm native richness  
+   lm_NativeRichness_cytrt <- lm(survey_native_rich ~ cytrt, data = Treated_NativeResponse_combined)
+  summary(lm_NativeRichness_cytrt)
+  check_model(lm_NativeRichness_cytrt)
+  
+  ggplot(Treated_NativeResponse_combined, aes(x = cytrt, y = survey_native_rich)) +
+    geom_point(alpha = 0.6, size = 2) +
+    geom_smooth(method = "lm", se = TRUE, color = "blue") +
+    labs(
+      x = "Consecutive Years Treated",
+      y = "Native Richness",
+      title = "Native Richness vs. Consecutive Treatment History"
+    ) +
+    theme_minimal()
+  
+  
+
+```
+
+
+```{r P.crispus test visuals and summary stats}
+ ggplot(pcri.e, aes(foc_clp))+
+      geom_histogram(alpha = .5)
+  ggplot(pcri.p, aes(foc_clp))+
+      geom_histogram(alpha = .5)
+  ggplot(LargeTrt_pcri_combined, aes(foc_clp))+
+      geom_histogram(alpha = .5)
+  
+  
+  n_distinct(LargeTrt_pcri_combined$Lake.ID) #25
+```
+```{r P. crispus visuals}
+#violin plot
+ggplot(LargeTrt_pcri_combined, aes(x = cytrt, y = foc_clp, group = cytrt, fill = cytrt)) +
+  geom_violin(trim = FALSE, alpha = 0.7, color = "black") +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
+  theme_minimal()
+
+#boxplot
+ggplot(Treated_pcri.e, aes(x = cytrt, y = foc_clp, group = cytrt, fill = cytrt)) +
+  geom_boxplot(trim = FALSE, alpha = 0.7, color = "black") +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
+  theme_minimal()
+
+ggplot(Treated_pcri.p, aes(x = cytrt, y = foc_clp, group = cytrt, fill = cytrt)) +
+  geom_boxplot(trim = FALSE, alpha = 0.7, color = "black") +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
+  theme_minimal()
+
+ggplot(LargeTrt_pcri_combined, aes(x = cytrt, y = foc_clp, group = cytrt, fill = cytrt)) +
+  geom_boxplot(trim = FALSE, alpha = 0.7, color = "black") +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
+  theme_minimal()
+
+
+
+
+ lm_pcri_cytrt <- lm(foc_clp ~ cytrt, data = LargeTrt_pcri_combined)
+  summary(lm_pcri_cytrt)
+  
+  ggplot(LargeTrt_pcri_combined, aes(x = cytrt, y = foc_clp)) +
+    geom_point(alpha = 0.6, size = 2) +
+    geom_smooth(method = "lm", se = TRUE, color = "blue") +
+    labs(
+      x = "Consecutive Years Treated",
+      y = "P. crispsus FOO",
+      title = "P. crispsus FOO vs. Consecutive Treatment History"
+    ) +
+    theme_minimal()
+```
+

@@ -986,7 +986,20 @@ write.csv(Added_Lakes_Matrix, file = "~/IAPM Project/MAISRC-IAPM/analysis/MVerho
 
 ```
 
-```{r next time}
+```{r making combined dataset}
+Treated_pcri.e <- pcri.e %>%
+  filter(
+    (perc.lit.chem < 0.1 | perc.lit.chem > 14.9),
+    !is.na(yutrt)
+  ) %>%
+  mutate(lag1 = as.numeric(lag1))
 
+Treated_pcri.p <- pcri.p %>%
+  filter(
+    (perc.lit.chem < 0.1 | perc.lit.chem > 14.9),
+    !is.na(yutrt)
+  )
+
+LargeTrt_pcri_combined <- bind_rows(Treated_pcri.p, Treated_pcri.e)
 ```
 

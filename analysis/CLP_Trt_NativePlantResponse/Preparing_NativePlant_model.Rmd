@@ -560,3 +560,20 @@ NativeResponse.p$APM_perc_lit[is.na(NativeResponse.p$APM_perc_lit)] <- 0
 NativeResponse.e$lag1_APM_perc_lit[is.na(NativeResponse.e$lag1_APM_perc_lit)] <- 0
 ```
 
+```{r creating filtered datasets}
+Treated_NativeResponse.e <- NativeResponse.e %>%
+  filter(
+    (perc.lit.chem < 0.1 | perc.lit.chem > 14.9),
+    !is.na(yutrt)
+  ) %>%
+  mutate(lag1 = as.numeric(lag1))
+
+Treated_NativeResponse.p <- NativeResponse.p %>%
+  filter(
+    (perc.lit.chem < 0.1 | perc.lit.chem > 14.9),
+    !is.na(yutrt)
+  )
+
+Treated_NativeResponse_combined <- bind_rows(Treated_NativeResponse.e, Treated_NativeResponse.p)
+```
+

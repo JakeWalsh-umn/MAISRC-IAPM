@@ -57,7 +57,7 @@ output: html_document
 ```
 
 
-```{r}
+```{r load in data}
 # load in data ------------------------------------------------------------
 #' # Load Data
 
@@ -74,7 +74,7 @@ output: html_document
 
 ```
 
-```{r}
+```{r cleaning data}
 # cleaning data -----------------------------------------------------------
 #' # Data Cleaning   
 #' Are our datasets complete for the parameters we want to estimate on?
@@ -155,12 +155,24 @@ ggplot(NativeResponse.e, aes(x = lag1, y = survey_native_rich, fill = lag1)) +
     NativeResponse.e <- NativeResponse.e %>% mutate(obs = row_number())
     NativeResponse.p <- NativeResponse.p %>% mutate(obs = row_number())
     
-  #glma
+    
+    
+  #glm richness
     glm.native.e <- glmer(survey_native_rich ~ lag1 + cytrt + secchi.e.sc+ (1 | Lake.ID) + (1 | obs), family = poisson, data = NativeResponse.e)
     summary(glm.native.e)
     
+    
+    plot(glm.native.e)  # not too bad
+    plot(glm.native.e, resid(.)~ fitted(.) |Lake.ID) # by group
+    plot(glm.native.e, resid(.)~ secchi.e) #secchi
+    plot(glm.native.e, resid(.)~ cytrt) # cytrt - def more var at low cytrt. That is also where most of our data lie
+  
+
+    
       glm.native.p <- glmer(survey_native_rich ~ Trt + cytrt + secchi.sc + (1 | Lake.ID) + (1 | obs), family = poisson, data = NativeResponse.p)
     summary(glm.native.p)
+    plot(glm.native.p)  # not too bad
+
   
     
     #native vegetated
@@ -170,32 +182,13 @@ ggplot(NativeResponse.e, aes(x = lag1, y = survey_native_rich, fill = lag1)) +
       glm.native.p.1 <- glmer(native_vegetated ~ Trt + cytrt + secchi.sc + (1 | Lake.ID) + (1 | obs), family = binomial(logit), data = NativeResponse.p, weights = nsamp)
     summary(glm.native.p.1)
     
-    
-#with perc.lit.chem
-#tweedie
-       glm.native.e.2 <- glmmTMB(native_rich_mean ~ Trt + cytrt + perc.lit.chem + secchi.e.sc  + (1 | Lake.ID) + (1 | obs), family = tweedie(link = "log"), data = NativeResponse.e)
-    summary(glm.native.e.2)
-    
-    
-    
-       glme.rich.p.2 <- glmmTMB(native_rich_mean ~ Trt + cytrt + perc.lit.chem + secchi.sc  + (1 | Lake.ID) + (1 | obs), family = tweedie(link = "log"), data = NativeResponse.p)
-    summary(glme.rich.p.2)
-
+ 
   
-    plot(glm.native.e)  # not too bad
-    plot(glm.native.e, resid(.)~ fitted(.) |Lake.ID) # by group
-    plot(glm.native.e, resid(.)~ Snow)  # residuals versus Snow
-    plot(glm.native.e, resid(.)~ PrevAUGSecchi) #secchi
-    plot(glm.native.e, resid(.)~ Ice_off) # ice off
-    plot(glm.native.e, resid(.)~ cytrt) # cytrt - def more var at low cytrt. That is also where most of our data lie
-  
-
     
 ```
 
 
 ```{r visuals}
- 
 #consecutive years of trt - early
   lm_NativeResponse.e_cytrt <- lm(native_rich_mean ~ cytrt, data = NativeResponse.e)
 
@@ -278,6 +271,42 @@ ggplot(NativeResponse.e, aes(x = lag1, y = survey_native_rich, fill = lag1)) +
       title = "CLP Frequency vs. Treatment Size"
     ) +
     theme_minimal()
+  
+  
+#violin plot
+ggplot(NativeResponse.e, aes(x = cytrt, y = native_vegetated, group = cytrt, fill = cytrt)) +
+  geom_violin(trim = FALSE, alpha = 0.7, color = "black") +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
+  theme_minimal()
+
+ggplot(NativeResponse.p, aes(x = Trt, y = native_vegetated, group = Trt, fill = Trt)) +
+  geom_violin(trim = FALSE, alpha = 0.7, color = "black") +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
+  theme_minimal()
+
+
+ggplot(Treated_NativeResponse_combined, aes(x = cytrt, y = survey_native_rich, group = cytrt, fill = cytrt)) +
+  geom_boxplot(trim = FALSE, alpha = 0.7, color = "black") +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
+  theme_minimal()
+
+
+ggplot(Treated_NativeResponse_combined, aes(x = cytrt, y = native_vegetated, group = cytrt, fill = cytrt)) +
+  geom_boxplot(trim = FALSE, alpha = 0.7, color = "black") +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
+  theme_minimal()
+
+
+ 
+ggplot(NativeResponse.p, aes(x = cytrt, y = native_vegetated, group = cytrt, fill = cytrt)) +
+  geom_violin(trim = FALSE, alpha = 0.7, color = "black") +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
+  scale_x_continuous(
+    breaks = c(0, 2, 4, 6, 8),
+    limits = c(0, 8)  # Ensures the axis limits stay fixed from 0 to 8
+  ) +
+  theme_minimal()
+
      
 ```
 

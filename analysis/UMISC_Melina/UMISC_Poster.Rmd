@@ -44,6 +44,21 @@ Treated_NativeResponse.p <- NativeResponse.p %>%
 
 Treated_NativeResponse_combined <- bind_rows(Treated_NativeResponse.e, Treated_NativeResponse.p)
 
+Treated_NativeResponse_combined <- Treated_NativeResponse_combined %>%
+  mutate(SURVEY_START = mdy(SURVEY_START)) %>%
+  mutate(trt_date_lag0 = mdy(trt_date_lag0))
+
+
+Treated_NativeResponse_combined <- Treated_NativeResponse_combined %>%
+  filter(month(SURVEY_START) != 4 | is.na(SURVEY_START))
+
+
+Treated_NativeResponse_combined <- Treated_NativeResponse_combined %>%
+  rename(lag0_APM_perc_lit = APM_perc_lit) %>%
+  mutate(APM_perc_lit = coalesce(lag1_APM_perc_lit, lag0_APM_perc_lit)) %>%
+  mutate(APM_perc_lit = pmin(APM_perc_lit, 100)) #make any % permitted above 100 be 100
+
+  Treated_NativeResponse_combined <- Treated_NativeResponse_combined %>% mutate(obs = row_number())
 
 #making P. cripsus combined early and late season survey datasets for only >15% littoral treatments
 Treated_pcri.e <- pcri.e %>%
@@ -61,6 +76,10 @@ Treated_pcri.p <- pcri.p %>%
 
 LargeTrt_pcri_combined <- bind_rows(Treated_pcri.p, Treated_pcri.e)
 
+LargeTrt_pcri_combined <- LargeTrt_pcri_combined %>%
+  mutate(SURVEY_START = mdy(SURVEY_START)) %>%
+  mutate(trt_date_lag0 = mdy(trt_date_lag0))
+
 
 write.csv(LargeTrt_pcri_combined, file = "~/IAPM Project/MAISRC-IAPM/analysis/UMISC_Melina/LargeTrt_pcri_combined.csv")
 write.csv(Treated_NativeResponse_combined, file = "~/IAPM Project/MAISRC-IAPM/analysis/UMISC_Melina/Treated_NativeResponse_combined.csv")
@@ -77,7 +96,7 @@ write.csv(Treated_NativeResponse_combined, file = "~/IAPM Project/MAISRC-IAPM/an
       geom_histogram(alpha = .5)
   
   
-  n_distinct(Treated_NativeResponse_combined$Lake.ID) #36
+  n_distinct(Treated_NativeResponse_combined$Lake.ID) #35
 
 ```
 ```{r Native response visuals}
@@ -129,6 +148,44 @@ ggplot(Treated_NativeResponse_combined, aes(x = cytrt, y = native_vegetated, gro
     theme_minimal()
   
   
+ggplot(Treated_NativeResponse.p, aes(x = factor(Trt), y = native_vegetated, fill = factor(Trt))) +
+  geom_violin(trim = FALSE, alpha = 0.7, color = "black") +
+  scale_x_discrete(labels = c("0" = "Control (0)", "1" = "Treatment (1)")) +
+  labs(
+    x = "Treated",
+    y = "Proportion Native Vegetated",
+    fill = "Trt"
+  ) +
+  theme_minimal()
+
+#lm for native vegetated and percent littoral APM 
+ lm_NativeVegetated_APM <- lm(native_vegetated ~ APM_perc_lit, data = Treated_NativeResponse_combined)
+  summary(lm_NativeVegetated_APM)
+  
+  ggplot(Treated_NativeResponse_combined, aes(x = APM_perc_lit, y = native_vegetated)) +
+    geom_point(alpha = 0.6, size = 2) +
+    geom_smooth(method = "lm", se = TRUE, color = "blue") +
+    labs(
+      x = "% of littoral zone permitted for APM",
+      y = "Proportion Native Vegetated",
+      title = "Proportion Native Vegetated vs. % of littoral zone permitted for APM"
+    ) +
+    theme_minimal()
+  
+  #lm for native richness and percent littoral APM 
+ lm_NativeRichness_APM <- lm(survey_native_rich ~ APM_perc_lit, data = Treated_NativeResponse_combined)
+  summary(lm_NativeRichness_APM)
+  
+  ggplot(Treated_NativeResponse_combined, aes(x = APM_perc_lit, y = survey_native_rich)) +
+    geom_point(alpha = 0.6, size = 2) +
+    geom_smooth(method = "lm", se = TRUE, color = "blue") +
+    labs(
+      x = "% of littoral zone permitted for APM",
+      y = "Native Richness",
+      title = "Native Richness vs. % of littoral zone permitted for APM"
+    ) +
+    theme_minimal()
+
 
 ```
 

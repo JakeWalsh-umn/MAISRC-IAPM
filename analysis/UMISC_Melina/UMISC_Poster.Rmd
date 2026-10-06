@@ -16,6 +16,7 @@ output: html_document
   library(rlang)
   library(devtools)
   library(ggthemes)
+library(ggcorrplot)
 
 library(marginaleffects)
 library(sjPlot)
@@ -126,30 +127,7 @@ write.csv(Treated_NativeResponse_combined, file = "~/IAPM Project/MAISRC-IAPM/an
 ```
 
 
-```{r Native response visuals}
-# ------------------------------------------------------------------------------
-# Boxplots
-# ------------------------------------------------------------------------------
-
-# boxplot native richness
-p_box_native_rich_cytrt <- ggplot(Treated_NativeResponse_combined, aes(x = cytrt, y = survey_native_rich, group = cytrt, fill = cytrt)) +
-  geom_boxplot(alpha = 0.7, color = "black", show.legend = FALSE) +
-  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
-  labs(
-    x = "Consecutive Years Treated",
-    y = "Native Richness",
-  ) +
-  theme_minimal()
-
-# boxplot proportion native-vegetated
-p_box_native_veg_cytrt <- ggplot(Treated_NativeResponse_combined, aes(x = cytrt, y = native_vegetated, group = cytrt, fill = cytrt)) +
-  geom_boxplot(alpha = 0.7, color = "black", show.legend = FALSE) +
-  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
-  labs(
-    x = "Consecutive Years Treated",
-    y = "Proportion Native Vegetated",
-  ) +
-  theme_minimal()
+```{r ignore}
 
 # boxplot native richness yutrt
 p_box_native_rich_yutrt <- ggplot(Treated_NativeResponse_combined, aes(x = yutrt, y = survey_native_rich, group = yutrt, fill = yutrt)) +
@@ -174,10 +152,6 @@ p_box_native_veg_yutrt <- ggplot(Treated_NativeResponse_combined, aes(x = yutrt,
   theme_minimal()
 
 
-# ------------------------------------------------------------------------------
-# Linear Models & Scatter Plots
-# ------------------------------------------------------------------------------
-
 # linear model native vegetated ~ cytrt
 lm_NativeVegetated_cytrt <- lm(native_vegetated ~ cytrt, data = Treated_NativeResponse_combined)
 summary(lm_NativeVegetated_cytrt)
@@ -201,33 +175,6 @@ p_lm_native_rich_cytrt <- ggplot(Treated_NativeResponse_combined, aes(x = cytrt,
   labs(
     x = "Consecutive Years Treated",
     y = "Native Richness"
-  ) +
-  theme_minimal()
-
-
-# ------------------------------------------------------------------------------
-# Violin Plots
-# ------------------------------------------------------------------------------
-
-p_box_native_veg_trt <- ggplot(Treated_NativeResponse.p, aes(x = factor(Trt), y = native_vegetated, fill = factor(Trt))) +
-  geom_boxplot(alpha = 0.7, color = "black", show.legend = FALSE) +
-  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
-  scale_x_discrete(labels = c("0" = "Untreated", "1" = "Treated")) +
-  labs(
-    x = "",
-    y = "Proportion Native Vegetated",
-    fill = "Trt"
-  ) +
-  theme_minimal()
-
-p_box_native_rich_trt <- ggplot(Treated_NativeResponse.p, aes(x = factor(Trt), y = survey_native_rich, fill = factor(Trt))) +
-  geom_boxplot(alpha = 0.7, color = "black", show.legend = FALSE) +
-  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
-  scale_x_discrete(labels = c("0" = "Untreated", "1" = "Treated")) +
-  labs(
-    x = "",
-    y = "Native Richness",
-    fill = "Trt"
   ) +
   theme_minimal()
 
@@ -318,6 +265,125 @@ ggplot(Treated_NativeResponse_combined, aes(x = cytrt, y = APM_perc_lit)) +
   geom_smooth(method = "lm", se = TRUE, color = "blue", show.legend = FALSE) +
   theme_minimal()
 
+
+```
+
+
+
+```{r Native response visuals}
+#boxplot tret
+p_box_native_rich_cytrt <- ggplot(Treated_NativeResponse_combined, aes(x = cytrt, y = survey_native_rich, group = cytrt, fill = cytrt)) +
+  geom_boxplot(alpha = 0.7, color = "black", show.legend = FALSE) +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
+  scale_fill_gradient(low = "#E6E6FA", high = "#4B0082") +
+  labs(
+    x = "Consecutive Years Treated",
+    y = "Native Richness"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.title = element_text(size = 14, face = "bold"),
+    axis.text  = element_text(size = 12, face = "bold", color = "black")
+  )
+
+# boxplot proportion native-vegetated
+p_box_native_veg_cytrt <- ggplot(Treated_NativeResponse_combined, aes(x = cytrt, y = native_vegetated, group = cytrt, fill = cytrt)) +
+  geom_boxplot(alpha = 0.7, color = "black", show.legend = FALSE) +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
+  scale_fill_gradient(low = "#E6E6FA", high = "#4B0082") +
+  labs(
+    x = "Consecutive Years Treated",
+    y = "Proportion Native Vegetated"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.title = element_text(size = 14, face = "bold"),
+    axis.text  = element_text(size = 12, face = "bold", color = "black")
+  )
+
+
+p_box_native_veg_trt <- ggplot(Treated_NativeResponse.p, aes(x = factor(Trt), y = native_vegetated, fill = factor(Trt))) +
+  geom_boxplot(alpha = 0.7, color = "black", show.legend = FALSE) +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
+  scale_x_discrete(labels = c("0" = "Untreated", "1" = "Treated")) +
+  scale_fill_manual(values = c("0" = "grey", "1" = "purple")) +
+  labs(
+    x = "",
+    y = "",
+    fill = "Trt"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.title.y = element_text(size = 14, face = "bold"),
+    axis.text.x  = element_text(size = 14, face = "bold", color = "black"),
+    axis.text.y  = element_text(size = 12)
+  )
+
+p_box_native_rich_trt <- ggplot(Treated_NativeResponse.p, aes(x = factor(Trt), y = survey_native_rich, fill = factor(Trt))) +
+  geom_boxplot(alpha = 0.7, color = "black", show.legend = FALSE) +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
+  scale_x_discrete(labels = c("0" = "Untreated", "1" = "Treated")) +
+  scale_fill_manual(values = c("0" = "grey", "1" = "purple")) +
+  labs(
+    x = "",
+    y = "",
+    fill = "Trt"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.title.y = element_text(size = 14, face = "bold"),
+    axis.text.x  = element_text(size = 14, face = "bold", color = "black"),
+    axis.text.y  = element_text(size = 12)
+  )
+
+```
+
+```{r corrplot}
+numeric_vars <- Treated_NativeResponse_combined %>%
+  dplyr::select(
+    survey_native_rich,
+    native_vegetated,
+    cytrt,
+    APM_perc_lit
+  )
+
+
+cor_matrix <- cor(numeric_vars, use = "complete.obs")
+p_mat <- cor_pmat(numeric_vars)
+
+
+# 2. Basic Correlation Plot
+p_corr <- ggcorrplot(cor_matrix)
+
+
+
+
+p_corr_custom <- ggcorrplot(
+  cor_matrix,
+  type = "lower",
+  lab = TRUE,
+  lab_size = 5,
+  p.mat = p_mat,
+  sig.level = 0.05,
+  colors = c("#6D9EC1", "white", "#E46726"),
+  ggtheme = theme_minimal()
+) +
+  scale_x_discrete(labels = c(
+    "survey_native_rich" = "Native Richness",
+    "native_vegetated"   = "Prop. Native Vegetated",
+    "cytrt"              = "Consecutive Yrs Treated",
+    "APM_perc_lit"       = "% Littoral Permitted APM"
+  )) +
+  scale_y_discrete(labels = c(
+    "survey_native_rich" = "Native Richness",
+    "native_vegetated"   = "Prop. Native Vegetated",
+    "cytrt"              = "Consecutive Yrs Treated",
+    "APM_perc_lit"       = "% Littoral Permitted APM"
+  )) +
+  labs(title = "Correlation Matrix") +
+  theme(legend.position = "none")
+
+print(p_corr_custom)
 ```
 
 
@@ -331,14 +397,9 @@ ggplot(Treated_NativeResponse_combined, aes(x = cytrt, y = APM_perc_lit)) +
   
   
   n_distinct(LargeTrt_pcri_combined$Lake.ID) #25
-```
-
-
-```{r P. crispus visuals}
-# ------------------------------------------------------------------------------
-# Boxplots
-# ------------------------------------------------------------------------------
-
+  
+  
+  
 # boxplot foc_clp ~ cytrt
 p_box_pcri_foc_cytrt <- ggplot(LargeTrt_pcri_combined, aes(x = cytrt, y = foc_clp, group = cytrt, fill = cytrt)) +
   geom_boxplot(alpha = 0.7, color = "black", show.legend = FALSE) +
@@ -352,6 +413,23 @@ p_box_pcri_foc_yutrt <- ggplot(LargeTrt_pcri_combined, aes(x = yutrt, y = foc_cl
   theme_minimal()
 
 
+
+p_box_pcri_FOO_trt <- ggplot(LargeTrt_pcri_combined, aes(x = factor(Trt), y = foc_clp, fill = factor(Trt))) +
+  geom_boxplot(alpha = 0.7, color = "black", show.legend = FALSE) +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
+  scale_x_discrete(labels = c("0" = "Untreated", "1" = "Treated")) +
+  labs(
+    y = "P. crispus Frequency of Occurrence",
+    fill = "Trt"
+  ) +
+  theme_minimal()
+
+
+```
+
+
+```{r P. crispus visuals}
+
 # ------------------------------------------------------------------------------
 # Linear Models & Scatter Plots
 # ------------------------------------------------------------------------------
@@ -363,12 +441,17 @@ summary(lm_pcri_yutrt)
 p_lm_pcri_foc_yutrt <- ggplot(LargeTrt_pcri_combined, aes(x = yutrt, y = foc_clp)) +
   geom_point(alpha = 0.6, size = 2, show.legend = FALSE) +
   geom_smooth(method = "lm", se = TRUE, color = "blue", show.legend = FALSE) +
+  scale_x_continuous(breaks = c(0, 2, 4, 6, 8)) +
   labs(
-    x = "Years since last treatment",
-    y = "P. crispus Frequency of Occurence",
-    title = "P. crispus Frequency of Occurence vs. Years since last treatment"
+    x = "Years since last P. crispus treatment",
+    y = "P. crispus Frequency of Occurrence"
   ) +
-  theme_minimal()
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 16, face = "bold"),
+    axis.title = element_text(size = 14, face = "bold"),
+    axis.text  = element_text(size = 12, face = "bold", color = "black")
+  )
 
 # lm foc_clp ~ cytrt
 lm_pcri_cytrt <- lm(foc_clp ~ cytrt, data = LargeTrt_pcri_combined)
@@ -379,24 +462,18 @@ p_lm_pcri_foc_cytrt <- ggplot(LargeTrt_pcri_combined, aes(x = cytrt, y = foc_clp
   geom_smooth(method = "lm", se = TRUE, color = "blue", show.legend = FALSE) +
   labs(
     x = "Consecutive Years Treated",
-    y = "P. crispus Frequency of Occurence",
-    title = "P. crispus Frequency of Occurence vs. Consecutive Years of Treatment"
+    y = "P. crispus Frequency of Occurrence",
   ) +
-  theme_minimal()
-
-
-p_box_pcri_FOO_trt <- ggplot(LargeTrt_pcri_combined, aes(x = factor(Trt), y = foc_clp, fill = factor(Trt))) +
-  geom_boxplot(alpha = 0.7, color = "black", show.legend = FALSE) +
-  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
-  scale_x_discrete(labels = c("0" = "Untreated", "1" = "Treated")) +
-  labs(
-    y = "P. crispus Frequency of Occurence",
-    fill = "Trt"
-  ) +
-  theme_minimal()
-
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 16, face = "bold"),
+    axis.title = element_text(size = 14, face = "bold"),
+    axis.text  = element_text(size = 12, face = "bold", color = "black")
+  )
 
 ```
+
+
 ```{r glm ignore}
  glme.foc <- glmer(foc_clp ~ Trt + cytrt + yutrt + (1 | Lake.ID) + (1 | obs), family = binomial(link = "logit"), data = LargeTrt_pcri_combined, weights = nsamp)
     summary(glme.foc)
@@ -445,17 +522,13 @@ plot_list <- list(
   "box_native_veg_cytrt.png"          = p_box_native_veg_cytrt,
   "box_native_richness_yutrt.png"     = p_box_native_rich_yutrt,
   "box_native_veg_yutrt.png"          = p_box_native_veg_yutrt,
-  "lm_native_veg_cytrt.png"           = p_lm_native_veg_cytrt,
-  "lm_native_richness_cytrt.png"      = p_lm_native_rich_cytrt,
   "box_native_veg_trt.png"         = p_box_native_veg_trt,
   "box_native_richness_trt.png"    = p_box_native_rich_trt,
-  "lm_native_veg_apm.png"             = p_lm_native_veg_apm,
-  "lm_native_richness_apm.png"        = p_lm_native_rich_apm,
-  "lm_native_veg_yutrt.png"           = p_lm_native_veg_yutrt,
   "box_pcri_foc_cytrt.png"    = p_box_pcri_foc_cytrt,
   "box_pcri_foc_yutrt.png"    = p_box_pcri_foc_yutrt,
   "lm_pcri_foc_yutrt.png"     = p_lm_pcri_foc_yutrt,
-  "lm_pcri_foc_cytrt.png"     = p_lm_pcri_foc_cytrt
+  "lm_pcri_foc_cytrt.png"     = p_lm_pcri_foc_cytrt,
+  "p_corr_custom.png" = p_corr_custom
 )
 
 # 3. Target directory
@@ -468,6 +541,47 @@ iwalk(plot_list, function(plot_obj, filename) {
     plot = plot_obj,
     width = 6,
     height = 4,
+    create.dir = TRUE
+  )
+})
+
+
+
+
+plot_list_skinny <- list(
+  "box_native_veg_trt_skinny.png"         = p_box_native_veg_trt,
+  "box_native_richness_trt_skinny.png"    = p_box_native_rich_trt,
+    "p_corr_custom.png" = p_corr_custom
+)
+
+# 3. Target directory
+output_dir <- "~/IAPM Project/MAISRC-IAPM/analysis/UMISC_Melina/UMISC_Poster_files"
+
+# 4. Loop through and save each file
+iwalk(plot_list_skinny, function(plot_obj, filename) {
+  ggsave(
+    filename = file.path(output_dir, filename),
+    plot = plot_obj,
+    width = 4,
+    height = 4,
+    create.dir = TRUE
+  )
+})
+
+
+
+plot_list_corr <- list(
+    "p_corr_custom.png" = p_corr_custom
+)
+
+output_dir <- "~/IAPM Project/MAISRC-IAPM/analysis/UMISC_Melina/UMISC_Poster_files"
+
+iwalk(plot_list_corr, function(plot_obj, filename) {
+  ggsave(
+    filename = file.path(output_dir, filename),
+    plot = plot_obj,
+    width = 5,
+    height = 5,
     create.dir = TRUE
   )
 })

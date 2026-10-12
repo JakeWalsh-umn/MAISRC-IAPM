@@ -1,0 +1,267 @@
+"","fieldNames","Explanation","Taxonomic","VEGETATION_ID","ORIGIN"
+"1","acorus_americanus","","Y","E","native"
+"2","acorus_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"3","algae","","Y",NA,NA
+"4","alisma_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","E","native"
+"5","alisma_triviale","","Y","E","native"
+"6","alnus_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","WE","native"
+"7","andromeda_polifolia","","Y",NA,NA
+"8","aquatic_moss","Generally Drepanocladus sp or Fontinalis sp","Y",NA,NA
+"9","asclepias_incarnata","","Y",NA,NA
+"10","asteraceae_taxa","""_taxa"" indicates an unknown taxon within a given family, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"11","azolla_microphylla","","Y",NA,NA
+"12","betula_pumila","","Y","WE","native"
+"13","bidens_beckii","","Y","SV","native"
+"14","bidens_cernua","","Y","WE","native"
+"15","bidens_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","WE","native"
+"16","bolboschoenus_fluviatilis","","Y","E","native"
+"17","bolboschoenus_maritimus","","Y",NA,NA
+"18","boltonia_asteroides","","Y","WE","native"
+"19","brasenia_schreberi","","Y","F","native"
+"20","butomus_umbellatus","","Y","E","nonnative"
+"21","calamagrostis_canadensis","","Y","WE","native"
+"22","calla_palustris","","Y","E","native"
+"23","callitriche_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","SV","native"
+"24","caltha_palustris","","Y","WE","native"
+"25","carex_aquatilis","","Y","WE","native"
+"26","carex_comosa","","Y","WE","native"
+"27","carex_lacustris","","Y","WE","native"
+"28","carex_pellita","","Y",NA,NA
+"29","carex_scoparia","","Y",NA,NA
+"30","carex_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","WE","native"
+"31","carex_stricta","","Y","WE","native"
+"32","ceratophyllum_demersum","","Y","SV","native"
+"33","ceratophyllum_echinatum","","Y","SV","native"
+"34","ceratophyllum_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","SV","native"
+"35","chamaedaphne_calyculata","","Y","WE","native"
+"36","chara_braunii","","Y","SA_C","native"
+"37","chara_canescens","","Y",NA,NA
+"38","chara_contraria","","Y","SA_C","native"
+"39","chara_globularis","","Y","SA_C","native"
+"40","chara_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","SA_C","native"
+"41","characeae_taxa","""_taxa"" indicates an unknown taxon within a given family, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"42","cicuta_maculata","","Y",NA,NA
+"43","cicuta_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","WE","native"
+"44","cladophora_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"45","comarum_palustre","","Y",NA,NA
+"46","cyanobacteria","","Y",NA,NA
+"47","cyperaceae_taxa","""_taxa"" indicates an unknown taxon within a given family, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"48","cyperus_esculentus","","Y",NA,NA
+"49","cyperus_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","WE","native"
+"50","decodon_verticillatus","","Y","E","native"
+"51","drepanocladus_aduncus","","Y","SV_M","native"
+"52","drepanocladus_or_fontinalis_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"53","drepanocladus_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"54","dulichium_arundinaceum","","Y",NA,NA
+"55","elatine_minima","","Y","SV","native"
+"56","elatine_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","SV","native"
+"57","eleocharis_acicularis","","Y","SV","native"
+"58","eleocharis_erythropoda","","Y","E","native"
+"59","eleocharis_palustris","","Y","E","native"
+"60","eleocharis_robbinsii","","Y","SV","native"
+"61","eleocharis_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","E","native"
+"62","eleocharis_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","SV","native"
+"63","elodea_canadensis","","Y","SV","native"
+"64","elodea_nuttallii","","Y","SV","native"
+"65","elodea_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","SV","native"
+"66","elymus_virginicus","","Y",NA,NA
+"67","equisetum_fluviatile","","Y","E","native"
+"68","equisetum_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","WE","native"
+"69","eragrostis_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","WE","native"
+"70","eriocaulon_aquaticum","","Y","SV","native"
+"71","eupatorium_perfoliatum","","Y","WE","native"
+"72","eutrochium_dubium","","Y",NA,NA
+"73","eutrochium_maculatum","","Y","WE","native"
+"74","eutrochium_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","WE","native"
+"75","fontinalis_antipyretica","","Y",NA,NA
+"76","fontinalis_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"77","fontinalis_sullivantii","","Y","SV_M","native"
+"78","freshwater_sponge","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"79","glyceria_borealis","","Y","WE","native"
+"80","glyceria_canadensis","","Y",NA,NA
+"81","heteranthera_dubia","","Y","SV","native"
+"82","heteranthera_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"83","hippuris_vulgaris","","Y","SV","native"
+"84","hydrocotyle_ranunculoides","","Y","WE","native"
+"85","hypericum_ellipticum","","Y","WE","native"
+"86","hypericum_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","WE","native"
+"87","impatiens_capensis","","Y","WE","native"
+"88","impatiens_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","WE","native"
+"89","iris_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","E","native"
+"90","iris_pseudacorus","","Y","E","nonnative"
+"91","iris_versicolor","","Y","E","native"
+"92","iris_virginica","","Y","E","native"
+"93","isoetes_echinospora","","Y","SV","native"
+"94","isoetes_lacustris","","Y","SV","native"
+"95","isoetes_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","SV","native"
+"96","juncus_balticus","","Y",NA,NA
+"97","juncus_canadensis","","Y","WE","native"
+"98","juncus_effusus","","Y","WE","native"
+"99","juncus_pelocarpus","","Y","SV","native"
+"100","juncus_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","E","native"
+"101","lamiaceae_taxa","""_taxa"" indicates an unknown taxon within a given family, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"102","leersia_oryzoides","","Y","WE","native"
+"103","lemna_gibba","","Y",NA,NA
+"104","lemna_minor","","Y","FF","native"
+"105","lemna_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","FF","native"
+"106","lemna_trisulca","","Y","FF","native"
+"107","lemna_turionifera","","Y","FF","native"
+"108","lemnaceae_taxa","""_taxa"" indicates an unknown taxon within a given family, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"109","littorella_uniflora","","Y",NA,NA
+"110","lobelia_dortmanna","","Y","SV","native"
+"111","ludwigia_palustris","","Y",NA,NA
+"112","lychnothamnus_barbatus","","Y","SA_C","native"
+"113","lycopus_americanus","","Y","WE","native"
+"114","lysimachia_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","WE","native"
+"115","lysimachia_terrestris","","Y","WE","native"
+"116","lythrum_salicaria","","Y","WE","nonnative"
+"117","menyanthes_trifoliata","","Y","WE","native"
+"118","myrica_gale","","Y","WE","native"
+"119","myriophyllum_alterniflorum","","Y","SV","native"
+"120","myriophyllum_farwellii","","Y","SV","native"
+"121","myriophyllum_sibiricum","","Y","SV","native"
+"122","myriophyllum_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","SV","native"
+"123","myriophyllum_spicatum","","Y","SV","nonnative"
+"124","myriophyllum_spicatum_x_sibiricum","","Y",NA,NA
+"125","myriophyllum_tenellum","","Y","SV","native"
+"126","myriophyllum_verticillatum","","Y","SV","native"
+"127","najas_flexilis","","Y","SV","native"
+"128","najas_gracillima","","Y","SV","native"
+"129","najas_guadalupensis","","Y","SV","native"
+"130","najas_marina","","Y","SV","native"
+"131","najas_minor","","Y","SV","nonnative"
+"132","najas_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","SV","native"
+"133","nasturtium_officinale","","Y","E","native"
+"134","nelumbo_lutea","","Y","F","native"
+"135","nitella_flexilis","","Y","SA_N","native"
+"136","nitella_furcata","","Y","SA_N","native"
+"137","nitella_macounii","","Y","SA_N","native"
+"138","nitella_mucronata","","Y","SA_N","native"
+"139","nitella_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","SA_N","native"
+"140","nitella_tenuissima","","Y","SA_N","native"
+"141","nitellopsis_obtusa","","Y","SA_C","nonnative"
+"142","nitellopsis_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"143","nostoc_sp","","Y",NA,NA
+"144","nuphar_advena","","Y",NA,NA
+"145","nuphar_microphylla","","Y","F","native"
+"146","nuphar_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","F","native"
+"147","nuphar_variegata","","Y","F","native"
+"148","nymphaea_leibergii","","Y","F","native"
+"149","nymphaea_odorata","","Y","F","native"
+"150","nymphaea_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","F","native"
+"151","nymphaeaceae_taxa","""_taxa"" indicates an unknown taxon within a given family, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"152","persicaria_amphibia","","Y","F","native"
+"153","persicaria_lapathifolia","","Y","WE","native"
+"154","persicaria_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","WE","native"
+"155","phalaris_arundinacea","","Y",NA,NA
+"156","phragmites_australis","","Y","E","native"
+"157","phragmites_australis_americanus","Native subspecies","Y",NA,NA
+"158","phragmites_australis_australis","Non-native subspecies","Y",NA,NA
+"159","phragmites_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"160","poaceae_taxa","""_taxa"" indicates an unknown taxon within a given family, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"161","pontederia_cordata","","Y","E","native"
+"162","potamogeton_alpinus","","Y","SV","native"
+"163","potamogeton_amplifolius","","Y","SV","native"
+"164","potamogeton_bicupulatus","","Y","SV","native"
+"165","potamogeton_crispus","","Y","SV","nonnative"
+"166","potamogeton_diversifolius","","Y","SV","native"
+"167","potamogeton_epihydrus","","Y","SV","native"
+"168","potamogeton_foliosus","","Y",NA,NA
+"169","potamogeton_friesii","","Y","SV","native"
+"170","potamogeton_gramineus","","Y","SV","native"
+"171","potamogeton_hillii","","Y",NA,NA
+"172","potamogeton_illinoensis","","Y","SV","native"
+"173","potamogeton_natans","","Y","F","native"
+"174","potamogeton_nodosus","","Y","SV","native"
+"175","potamogeton_obtusifolius","","Y","SV","native"
+"176","potamogeton_perfoliatus","","Y","SV","native"
+"177","potamogeton_praelongus","","Y","SV","native"
+"178","potamogeton_pulcher","","Y","SV","native"
+"179","potamogeton_pusillus","","Y","SV","native"
+"180","potamogeton_richardsonii","","Y","SV","native"
+"181","potamogeton_robbinsii","","Y","SV","native"
+"182","potamogeton_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","SV","native"
+"183","potamogeton_spirillus","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","SV","native"
+"184","potamogeton_strictifolius","","Y","SV","native"
+"185","potamogeton_vaseyi","","Y","SV","native"
+"186","potamogeton_zosteriformis","","Y","SV","native"
+"187","ranunculus_aquatilis","","Y",NA,NA
+"188","ranunculus_flabellaris","","Y","SV","native"
+"189","ranunculus_flammula","","Y","SV","native"
+"190","ranunculus_sceleratus","","Y","WE","native"
+"191","ranunculus_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","SV","native"
+"192","rhododendron_groenlandicum","","Y","WE","native"
+"193","riccia_fluitans","","Y","FF","native"
+"194","riccia_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"195","ricciocarpos_natans","","Y",NA,NA
+"196","rumex_britannica","","Y","WE","native"
+"197","ruppia_cirrhosa","","Y","SV","native"
+"198","sagittaria_cristata","","Y","E","native"
+"199","sagittaria_cuneata","","Y","E","native"
+"200","sagittaria_graminea","","Y","E","native"
+"201","sagittaria_latifolia","","Y","E","native"
+"202","sagittaria_montevidensis","","Y",NA,NA
+"203","sagittaria_rigida","","Y","E","native"
+"204","sagittaria_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","E","native"
+"205","salix_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","WE","native"
+"206","schoenoplectus_acutus","","Y",NA,NA
+"207","schoenoplectus_heterochaetus","","Y","E","native"
+"208","schoenoplectus_pungens","","Y","E","native"
+"209","schoenoplectus_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"210","schoenoplectus_subterminalis","","Y","SV","native"
+"211","schoenoplectus_tabernaemontani","","Y","E","native"
+"212","schoenoplectus_x_oblongus","","Y",NA,NA
+"213","scirpus_atrovirens","","Y","WE","native"
+"214","scirpus_cyperinus","","Y","WE","native"
+"215","scirpus_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","WE","native"
+"216","scirpus_validus","","Y",NA,NA
+"217","scolochloa_festucacea","","Y","WE","native"
+"218","scorpidium_scorpioides","","Y","SV_M","native"
+"219","scutellaria_lateriflora","","Y","WE","native"
+"220","scutellaria_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","WE","native"
+"221","sium_suave","","Y","WE","native"
+"222","solanum_dulcamara","","Y",NA,NA
+"223","solidago_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","WE","native"
+"224","sparganium_americanum","","Y","E","native"
+"225","sparganium_angustifolium","","Y","F","native"
+"226","sparganium_emersum","","Y","F","native"
+"227","sparganium_eurycarpum","","Y","E","native"
+"228","sparganium_fluctuans","","Y","F","native"
+"229","sparganium_natans","","Y","F","native"
+"230","sparganium_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","E","native"
+"231","sphagnum_magellanicum","","Y",NA,NA
+"232","sphagnum_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"233","spirodela_polyrrhiza","","Y",NA,NA
+"234","spirodela_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"235","spirogyra_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"236","stuckenia_filiformis","","Y","SV","native"
+"237","stuckenia_pectinata","","Y","SV","native"
+"238","stuckenia_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","SV","native"
+"239","stuckenia_vaginata","","Y","SV","native"
+"240","thelypteris_palustris","","Y",NA,NA
+"241","tolypella_intricata","","Y","SA_N","native"
+"242","triadenum_fraseri","","Y","WE","native"
+"243","typha_angustifolia","","Y","E","native"
+"244","typha_x_glauca","","Y",NA,NA
+"245","typha_latifolia","","Y","E","native"
+"246","typha_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","E","native"
+"247","unk_sp","""Unknown species,"" as indicated by the original surveyor, not MAISRC","Y",NA,NA
+"248","utricularia_geminiscapa","","Y","SV","native"
+"249","utricularia_gibba","","Y","SV","native"
+"250","utricularia_intermedia","","Y","SV","native"
+"251","utricularia_macrorhiza","","Y",NA,NA
+"252","utricularia_minor","","Y","SV","native"
+"253","utricularia_purpurea","","Y","SV","native"
+"254","utricularia_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","SV","native"
+"255","utricularia_vulgaris","","Y","SV","native"
+"256","vallisneria_americana","","Y","SV","native"
+"257","vallisneria_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y",NA,NA
+"258","verbena_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","WE","native"
+"259","veronica_americana","","Y","SV","native"
+"260","veronica_catenata","","Y",NA,NA
+"261","wolffia_borealis","","Y","FF","native"
+"262","wolffia_columbiana","","Y","FF","native"
+"263","wolffia_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","FF","native"
+"264","zannichellia_palustris","","Y","SV","native"
+"265","zizania_palustris","","Y","E","native"
+"266","zizania_sp","""_sp"" indicates an unknown species within a given genus, as indicated by the surveyor, not MAISRC","Y","E","native"

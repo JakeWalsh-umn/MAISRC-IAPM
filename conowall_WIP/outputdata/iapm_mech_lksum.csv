@@ -1,0 +1,396 @@
+DOW_parent,treatment_year,yr_approved_acres,lake_name,treatment_method,LK_LZACRES,prcnt_LZ,species_code
+01020400,2025,9.4,Round,Mechanical Control,311.65,0.03016,CLP
+02005300,2018,0.06,Ham,Mechanical Control,190.45,3.2e-4,PHR
+02005300,2019,0.06,Ham,Mechanical Control,190.45,3.2e-4,PHR
+03028700,2018,0.56,Pickerel,Mechanical Control,137.68,0.00407,FR
+03028700,2019,0.56,Pickerel,Mechanical Control,137.68,0.00407,FR
+03028700,2020,0.56,Pickerel,Mechanical Control,137.68,0.00407,FR
+03028700,2021,0.23,Pickerel,Mechanical Control,137.68,0.00167,FR
+03028700,2022,0.1,Pickerel,Mechanical Control,137.68,7.3e-4,FR
+03028700,2023,0.6,Pickerel,Mechanical Control,137.68,0.00436,FR
+03028700,2024,1.43,Pickerel,Mechanical Control,137.68,0.01039,FR
+03028700,2025,0.5,Pickerel,Mechanical Control,137.68,0.00363,FR
+03038300,2018,0.25,Long,Mechanical Control,180.69,0.00138,YI
+03047300,2018,1,Buck,Mechanical Control,85.94,0.01164,FR
+03047300,2019,2,Buck,Mechanical Control,85.94,0.02327,FR
+03047300,2020,2,Buck,Mechanical Control,85.94,0.02327,FR
+03047300,2021,1,Buck,Mechanical Control,85.94,0.01164,FR
+03047300,2022,5,Buck,Mechanical Control,85.94,0.05818,FR
+03047300,2023,5,Buck,Mechanical Control,85.94,0.05818,FR
+03047300,2024,5,Buck,Mechanical Control,85.94,0.05818,FR
+03047300,2025,5,Buck,Mechanical Control,85.94,0.05818,FR
+04003200,2022,0.5,Pimushe,Mechanical Control,613.15,8.2e-4,SS
+04003200,2023,0.1,Pimushe,Mechanical Control,613.15,1.6e-4,SS
+04003200,2024,0.25,Pimushe,Mechanical Control,613.15,4.1e-4,SS
+04003200,2025,0.25,Pimushe,Mechanical Control,613.15,4.1e-4,SS
+04006300,2023,0.5,North Twin,Mechanical Control,138.86,0.0036,SS
+04007900,2022,1,Wolf,Mechanical Control,318.1,0.00314,SS
+04007900,2023,0.75,Wolf,Mechanical Control,318.1,0.00236,SS
+04007900,2025,0.92,Wolf,Mechanical Control,318.1,0.00289,SS
+04011100,2023,0.25,Turtle River,Mechanical Control,717.67,3.5e-4,SS
+04011100,2024,0.25,Turtle River,Mechanical Control,717.67,3.5e-4,SS
+04013000,2023,0.07,Bemidji (main lake),Mechanical Control,2087.66,3e-5,SS
+04013500,2022,0.5,Beltrami,Mechanical Control,405.49,0.00123,SS
+04013500,2023,0.07,Beltrami,Mechanical Control,405.49,1.7e-4,SS
+04013500,2025,0.5,Beltrami,Mechanical Control,405.49,0.00123,SS
+04015900,2017,0.75,Turtle,Mechanical Control,928.21,8.1e-4,SS
+04015900,2018,0.75,Turtle,Mechanical Control,928.21,8.1e-4,SS
+04015900,2019,0.75,Turtle,Mechanical Control,928.21,8.1e-4,SS
+04015900,2020,0.75,Turtle,Mechanical Control,928.21,8.1e-4,SS
+04015900,2021,0.75,Turtle,Mechanical Control,928.21,8.1e-4,SS
+04015900,2022,1,Turtle,Mechanical Control,928.21,0.00108,SS
+04015900,2023,1,Turtle,Mechanical Control,928.21,0.00108,SS
+04015900,2025,0.2,Turtle,Mechanical Control,928.21,2.2e-4,SS
+05001300,2022,6,Little Rock,Mechanical Control,1240.12,0.00484,CLP
+05001300,2023,6,Little Rock,Mechanical Control,1240.12,0.00484,CLP
+05001300,2024,6,Little Rock,Mechanical Control,1240.12,0.00484,CLP
+05001300,2025,6,Little Rock,Mechanical Control,1240.12,0.00484,CLP
+07004400,2025,88.51,Madison,Mechanical Control,1026.22,0.08625,CLP
+07005400,2025,24.74,Ballantyne,Mechanical Control,328.59,0.07529,EWM
+11005900,2017,1.1,Washburn,Mechanical Control,720.55,0.00153,EWM
+11006200,2023,0.1,Thunder,Mechanical Control,308.7,3.2e-4,SS
+11006200,2024,0.1,Thunder,Mechanical Control,308.7,3.2e-4,SS
+11006200,2025,0.01,Thunder,Mechanical Control,308.7,3e-5,SS
+11019000,2018,19.7,Town Line,Mechanical Control,697.66,0.02824,EWM
+11019000,2022,2.1,Town Line,Mechanical Control,697.66,0.00301,EWM
+11019000,2024,3.2,Town Line,Mechanical Control,697.66,0.00459,EWM
+11019000,2025,10,Town Line,Mechanical Control,697.66,0.01433,EWM
+11020300,2021,6.5,Leech,Mechanical Control,52231.06,1.2e-4,SS
+11020300,2022,7.35,Leech,Mechanical Control,52231.06,1.4e-4,SS
+11020300,2023,7.35,Leech,Mechanical Control,52231.06,1.4e-4,SS
+11020300,2024,7.85,Leech,Mechanical Control,52231.06,1.5e-4,SS
+11020300,2025,7.25,Leech,Mechanical Control,52231.06,1.4e-4,SS
+11030700,2017,14.4,Norway,Mechanical Control,514.88,0.02797,CLP
+11030700,2018,23,Norway,Mechanical Control,514.88,0.04467,CLP
+11030700,2019,23,Norway,Mechanical Control,514.88,0.04467,CLP
+11030700,2020,6.5,Norway,Mechanical Control,514.88,0.01262,CLP
+11030700,2021,4.2,Norway,Mechanical Control,514.88,0.00816,CLP
+11030700,2022,28,Norway,Mechanical Control,514.88,0.05438,CLP
+11035000,2023,1,Bowen,Mechanical Control,51.06,0.01958,SS
+11035000,2024,0.5,Bowen,Mechanical Control,51.06,0.00979,SS
+11035000,2025,0.5,Bowen,Mechanical Control,51.06,0.00979,SS
+17000300,2017,99,Mountain,Mechanical Control,219.79,0.45043,CLP
+17000300,2018,99,Mountain,Mechanical Control,219.79,0.45043,CLP
+17000300,2019,99,Mountain,Mechanical Control,219.79,0.45043,CLP
+17000300,2020,99,Mountain,Mechanical Control,219.79,0.45043,CLP
+17000300,2021,99,Mountain,Mechanical Control,219.79,0.45043,CLP
+17000300,2022,99,Mountain,Mechanical Control,219.79,0.45043,CLP
+17000300,2023,99,Mountain,Mechanical Control,219.79,0.45043,CLP
+17000300,2024,99,Mountain,Mechanical Control,219.79,0.45043,CLP
+17000300,2025,99,Mountain,Mechanical Control,219.79,0.45043,CLP
+18003800,2021,1,Clearwater,Mechanical Control,338.34,0.00296,EWM
+18003800,2022,4.8,Clearwater,Mechanical Control,338.34,0.01419,EWM
+18003800,2023,0.5,Clearwater,Mechanical Control,338.34,0.00148,EWM
+18004100,2020,1.75,Crooked,Mechanical Control,239.43,0.00731,EWM
+18004100,2021,2,Crooked,Mechanical Control,239.43,0.00835,EWM
+18004100,2022,3,Crooked,Mechanical Control,239.43,0.01253,EWM
+18031100,2024,1,Rush,Mechanical Control,398.92,0.00251,SS
+18031100,2025,1,Rush,Mechanical Control,398.92,0.00251,SS
+18037900,2020,2,White Sand,Mechanical Control,282.54,0.00708,EWM
+18037900,2021,2,White Sand,Mechanical Control,282.54,0.00708,EWM
+19002500,2021,0.01,Keller,Mechanical Control,NA,NA,YI
+19002700,2017,47.5,Crystal,Mechanical Control,221.71,0.21424,CLP
+19002700,2018,52.5,Crystal,Mechanical Control,221.71,0.2368,CLP
+19002700,2019,51.5,Crystal,Mechanical Control,221.71,0.23229,CLP
+19002700,2020,51.5,Crystal,Mechanical Control,221.71,0.23229,CLP
+19002700,2021,34.66,Crystal,Mechanical Control,221.71,0.15633,CLP
+19002700,2022,53.86,Crystal,Mechanical Control,221.71,0.24293,CLP
+19002700,2023,49.68,Crystal,Mechanical Control,221.71,0.22408,CLP
+19002700,2024,44.48,Crystal,Mechanical Control,221.71,0.20062,CLP
+19002700,2025,28.8,Crystal,Mechanical Control,221.71,0.1299,CLP
+19003300,2017,7.1,Earley,Mechanical Control,NA,NA,CLP
+19003300,2019,7.1,Earley,Mechanical Control,NA,NA,CLP
+19006200,2018,1,Unnamed,Mechanical Control,NA,NA,FR
+19006200,2019,0.1,Unnamed,Mechanical Control,NA,NA,FR
+19006200,2020,1,Unnamed,Mechanical Control,NA,NA,FR
+19006200,2021,1,Unnamed,Mechanical Control,NA,NA,FR
+19006200,2022,1,Unnamed,Mechanical Control,NA,NA,FR
+19006200,2023,0.2,Unnamed,Mechanical Control,NA,NA,FR
+19006200,2024,0.1,Unnamed,Mechanical Control,NA,NA,FR
+19006200,2025,0.1,Unnamed,Mechanical Control,NA,NA,FR
+19006400,2018,1,Unnamed,Mechanical Control,NA,NA,FR
+19006400,2019,0.2,Unnamed,Mechanical Control,NA,NA,FR
+19006400,2020,1,Unnamed,Mechanical Control,NA,NA,FR
+19006400,2021,1,Unnamed,Mechanical Control,NA,NA,FR
+19006400,2023,1,Unnamed,Mechanical Control,NA,NA,FR
+19006400,2024,0.1,Unnamed,Mechanical Control,NA,NA,FR
+19006400,2025,0.1,Unnamed,Mechanical Control,NA,NA,FR
+19006600,2021,0.5,Carlson,Mechanical Control,8.91,0.05612,YI
+19006600,2022,0.5,Carlson,Mechanical Control,8.91,0.05612,YI
+19006600,2023,0.2,Carlson,Mechanical Control,8.91,0.02245,YI
+19007100,2025,2,Jensen,Mechanical Control,NA,NA,PL
+19007500,2025,1,Schultz,Mechanical Control,NA,NA,PL
+19007600,2025,2,McDonough,Mechanical Control,NA,NA,PL
+19017800,2025,0.5,Unnamed,Mechanical Control,NA,NA,PL
+19017900,2025,0.25,Unnamed,Mechanical Control,NA,NA,PL
+19029400,2023,0.1,Unnamed,Mechanical Control,NA,NA,FR
+19029400,2024,0.1,Unnamed,Mechanical Control,NA,NA,FR
+19029400,2025,0.1,Unnamed,Mechanical Control,NA,NA,FR
+21010600,2025,0.06,Latoka,Mechanical Control,268.8,2.2e-4,NWL
+21015000,2025,0.1,Grants,Mechanical Control,64.31,0.00155,FR
+25001700,2024,80,North,Mechanical Control,1247.91,0.06411,FR
+25001700,2025,100,North,Mechanical Control,1247.91,0.08013,FR
+27001600,2017,40,Harriet,Mechanical Control,88.94,0.44974,EWM
+27001600,2020,44,Harriet,Mechanical Control,88.94,0.49472,EWM
+27001600,2021,44,Harriet,Mechanical Control,88.94,0.49472,EWM
+27001600,2022,44,Harriet,Mechanical Control,88.94,0.49472,EWM
+27001600,2023,44,Harriet,Mechanical Control,88.94,0.49472,EWM
+27001600,2024,44,Harriet,Mechanical Control,88.94,0.49472,EWM
+27001600,2025,44,Harriet,Mechanical Control,88.94,0.49472,EWM
+27001900,2016,15,Nokomis,Mechanical Control,104.26,0.14387,EWM
+27001900,2017,15,Nokomis,Mechanical Control,104.26,0.14387,EWM
+27003100,2017,53,Calhoun,Mechanical Control,113.95,0.46512,EWM
+27003100,2020,55,Calhoun,Mechanical Control,113.95,0.48267,EWM
+27003100,2021,55,Calhoun,Mechanical Control,113.95,0.48267,EWM
+27003100,2022,55,Calhoun,Mechanical Control,113.95,0.48267,EWM
+27003100,2023,56,Calhoun,Mechanical Control,113.95,0.49144,EWM
+27003100,2024,56,Calhoun,Mechanical Control,113.95,0.49144,EWM
+27003100,2025,114,Calhoun,Mechanical Control,113.95,1.00044,EWM
+27003700,2016,5,Wirth,Mechanical Control,23.05,0.21692,EWM
+27003700,2017,5,Wirth,Mechanical Control,23.05,0.21692,EWM
+27003700,2020,2.3,Wirth,Mechanical Control,23.05,0.09978,EWM
+27003700,2021,5,Wirth,Mechanical Control,23.05,0.21692,EWM
+27003700,2022,2,Wirth,Mechanical Control,23.05,0.08677,EWM
+27003700,2023,2.87,Wirth,Mechanical Control,23.05,0.12451,EWM
+27003700,2024,2.31,Wirth,Mechanical Control,23.05,0.10022,EWM
+27003700,2025,2.31,Wirth,Mechanical Control,23.05,0.10022,EWM
+27003900,2017,19,Cedar,Mechanical Control,60.06,0.31635,EWM
+27003900,2020,13,Cedar,Mechanical Control,60.06,0.21645,EWM
+27003900,2021,13,Cedar,Mechanical Control,60.06,0.21645,EWM
+27003900,2022,13,Cedar,Mechanical Control,60.06,0.21645,EWM
+27003900,2023,13,Cedar,Mechanical Control,60.06,0.21645,EWM
+27003900,2024,13,Cedar,Mechanical Control,60.06,0.21645,EWM
+27003900,2025,13,Cedar,Mechanical Control,60.06,0.21645,EWM
+27004000,2017,38,Lake of the Isles,Mechanical Control,92.02,0.41295,EWM
+27004000,2020,36,Lake of the Isles,Mechanical Control,92.02,0.39122,EWM
+27004000,2021,36,Lake of the Isles,Mechanical Control,92.02,0.39122,EWM
+27004000,2022,38,Lake of the Isles,Mechanical Control,92.02,0.41295,EWM
+27004000,2023,38,Lake of the Isles,Mechanical Control,92.02,0.41295,EWM
+27004000,2024,38,Lake of the Isles,Mechanical Control,92.02,0.41295,EWM
+27004000,2025,38,Lake of the Isles,Mechanical Control,92.02,0.41295,EWM
+27004100,2017,7,Edina Mill Pond,Mechanical Control,NA,NA,"CLP, EWM"
+27004100,2018,7,Edina Mill Pond,Mechanical Control,NA,NA,"CLP, EWM"
+27004400,2021,1,Indianhead,Mechanical Control,NA,NA,YI
+27006900,2020,0.1,Duck,Mechanical Control,NA,NA,EWM
+27007000,2017,15,Mitchell,Mechanical Control,110.62,0.1356,CLP
+27007000,2018,15,Mitchell,Mechanical Control,110.62,0.1356,CLP
+27007000,2019,16,Mitchell,Mechanical Control,110.62,0.14464,CLP
+27007000,2020,8.2,Mitchell,Mechanical Control,110.62,0.07413,CLP
+27007000,2023,0.5,Mitchell,Mechanical Control,110.62,0.00452,BN
+27007600,2018,5.5,Red Rock,Mechanical Control,96.61,0.05693,CLP
+27007600,2019,7,Red Rock,Mechanical Control,96.61,0.07246,CLP
+27007600,2020,5.2,Red Rock,Mechanical Control,96.61,0.05382,CLP
+27013300,2017,435.15,Minnetonka-Black Lake,Mechanical Control,12064.33,0.03607,"CLP, EWM"
+27013300,2018,435.15,Minnetonka-Black Lake,Mechanical Control,12064.33,0.03607,"CLP, EWM"
+29006100,2025,0.2,Garfield,Mechanical Control,517.27,3.9e-4,SS
+29016100,2023,1.25,Long,Mechanical Control,698.84,0.00179,SS
+29016100,2024,0.76,Long,Mechanical Control,698.84,0.00109,SS
+29016100,2025,0.75,Long,Mechanical Control,698.84,0.00107,SS
+30003500,2018,15,Florence,Mechanical Control,120.2,0.12479,CLP
+30013500,2017,0.7,Spectacle,Mechanical Control,170.29,0.00411,EWM
+30013600,2019,78.2,Green,Mechanical Control,357.1,0.21899,EWM
+30013600,2021,128.7,Green,Mechanical Control,357.1,0.3604,CLP
+34006600,2023,0.51,Long,Mechanical Control,154.02,0.00331,SS
+34006600,2024,0.51,Long,Mechanical Control,154.02,0.00331,SS
+34006600,2025,1,Long,Mechanical Control,154.02,0.00649,SS
+34008600,2019,104,Big Kandiyohi,Mechanical Control,1445.1,0.07197,CLP
+34008600,2020,104,Big Kandiyohi,Mechanical Control,1445.1,0.07197,CLP
+34008600,2021,138,Big Kandiyohi,Mechanical Control,1445.1,0.0955,CLP
+34008600,2022,400,Big Kandiyohi,Mechanical Control,1445.1,0.2768,CLP
+34008600,2023,536,Big Kandiyohi,Mechanical Control,1445.1,0.37091,CLP
+34008600,2024,320,Big Kandiyohi,Mechanical Control,1445.1,0.22144,CLP
+34008600,2025,184,Big Kandiyohi,Mechanical Control,1445.1,0.12733,CLP
+34015400,2017,200,Nest,Mechanical Control,577.17,0.34652,CLP
+34015400,2018,149,Nest,Mechanical Control,577.17,0.25816,CLP
+34015400,2019,156.47,Nest,Mechanical Control,577.17,0.2711,CLP
+34015400,2020,133.52,Nest,Mechanical Control,577.17,0.23134,CLP
+34015400,2021,138.66,Nest,Mechanical Control,577.17,0.24024,CLP
+34015400,2022,124,Nest,Mechanical Control,577.17,0.21484,CLP
+34015400,2023,82.7,Nest,Mechanical Control,577.17,0.14329,CLP
+34015400,2024,127.5,Nest,Mechanical Control,577.17,0.22091,CLP
+34015400,2025,130.8,Nest,Mechanical Control,577.17,0.22662,CLP
+34037600,2024,10,Unnamed,Mechanical Control,NA,NA,CLP
+40000200,2022,0.5,Upper Sakatah,Mechanical Control,899.57,5.6e-4,EWM
+40003100,2016,0.9,Tetonka,Mechanical Control,551.22,0.00163,EWM
+40005700,2017,2.13,Frances,Mechanical Control,568.07,0.00375,EWM
+40005700,2018,4,Frances,Mechanical Control,568.07,0.00704,EWM
+40005700,2019,1,Frances,Mechanical Control,568.07,0.00176,EWM
+40005700,2020,1,Frances,Mechanical Control,568.07,0.00176,EWM
+40005700,2021,1,Frances,Mechanical Control,568.07,0.00176,EWM
+40005700,2022,1,Frances,Mechanical Control,568.07,0.00176,EWM
+40005700,2023,1,Frances,Mechanical Control,568.07,0.00176,EWM
+40012400,2024,1.5,Emily,Mechanical Control,219.86,0.00682,PHR
+40012400,2025,1.5,Emily,Mechanical Control,219.86,0.00682,PHR
+43011500,2017,2,Cedar,Mechanical Control,1860.01,0.00108,EWM
+47004900,2020,0.54,Belle Lake,Mechanical Control,376.55,0.00143,EWM
+47009500,2020,103,Clear,Mechanical Control,479.66,0.21474,"CLP, EWM"
+47009500,2021,127,Clear,Mechanical Control,479.66,0.26477,"CLP, EWM"
+47009500,2022,127,Clear,Mechanical Control,479.66,0.26477,"CLP, EWM"
+47009500,2023,368,Clear,Mechanical Control,479.66,0.76721,"CLP, EWM"
+47009500,2024,183,Clear,Mechanical Control,479.66,0.38152,"CLP, EWM"
+47009500,2025,170,Clear,Mechanical Control,479.66,0.35442,"CLP, EWM"
+47009600,2017,0.85,Little Mud,Mechanical Control,25.74,0.03302,EWM
+47009600,2019,0.2,Little Mud,Mechanical Control,25.74,0.00777,EWM
+47009600,2020,0.36,Little Mud,Mechanical Control,25.74,0.01399,EWM
+47009600,2021,0.5,Little Mud,Mechanical Control,25.74,0.01943,EWM
+47009600,2022,0.5,Little Mud,Mechanical Control,25.74,0.01943,EWM
+47009600,2025,1,Little Mud,Mechanical Control,25.74,0.03885,"EWM, CLP"
+49012700,2017,6.9,Shamineau,Mechanical Control,630.54,0.01094,EWM
+49012700,2018,21.8,Shamineau,Mechanical Control,630.54,0.03457,EWM
+49012700,2019,21.8,Shamineau,Mechanical Control,630.54,0.03457,EWM
+49012700,2020,20.8,Shamineau,Mechanical Control,630.54,0.03299,EWM
+49012700,2021,14,Shamineau,Mechanical Control,630.54,0.0222,EWM
+49012700,2022,14,Shamineau,Mechanical Control,630.54,0.0222,EWM
+49012700,2023,4.4,Shamineau,Mechanical Control,630.54,0.00698,EWM
+49012700,2024,4.4,Shamineau,Mechanical Control,630.54,0.00698,EWM
+56038700,2021,1,Sybil,Mechanical Control,278.84,0.00359,PL
+56076100,2021,1,Little Pelican,Mechanical Control,NA,NA,FR
+56076100,2023,1,Little Pelican,Mechanical Control,NA,NA,FR
+60021700,2022,55.41,Union,Mechanical Control,376.24,0.14727,CLP
+60021700,2024,162.2,Union,Mechanical Control,376.24,0.43111,CLP
+60021700,2025,95.3,Union,Mechanical Control,376.24,0.2533,CLP
+61013000,2017,1.5,Minnewaska,Mechanical Control,3290.84,4.6e-4,SS
+61013000,2019,1.9,Minnewaska,Mechanical Control,3290.84,5.8e-4,SS
+61013000,2020,3.85,Minnewaska,Mechanical Control,3290.84,0.00117,SS
+61013000,2021,5.62,Minnewaska,Mechanical Control,3290.84,0.00171,SS
+61013000,2022,3.5,Minnewaska,Mechanical Control,3290.84,0.00106,SS
+61013000,2023,5,Minnewaska,Mechanical Control,3290.84,0.00152,SS
+62000500,2019,5,Casey,Mechanical Control,11.82,0.42301,CLP
+62000500,2022,1,Casey,Mechanical Control,11.82,0.0846,CLP
+62000600,2020,13.8,Kohlman,Mechanical Control,82.9,0.16647,CLP
+62000600,2021,9.7,Kohlman,Mechanical Control,82.9,0.11701,CLP
+62000700,2020,6.2,Gervais,Mechanical Control,94.42,0.06566,CLP
+62000700,2021,8,Gervais,Mechanical Control,94.42,0.08473,CLP
+62001000,2020,11.5,Keller (main bay),Mechanical Control,80.13999999999999,0.1435,CLP
+62001000,2021,6.2,Keller (main bay),Mechanical Control,80.13999999999999,0.07736,CLP
+62001300,2017,28.01,Phalen,Mechanical Control,84.53,0.33136,EWM
+62001300,2018,28,Phalen,Mechanical Control,84.53,0.33124,EWM
+62001300,2019,28,Phalen,Mechanical Control,84.53,0.33124,EWM
+62001300,2020,28,Phalen,Mechanical Control,84.53,0.33124,EWM
+62001300,2021,28,Phalen,Mechanical Control,84.53,0.33124,EWM
+62001300,2022,27.4,Phalen,Mechanical Control,84.53,0.32415,EWM
+62001300,2023,29.9,Phalen,Mechanical Control,84.53,0.35372,EWM
+62001300,2024,23.6,Phalen,Mechanical Control,84.53,0.27919,EWM
+62001300,2025,30,Phalen,Mechanical Control,84.53,0.3549,EWM
+62001800,2019,1,Deep,Mechanical Control,NA,NA,YI
+62001800,2020,1,Deep,Mechanical Control,NA,NA,YI
+62001800,2021,1,Deep,Mechanical Control,NA,NA,YI
+62001800,2022,4.5,Deep,Mechanical Control,NA,NA,YI
+62002400,2022,32.64,Birch,Mechanical Control,NA,NA,EWM
+62002400,2023,5,Birch,Mechanical Control,NA,NA,EWM
+62002400,2024,5,Birch,Mechanical Control,NA,NA,EWM
+62002400,2025,15,Birch,Mechanical Control,NA,NA,EWM
+62005500,2017,10,Como,Mechanical Control,65.65,0.15232,CLP
+62005500,2018,10,Como,Mechanical Control,65.65,0.15232,CLP
+62005500,2019,10,Como,Mechanical Control,65.65,0.15232,CLP
+62005500,2023,6.94,Como,Mechanical Control,65.65,0.10571,CLP
+62007300,2016,0.01,Snail,Mechanical Control,127.79,8e-5,YI
+62007300,2023,16,Snail,Mechanical Control,127.79,0.12521,EWM
+66002700,2017,15.1,Circle,Mechanical Control,837.56,0.01803,CLP
+66002700,2018,15,Circle,Mechanical Control,837.56,0.01791,CLP
+66002700,2020,15,Circle,Mechanical Control,837.56,0.01791,CLP
+66002700,2021,35.8,Circle,Mechanical Control,837.56,0.04274,CLP
+66002700,2022,41.5,Circle,Mechanical Control,837.56,0.04955,CLP
+66002700,2023,41,Circle,Mechanical Control,837.56,0.04895,CLP
+66002700,2024,41.4,Circle,Mechanical Control,837.56,0.04943,CLP
+66003800,2017,63.1,French,Mechanical Control,379.03,0.16648,CLP
+66003800,2018,65,French,Mechanical Control,379.03,0.17149,CLP
+66003800,2019,74.6,French,Mechanical Control,379.03,0.19682,CLP
+66003800,2020,67.5,French,Mechanical Control,379.03,0.17809,CLP
+66003800,2021,67.5,French,Mechanical Control,379.03,0.17809,CLP
+66003800,2022,67.5,French,Mechanical Control,379.03,0.17809,CLP
+66003800,2023,67.5,French,Mechanical Control,379.03,0.17809,CLP
+66003800,2024,67.5,French,Mechanical Control,379.03,0.17809,CLP
+66003800,2025,67.5,French,Mechanical Control,379.03,0.17809,CLP
+66004700,2023,14.3,Hunt,Mechanical Control,148.64,0.09621,CLP
+66005500,2021,60.9,Shields,Mechanical Control,702.93,0.08664,CLP
+69129100,2017,3,St. Louis River Estuary,Mechanical Control,NA,NA,PHR
+69129100,2018,3,St. Louis River Estuary,Mechanical Control,NA,NA,PHR
+69129100,2019,8.05,St. Louis River Estuary,Mechanical Control,NA,NA,PHR
+69129100,2021,3.49,St. Louis River Estuary,Mechanical Control,NA,NA,PHR
+69129100,2024,2.3,St. Louis River Estuary,Mechanical Control,NA,NA,EWM
+70005400,2021,1,Spring,Mechanical Control,282.83,0.00354,EWM
+71011000,2018,10.7,Fredrickson Slough,Mechanical Control,NA,NA,EWM
+71011000,2019,10.7,Fredrickson Slough,Mechanical Control,NA,NA,EWM
+71011000,2020,10.7,Fredrickson Slough,Mechanical Control,NA,NA,EWM
+71011000,2021,10.7,Fredrickson Slough,Mechanical Control,NA,NA,EWM
+71011000,2022,10.7,Fredrickson Slough,Mechanical Control,NA,NA,EWM
+73003500,2021,0.08,School Section,Mechanical Control,192.98,4.1e-4,EWM
+73003800,2020,0.15,Carnelian,Mechanical Control,96.99,0.00155,SS
+73003800,2021,0.15,Carnelian,Mechanical Control,96.99,0.00155,SS
+73003800,2022,0.6,Carnelian,Mechanical Control,96.99,0.00619,SS
+73003800,2023,0.6,Carnelian,Mechanical Control,96.99,0.00619,SS
+73003800,2024,0.6,Carnelian,Mechanical Control,96.99,0.00619,SS
+73003800,2025,0.6,Carnelian,Mechanical Control,96.99,0.00619,SS
+73005500,2017,1,Grand,Mechanical Control,233.22,0.00429,SS
+73005500,2018,1,Grand,Mechanical Control,233.22,0.00429,SS
+73005500,2019,1,Grand,Mechanical Control,233.22,0.00429,SS
+73005500,2021,0.5,Grand,Mechanical Control,233.22,0.00214,SS
+73008300,2021,2.7,Great Northern,Mechanical Control,185.35,0.01457,CLP
+73008300,2022,2.7,Great Northern,Mechanical Control,185.35,0.01457,CLP
+73008300,2023,15.6,Great Northern,Mechanical Control,185.35,0.08417,CLP
+73008300,2024,15.6,Great Northern,Mechanical Control,185.35,0.08417,CLP
+73008600,2021,18,Knaus,Mechanical Control,209.7,0.08584,CLP
+73008600,2022,18,Knaus,Mechanical Control,209.7,0.08584,CLP
+73008600,2024,11,Knaus,Mechanical Control,209.7,0.05246,CLP
+73008700,2021,14.4,Krays,Mechanical Control,86.94,0.16563,CLP
+73008700,2022,14.4,Krays,Mechanical Control,86.94,0.16563,CLP
+73008700,2023,28.1,Krays,Mechanical Control,86.94,0.32321,CLP
+73008800,2021,1,Bolfing,Mechanical Control,67.37,0.01484,CLP
+73008800,2022,1,Bolfing,Mechanical Control,67.37,0.01484,CLP
+73008900,2023,8.8,Zumwalde,Mechanical Control,118.62,0.07419,CLP
+73013900,2021,22.7,Long,Mechanical Control,331.23,0.06853,CLP
+73013900,2022,91.9,Long,Mechanical Control,331.23,0.27745,CLP
+73013900,2023,91.9,Long,Mechanical Control,331.23,0.27745,CLP
+73013900,2024,32.5,Long,Mechanical Control,331.23,0.09812,CLP
+73013900,2025,32.5,Long,Mechanical Control,331.23,0.09812,CLP
+73014400,2017,0.4,Pirz,Mechanical Control,NA,NA,CLP
+73014400,2019,2.3,Pirz,Mechanical Control,NA,NA,CLP
+73014400,2020,2.3,Pirz,Mechanical Control,NA,NA,CLP
+73014400,2021,5.77,Pirz,Mechanical Control,NA,NA,CLP
+73014400,2022,5.77,Pirz,Mechanical Control,NA,NA,CLP
+73014400,2024,5.77,Pirz,Mechanical Control,NA,NA,CLP
+73014400,2025,14.04,Pirz,Mechanical Control,NA,NA,CLP
+73015600,2021,21.6,Becker,Mechanical Control,212.02,0.10188,CLP
+73015600,2022,22,Becker,Mechanical Control,212.02,0.10376,CLP
+73015600,2024,22,Becker,Mechanical Control,212.02,0.10376,CLP
+73015600,2025,22,Becker,Mechanical Control,212.02,0.10376,CLP
+73019600,2022,11.9,Rice,Mechanical Control,832.55,0.01429,CLP
+73020000,2016,1.1,Koronis (main lake),Mechanical Control,1146.64,9.6e-4,SS
+73020000,2017,22.2,Koronis (main lake),Mechanical Control,1146.64,0.01936,SS
+81001400,2022,98,Clear,Mechanical Control,563.67,0.17386,CLP
+81001400,2023,167,Clear,Mechanical Control,563.67,0.29627,CLP
+81001400,2024,138,Clear,Mechanical Control,563.67,0.24482,CLP
+81001400,2025,276.07,Clear,Mechanical Control,563.67,0.48977,CLP
+82005400,2019,1,Bone,Mechanical Control,119.4,0.00838,WH
+82009000,2023,2.86,Wilmes,Mechanical Control,NA,NA,EWM
+82009200,2018,5,Powers,Mechanical Control,29.67,0.16852,EWM
+82015300,2017,19,Sunset,Mechanical Control,130.59,0.14549,EWM
+82015300,2018,18,Sunset,Mechanical Control,130.59,0.13784,EWM
+82015300,2019,15,Sunset,Mechanical Control,130.59,0.11486,EWM
+82015300,2020,15,Sunset,Mechanical Control,130.59,0.11486,EWM
+82015300,2021,15,Sunset,Mechanical Control,130.59,0.11486,EWM
+82015300,2022,15,Sunset,Mechanical Control,130.59,0.11486,EWM
+82015300,2023,14.6,Sunset,Mechanical Control,130.59,0.1118,EWM
+82015300,2024,14.6,Sunset,Mechanical Control,130.59,0.1118,EWM
+82015300,2025,14.6,Sunset,Mechanical Control,130.59,0.1118,EWM
+82015900,2016,36.1,Forest,Mechanical Control,1561.19,0.02312,FR
+85001100,2017,100,Winona,Mechanical Control,211,0.47393,YI
+85001100,2018,2,Winona,Mechanical Control,211,0.00948,YI
+85001100,2019,2,Winona,Mechanical Control,211,0.00948,YI
+85001100,2021,2,Winona,Mechanical Control,211,0.00948,YI
+85001100,2022,2,Winona,Mechanical Control,211,0.00948,YI
+85001100,2023,2,Winona,Mechanical Control,211,0.00948,YI
+85001100,2024,2,Winona,Mechanical Control,211,0.00948,YI
+86001100,2016,2.5,Charlotte,Mechanical Control,89.71,0.02787,EWM
+86023300,2019,1,Sugar,Mechanical Control,371.23,0.00269,YI
+86025100,2018,1,Pleasant,Mechanical Control,291.24,0.00343,SS
+86025100,2019,1,Pleasant,Mechanical Control,291.24,0.00343,SS
+86025100,2020,1,Pleasant,Mechanical Control,291.24,0.00343,SS
+86025100,2021,1,Pleasant,Mechanical Control,291.24,0.00343,SS
+86025100,2022,1,Pleasant,Mechanical Control,291.24,0.00343,SS
+86025100,2023,1,Pleasant,Mechanical Control,291.24,0.00343,SS
+86025100,2024,1,Pleasant,Mechanical Control,291.24,0.00343,SS
+86025100,2025,1,Pleasant,Mechanical Control,291.24,0.00343,SS
+86027900,2016,0.41,West Lake Sylvia,Mechanical Control,297.1,0.00138,SS
+86027900,2017,7.71,West Lake Sylvia,Mechanical Control,297.1,0.02595,EWM
